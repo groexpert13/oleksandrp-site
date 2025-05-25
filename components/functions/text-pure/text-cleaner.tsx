@@ -102,7 +102,7 @@ export function TextCleaner() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(50vh-6rem)] min-h-[250px] gap-6">
+    <div className="flex flex-col gap-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
         <div className="flex-1 max-w-xs">
           <Select 
@@ -128,7 +128,7 @@ export function TextCleaner() {
         {getTransformationDescription()}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 flex-1 h-full min-h-0">
+      <div className="grid gap-6 md:grid-cols-2">
         <Card className="flex flex-col h-full">
           <CardHeader className="!flex-row !space-y-0 items-center justify-between">
             <CardTitle>{t('originalText')}</CardTitle>
@@ -141,7 +141,7 @@ export function TextCleaner() {
             <div className="relative flex-1 flex flex-col h-full">
               <Textarea
                 placeholder={t('pasteTextHere')}
-                className="h-full w-full resize-none pr-10 overflow-auto"
+                className="h-full w-full resize-none pr-10 overflow-auto text-base"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
               />
@@ -171,7 +171,7 @@ export function TextCleaner() {
             <div className="relative flex-1 flex flex-col h-full">
               <Textarea
                 placeholder={t('resultWillAppearHere')}
-                className="h-full w-full resize-none pr-10 overflow-auto"
+                className="h-full w-full resize-none pr-10 overflow-auto text-base"
                 value={outputText}
                 readOnly
               />
