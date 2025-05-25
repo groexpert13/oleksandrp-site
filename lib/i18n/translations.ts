@@ -37,6 +37,12 @@ type TranslationKey =
   | 'plainToSsmlDesc'
   | 'smartTypographyDesc'
   | 'plainToJsonYamlDesc'
+  | 'markdownToTelegram'
+  | 'markdownToTelegramDesc'
+  // New notifications
+  | 'generateSuccess'
+  | 'generateError'
+  | 'emptyInputError'
   // Codex Prompt Forge
   | 'yourRequest'
   | 'describeCodingTask'
@@ -51,6 +57,21 @@ type TranslationKey =
   | 'selfReviewLoop'
   | 'worksWithAny'
   | 'openInNewWindow'
+  // Yes/No Generator
+  | 'selectSeconds'
+  | 'seconds'
+  | 'start'
+  | 'repeat'
+  | 'yes'
+  | 'no'
+  // Countdown Timer
+  | 'selectDateTime'
+  | 'startCountdown'
+  | 'timeRemaining'
+  | 'days'
+  | 'hours'
+  | 'minutes'
+  | 'edit'
   // Footer
   | 'project'
   | 'techStack'
@@ -87,20 +108,39 @@ export const translations: Translations = {
     copyResult: 'Copy result',
     generate: 'Generate',
     textCleanerTool: 'Text Cleaner',
+    generateSuccess: 'Text generated successfully',
+    generateError: 'Failed to generate text',
+    emptyInputError: 'Please enter text to generate.',
+    selectSeconds: 'Select seconds',
+    seconds: 'seconds',
+    start: 'Start',
+    repeat: 'Repeat',
+    yes: 'Yes',
+    no: 'No',
+    // Countdown Timer
+    selectDateTime: 'Select Date & Time',
+    startCountdown: 'Start Countdown',
+    timeRemaining: 'Time Remaining',
+    days: 'days',
+    hours: 'hours',
+    minutes: 'min',
+    edit: 'Edit',
     // TextPure Categories
     markdownToPlain: 'Markdown → Plain Text',
+    markdownToTelegram: 'Markdown → Telegram Text',
     plainToHtmlEmail: 'Plain Text → HTML Email Template',
     plainToOg: 'Plain Text → Open Graph',
     plainToSsml: 'Plain Text → SSML Markup',
     smartTypography: 'Smart Typography',
     plainToJsonYaml: 'Plain Text → JSON/YAML',
     transformationCategories: 'Transformation Type',
-    markdownToPlainDesc: 'What it does: removes formatting characters (#, *, `) and converts lists, headings and links to readable text.\nWhy it\'s needed: convenience for publishing on platforms that don\'t support Markdown (SMS, messengers, banners).',
-    plainToHtmlEmailDesc: 'What it does: transforms plain text into semantic tags <h1>…</h1>, <p>…</p>, <ul>…</ul> with inline CSS for styling.\nWhy it\'s needed: guaranteed cross-mail client compatibility and flexible adaptation to any email client.',
-    plainToOgDesc: 'What it does: generates Open Graph meta tags (<meta property="og:title"/>, etc.) and Twitter Card for social media preview cards.\nWhy it\'s needed: automatic generation of attractive preview cards on Facebook, LinkedIn, and Twitter when sharing.',
-    plainToSsmlDesc: 'What it does: wraps text in <speak>, <break time="500ms"/>, <emphasis level="strong"/>, etc. to add intonation, pauses and emphasis.\nWhy it\'s needed: high-quality speech synthesis for Alexa Skills, Google Assistant, and audio advertising.',
-    smartTypographyDesc: 'What it does: replaces straight quotes with smart quotes, -- with em dash (—), ... with ellipsis (…), and inserts non-breaking spaces before punctuation (§!?.) and between numbers and units.\nWhy it\'s needed: professional typography that improves readability and brand style on websites and newsletters.',
-    plainToJsonYamlDesc: 'What it does: converts headings, lists, and text blocks into structured objects (YAML or JSON).\nWhy it\'s needed: easy integration into headless CMS, newsletter generation, and automatic content migration between platforms.',
+    markdownToPlainDesc: '**What it does:** removes formatting characters (#, *, `) and converts lists, headings and links to readable text.\n**Why it\'s needed:** convenience for publishing on platforms that don\'t support Markdown (SMS, messengers, banners).',
+    markdownToTelegramDesc: '**What it does:** converts standard Markdown to Telegram Markdown V2, escaping all special characters and formatting for safe use in Telegram bots and messages.\n**Why it\'s needed:** ensures your formatted text is displayed correctly in Telegram, avoiding formatting errors and message rejections.',
+    plainToHtmlEmailDesc: '**What it does:** transforms plain text into semantic tags <h1>…</h1>, <p>…</p>, <ul>…</ul> with inline CSS for styling.\n**Why it\'s needed:** guaranteed cross-mail client compatibility and flexible adaptation to any email client.',
+    plainToOgDesc: '**What it does:** generates Open Graph meta tags (<meta property="og:title"/>, etc.) and Twitter Card for social media preview cards.\n**Why it\'s needed:** automatic generation of attractive preview cards on Facebook, LinkedIn, and Twitter when sharing.',
+    plainToSsmlDesc: '**What it does:** wraps text in <speak>, <break time="500ms"/>, <emphasis level="strong"/>, etc. to add intonation, pauses and emphasis.\n**Why it\'s needed:** high-quality speech synthesis for Alexa Skills, Google Assistant, and audio advertising.',
+    smartTypographyDesc: '**What it does:** replaces straight quotes with smart quotes, -- with em dash (—), ... with ellipsis (…), and inserts non-breaking spaces before punctuation (§!?.) and between numbers and units.\n**Why it\'s needed:** professional typography that improves readability and brand style on websites and newsletters.',
+    plainToJsonYamlDesc: '**What it does:** converts headings, lists, and text blocks into structured objects (YAML or JSON).\n**Why it\'s needed:** easy integration into headless CMS, newsletter generation, and automatic content migration between platforms.',
     // Codex Prompt Forge
     yourRequest: 'Your Request',
     describeCodingTask: 'Describe the coding task you want to solve',
@@ -144,8 +184,26 @@ export const translations: Translations = {
     copyResult: 'Скопіювати результат',
     generate: 'Згенерувати',
     textCleanerTool: 'Очищення тексту',
+    generateSuccess: 'Текст успішно згенеровано',
+    generateError: 'Не вдалося згенерувати текст',
+    emptyInputError: 'Будь ласка, введіть текст для генерації.',
+    selectSeconds: 'Оберіть секунди',
+    seconds: 'секунд',
+    start: 'Почати',
+    repeat: 'Повторити',
+    yes: 'Так',
+    no: 'Ні',
+    // Countdown Timer
+    selectDateTime: 'Оберіть дату і час',
+    startCountdown: 'Почати відлік',
+    timeRemaining: 'Залишилось часу',
+    days: 'днів',
+    hours: 'годин',
+    minutes: 'хв',
+    edit: 'Змінити',
     // TextPure Categories
     markdownToPlain: 'Markdown → Звичайний текст',
+    markdownToTelegram: 'Markdown → Telegram-текст',
     plainToHtmlEmail: 'Звичайний текст → HTML шаблон email',
     plainToOg: 'Звичайний текст → Open Graph',
     plainToSsml: 'Звичайний текст → SSML розмітка',
@@ -153,6 +211,7 @@ export const translations: Translations = {
     plainToJsonYaml: 'Звичайний текст → JSON/YAML',
     transformationCategories: 'Тип трансформації',
     markdownToPlainDesc: 'Що робить: видаляє символи розмітки (#, *, `) і перетворює списки, заголовки та посилання на читабельний текст.\nНавіщо: зручність публікацій на майданчиках, що не підтримують Markdown (SMS-розсилки, месенджери, банери).',
+    markdownToTelegramDesc: 'Що робить: конвертує стандартний Markdown у Markdown V2 для Telegram, екранує всі спецсимволи та форматування для безпечного використання в ботах і повідомленнях Telegram.\nНавіщо: гарантує коректне відображення форматованого тексту в Telegram, уникаючи помилок форматування та відхилення повідомлень.',
     plainToHtmlEmailDesc: 'Що робить: перетворює звичайний текст у семантичні теги <h1>…</h1>, <p>…</p>, <ul>…</ul> з inline-CSS для стилізації.\nНавіщо: гарантована крос-клієнтська сумісність email та гнучка адаптація до будь-якого поштового клієнта.',
     plainToOgDesc: 'Що робить: генерує мета-теги Open Graph (<meta property="og:title"/>, тощо) та Twitter Card для соціальних мереж.\nНавіщо: красиві прев\'ю-карточки при шарингу в Facebook, LinkedIn, Twitter.',
     plainToSsmlDesc: 'Що робить: обгортає текст у теги <speak>, <break time="500ms"/>, <emphasis level="strong"/> тощо, задає інтонацію, паузи, наголоси.\nНавіщо: якісне озвучування в Alexa Skills, Google Assistant та аудіорекламі.',
@@ -201,8 +260,26 @@ export const translations: Translations = {
     copyResult: 'Копировать результат',
     generate: 'Генерировать',
     textCleanerTool: 'Очистка текста',
+    generateSuccess: 'Текст успешно сгенерирован',
+    generateError: 'Не удалось сгенерировать текст',
+    emptyInputError: 'Пожалуйста, введите текст для генерации.',
+    selectSeconds: 'Выберите секунды',
+    seconds: 'секунд',
+    start: 'Старт',
+    repeat: 'Повторить',
+    yes: 'Да',
+    no: 'Нет',
+    // Countdown Timer
+    selectDateTime: 'Выберите дату и время',
+    startCountdown: 'Начать отсчет',
+    timeRemaining: 'Осталось времени',
+    days: 'дней',
+    hours: 'часов',
+    minutes: 'мин',
+    edit: 'Изменить',
     // TextPure Categories
     markdownToPlain: 'Markdown → Обычный текст',
+    markdownToTelegram: 'Markdown → Telegram-текст',
     plainToHtmlEmail: 'Обычный текст → HTML шаблон email',
     plainToOg: 'Обычный текст → Open Graph',
     plainToSsml: 'Обычный текст → SSML разметка',
@@ -210,6 +287,7 @@ export const translations: Translations = {
     plainToJsonYaml: 'Обычный текст → JSON/YAML',
     transformationCategories: 'Тип трансформации',
     markdownToPlainDesc: 'Что делает: убирает символы разметки (#, *, `) и преобразует списки, заголовки и ссылки в читабельный текст.\nЗачем нужно: удобство публикаций на поверхностях, не поддерживающих Markdown (SMS-рассылки, мессенджеры, баннеры).',
+    markdownToTelegramDesc: 'Что делает: конвертирует стандартный Markdown в Markdown V2 для Telegram, экранирует все спецсимволы и форматирование для безопасного использования в ботах и сообщениях Telegram.\nЗачем нужно: гарантирует корректное отображение форматированного текста в Telegram, избегая ошибок форматирования и отклонения сообщений.',
     plainToHtmlEmailDesc: 'Что делает: превращает обычный текст в семантические теги <h1>…</h1>, <p>…</p>, <ul>…</ul>, добавляет inline-CSS для стилизации.\nЗачем нужно: гарантированная кросс-почтовая вёрстка, гибкая адаптация под любой email-клиент.',
     plainToOgDesc: 'Что делает: комплект метатегов <meta property="og:title"/>, <meta property="og:description"/>, <meta property="og:image"/> и вёрстку для Twitter Card.\nЗачем нужно: при шаринге в Facebook, LinkedIn, Twitter автоматически генерируется красивая карточка с изображением и описанием.',
     plainToSsmlDesc: 'Что делает: оборачивает текст в теги <speak>, <break time="500ms"/>, <emphasis level="strong"/> и др., задаёт интонацию, паузы, ударения.\nЗачем нужно: качественная озвучка в Alexa Skills, Google Assistant, аудиореклама.',
@@ -258,8 +336,26 @@ export const translations: Translations = {
     copyResult: 'Copiar resultado',
     generate: 'Generar',
     textCleanerTool: 'Limpiador de Texto',
+    generateSuccess: 'Texto generado exitosamente',
+    generateError: 'Error al generar el texto',
+    emptyInputError: 'Por favor ingrese texto para generar.',
+    selectSeconds: 'Seleccione segundos',
+    seconds: 'segundos',
+    start: 'Iniciar',
+    repeat: 'Repetir',
+    yes: 'Sí',
+    no: 'No',
+    // Countdown Timer
+    selectDateTime: 'Seleccione fecha y hora',
+    startCountdown: 'Iniciar cuenta regresiva',
+    timeRemaining: 'Tiempo restante',
+    days: 'días',
+    hours: 'horas',
+    minutes: 'min',
+    edit: 'Editar',
     // TextPure Categories
     markdownToPlain: 'Markdown → Texto Plano',
+    markdownToTelegram: 'Markdown → Texto para Telegram',
     plainToHtmlEmail: 'Texto Plano → Plantilla HTML Email',
     plainToOg: 'Texto Plano → Open Graph',
     plainToSsml: 'Texto Plano → Marcado SSML',
@@ -267,6 +363,7 @@ export const translations: Translations = {
     plainToJsonYaml: 'Texto Plano → JSON/YAML',
     transformationCategories: 'Tipo de Transformación',
     markdownToPlainDesc: 'Qué hace: elimina caracteres de formato (#, *, `) y convierte listas, encabezados y enlaces en texto legible.\nPor qué es necesario: comodidad para publicar en plataformas que no soportan Markdown (SMS, mensajería, banners).',
+    markdownToTelegramDesc: 'Qué hace: convierte Markdown estándar a Markdown V2 de Telegram, escapando todos los caracteres especiales y el formato para un uso seguro en bots y mensajes de Telegram.\nPor qué es necesario: asegura que tu texto formateado se muestre correctamente en Telegram, evitando errores de formato y rechazos de mensajes.',
     plainToHtmlEmailDesc: 'Qué hace: convierte texto plano en etiquetas semánticas <h1>…</h1>, <p>…</p>, <ul>…</ul> con CSS inline para estilos.\nPor qué es necesario: compatibilidad garantizada entre clientes de correo y adaptación flexible a cualquier cliente de email.',
     plainToOgDesc: 'Qué hace: genera meta etiquetas Open Graph (<meta property="og:title"/>, etc.) y Twitter Card para tarjetas de vista previa en redes sociales.\nPor qué es necesario: tarjetas de vista previa atractivas al compartir en Facebook, LinkedIn y Twitter.',
     plainToSsmlDesc: 'Qué hace: envuelve el texto en <speak>, <break time="500ms"/>, <emphasis level="strong"/>, etc., para añadir entonación, pausas y énfasis.\nPor qué es necesario: síntesis de voz de alta calidad para Alexa Skills, Google Assistant y publicidad de audio.',

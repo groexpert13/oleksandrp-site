@@ -2,8 +2,12 @@
  * Text transformation utilities for various formats
  */
 
+import { markdownToPlainText } from './markdown-to-plain';
+import { markdownToTelegram } from './markdown-to-telegram';
+
 export enum TextTransformationType {
   MARKDOWN_TO_PLAIN = 'markdown-to-plain',
+  MARKDOWN_TO_TELEGRAM = 'markdown-to-telegram',
   PLAIN_TO_HTML_EMAIL = 'plain-to-html-email',
   PLAIN_TO_OG = 'plain-to-og',
   PLAIN_TO_SSML = 'plain-to-ssml',
@@ -30,29 +34,6 @@ export function cleanText(text: string): string {
     // Remove zero-width spaces and similar
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
     // Trim whitespace
-    .trim();
-}
-
-/**
- * Convert Markdown to plain text
- */
-export function markdownToPlainText(text: string): string {
-  if (!text) return '';
-  
-  return text
-    // Remove headers: # Header => Header
-    .replace(/^#+\s+/gm, '')
-    // Remove bold/italic: **bold** => bold, *italic* => italic
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/\*(.*?)\*/g, '$1')
-    // Remove backticks: `code` => code
-    .replace(/`([^`]*)`/g, '$1')
-    // Convert links: [text](url) => text
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    // Convert list items: - item => item, * item => item, 1. item => item
-    .replace(/^[\s-*]*\s*|\d+\.\s*/gm, '')
-    // Clean up extra spacing
-    .replace(/\s+/g, ' ')
     .trim();
 }
 
@@ -200,10 +181,9 @@ export function plainToSsml(text: string): string {
  */
 export function smartTypography(text: string): string {
   if (!text) return '';
-  
   return text
     // Convert straight single quotes to smart single quotes
-    .replace(/(^|[-—\s(\[\"])'/g, '$1‘')
+    .replace(/(^|[-—\s(\["])'/g, '$1‘')
     .replace(/'/g, '’')
     // Convert straight double quotes to smart double quotes
     .replace(/(^|[-—/\[(\s])"/g, '$1"')
@@ -313,6 +293,8 @@ export function transformText(text: string, type: TextTransformationType): strin
   switch (type) {
     case TextTransformationType.MARKDOWN_TO_PLAIN:
       return markdownToPlainText(text);
+    case TextTransformationType.MARKDOWN_TO_TELEGRAM:
+      return markdownToTelegram(text);
     case TextTransformationType.PLAIN_TO_HTML_EMAIL:
       return plainToHtmlEmail(text);
     case TextTransformationType.PLAIN_TO_OG:

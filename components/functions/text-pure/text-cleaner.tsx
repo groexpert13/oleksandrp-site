@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from 'sonner';
+import React from "react";
 
 export function TextCleaner() {
   const { t } = useLanguage();
@@ -26,7 +28,19 @@ export function TextCleaner() {
   );
 
   const handleGenerate = () => {
-    setOutputText(transformText(inputText, transformationType));
+    // Prevent generation when input is empty
+    if (!inputText.trim()) {
+      toast.error(t('emptyInputError'));
+      return;
+    }
+    try {
+      const result = transformText(inputText, transformationType);
+      setOutputText(result);
+      toast.success(t('generateSuccess'));
+    } catch (err) {
+      console.error(err);
+      toast.error(t('generateError'));
+    }
   };
 
   const handleCopyToClipboard = async () => {
@@ -41,22 +55,50 @@ export function TextCleaner() {
 
   // Get a description for the currently selected transformation type
   const getTransformationDescription = () => {
+    let desc = '';
     switch (transformationType) {
       case TextTransformationType.MARKDOWN_TO_PLAIN:
-        return t('markdownToPlainDesc');
+        desc = t('markdownToPlainDesc'); break;
+      case TextTransformationType.MARKDOWN_TO_TELEGRAM:
+        desc = t('markdownToTelegramDesc'); break;
       case TextTransformationType.PLAIN_TO_HTML_EMAIL:
-        return t('plainToHtmlEmailDesc');
+        desc = t('plainToHtmlEmailDesc'); break;
       case TextTransformationType.PLAIN_TO_OG:
-        return t('plainToOgDesc');
+        desc = t('plainToOgDesc'); break;
       case TextTransformationType.PLAIN_TO_SSML:
-        return t('plainToSsmlDesc');
+        desc = t('plainToSsmlDesc'); break;
       case TextTransformationType.SMART_TYPOGRAPHY:
-        return t('smartTypographyDesc');
+        desc = t('smartTypographyDesc'); break;
       case TextTransformationType.PLAIN_TO_JSON_YAML:
-        return t('plainToJsonYamlDesc');
+        desc = t('plainToJsonYamlDesc'); break;
       default:
-        return '';
+        desc = '';
     }
+    // Render bold for **...**
+    // Split by newlines, replace **...** with <strong>...</strong>
+    return desc.split('\n').map((line, idx) => {
+      const parts = [];
+      let rest = line;
+      while (rest.includes('**')) {
+        const start = rest.indexOf('**');
+        if (start !== -1) {
+          if (start > 0) parts.push(rest.slice(0, start));
+          const end = rest.indexOf('**', start + 2);
+          if (end !== -1) {
+            parts.push(<strong key={start + '-' + end}>{rest.slice(start + 2, end)}</strong>);
+            rest = rest.slice(end + 2);
+          } else {
+            parts.push(rest.slice(start));
+            rest = '';
+          }
+        } else {
+          parts.push(rest);
+          rest = '';
+        }
+      }
+      if (rest) parts.push(rest);
+      return <div key={idx}>{parts}</div>;
+    });
   };
 
   return (
@@ -72,6 +114,7 @@ export function TextCleaner() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={TextTransformationType.MARKDOWN_TO_PLAIN}>{t('markdownToPlain')}</SelectItem>
+              <SelectItem value={TextTransformationType.MARKDOWN_TO_TELEGRAM}>{t('markdownToTelegram')}</SelectItem>
               <SelectItem value={TextTransformationType.PLAIN_TO_HTML_EMAIL}>{t('plainToHtmlEmail')}</SelectItem>
               <SelectItem value={TextTransformationType.PLAIN_TO_OG}>{t('plainToOg')}</SelectItem>
               <SelectItem value={TextTransformationType.PLAIN_TO_SSML}>{t('plainToSsml')}</SelectItem>

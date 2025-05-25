@@ -6,6 +6,8 @@ import { FunctionCard as FunctionCardType } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { TextCleaner } from "@/components/functions/text-pure/text-cleaner";
 import { PromptForge } from "@/components/functions/codex-prompt-forge/prompt-forge";
+import { RandomYesNo } from "@/components/functions/random-yes-no/RandomYesNo";
+import { CountdownTimer } from "@/components/functions/countdown-timer/CountdownTimer";
 
 interface FunctionPageContentProps {
   card: FunctionCardType;
@@ -40,6 +42,8 @@ export default function FunctionPageContent({ card }: FunctionPageContentProps) 
         <div className="py-4">
           {slug === 'text-pure' && <TextCleaner />}
           {slug === 'codex-prompt-forge' && <PromptForge />}
+          {slug === 'random-yes-no' && <RandomYesNo />}
+          {slug === 'countdown-timer' && <CountdownTimer />}
         </div>
       </div>
     </div>

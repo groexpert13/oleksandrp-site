@@ -67,5 +67,55 @@ export const functionCards: FunctionCard[] = [
       }
     },
     likes: 93
+  },
+  {
+    id: "3",
+    slug: "random-yes-no",
+    title: "Yes/No",
+    description: "Generate a random Yes or No after a countdown",
+    i18n: {
+      en: {
+        title: "Yes/No",
+        description: "Generate a random Yes or No after a countdown"
+      },
+      uk: {
+        title: "Так/Ні",
+        description: "Генерує випадковий Так або Ні після зворотного відліку"
+      },
+      ru: {
+        title: "Да/Нет",
+        description: "Генерирует случайное Да или Нет после обратного отсчета"
+      },
+      es: {
+        title: "Sí/No",
+        description: "Genera un Sí o No al azar después de una cuenta regresiva"
+      }
+    },
+    likes: 0
+  },
+  {
+    id: "4",
+    slug: "countdown-timer",
+    title: "Countdown Timer",
+    description: "Track time remaining until a specific date and time",
+    i18n: {
+      en: {
+        title: "Countdown Timer",
+        description: "Track time remaining until a specific date and time"
+      },
+      uk: {
+        title: "Зворотний відлік",
+        description: "Відстежуйте час, що залишився до конкретної дати та часу"
+      },
+      ru: {
+        title: "Обратный отсчет",
+        description: "Отслеживайте оставшееся время до определенной даты и времени"
+      },
+      es: {
+        title: "Cuenta Regresiva",
+        description: "Seguimiento del tiempo restante hasta una fecha y hora específicas"
+      }
+    },
+    likes: 0
   }
 ];

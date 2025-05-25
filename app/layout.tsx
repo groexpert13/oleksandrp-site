@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider defaultTheme="system" storageKey="function-showcase-theme">
           <LanguageProvider>
+            <Toaster />
             <div className="relative flex min-h-screen flex-col">
               <Header />
               <main className="flex-1 container mx-auto px-4 py-8 md:py-12">{children}</main>
