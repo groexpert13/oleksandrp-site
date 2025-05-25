@@ -50,8 +50,8 @@ export function Footer() {
             <div className="h-px bg-border" />
             
             {/* Contact and Copyright */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:flex-nowrap sm:justify-start sm:gap-3">
                 <span className="text-xs font-medium text-muted-foreground">Oleksandr P.</span>
                 <a 
                   href="mailto:hi@oleksandrp.me" 
@@ -84,7 +84,7 @@ export function Footer() {
               </div>
               
               {/* Language Switcher */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex flex-wrap justify-center items-center gap-1.5">
                 {[
                   { code: "en", label: "English" },
                   { code: "uk", label: "Українська" },
