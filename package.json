@@ -7,7 +7,8 @@
     "generate-favicon": "png-to-ico public/oleksandrp_logo.png > public/favicon.ico",
     "build": "npm run generate-favicon && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
