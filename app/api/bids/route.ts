@@ -4,6 +4,7 @@ import { AuctionOption } from "@/lib/database-types";
 import { marketplaceItems } from "@/lib/marketplace-types";
 import { getSql } from '@/lib/neon';
 import { logEmail } from '@/lib/utils/log-email';
+import { maskEmail } from '@/lib/utils/fake-bids';
 
 // In-memory storage
 const inMemoryBids: any[] = [];
@@ -46,12 +47,6 @@ const generateAuctionOptions = (): AuctionOption[] => {
 // Initialize auctions
 const auctionOptions = generateAuctionOptions();
 
-// Helper to mask email
-const maskEmail = (email: string): string => {
-  const [username, domain] = email.split('@');
-  const maskedUsername = username.substring(0, 2) + '*'.repeat(username.length - 2);
-  return `${maskedUsername}@${domain}`;
-};
 
 // GET handler to retrieve auction details for an item
 export async function GET(request: Request) {

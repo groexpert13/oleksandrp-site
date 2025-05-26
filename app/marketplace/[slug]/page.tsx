@@ -22,6 +22,7 @@ import {
   Users,
   User,
 } from "lucide-react";
+import { getFakeBidData, maskEmail } from "@/lib/utils/fake-bids";
 import { Badge } from "@/components/ui/badge";
 import { Language } from "@/lib/i18n/translations";
 import { Icons } from "@/components/icons";
@@ -349,6 +350,11 @@ export default function MarketplaceItemPage() {
       const response = await fetch(`/api/bids?itemId=${id}`);
       if (response.ok) {
         const data = await response.json();
+        if (!data.bidCount || data.bidCount === 0) {
+          const fake = getFakeBidData(id);
+          data.bidCount = fake.count;
+          data.currentHighestBidder = maskEmail(fake.email);
+        }
         setAuction(data);
       } else {
         console.error('Failed to fetch auction data');
@@ -667,12 +673,10 @@ export default function MarketplaceItemPage() {
                             )}
                           </Button>
                           
-                          <p className="text-xs text-muted-foreground text-center mt-2">
-                            {t('bidDisclaimer')}
-                          </p>
-                          <p className="text-xs text-muted-foreground text-center">
-                            {t('participationNote')}
-                          </p>
+                          <div className="mt-2 border rounded-md bg-muted/5 p-3 text-xs text-muted-foreground space-y-1">
+                            <p>{t('bidDisclaimer')}</p>
+                            <p>{t('participationNote')}</p>
+                          </div>
                         </div>
                       ) : (
                         <Alert variant="destructive">
