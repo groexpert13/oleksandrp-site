@@ -10,6 +10,7 @@ const depSrc = fs.readFileSync(path.join(__dirname, '../lib/marketplace-types.ts
 const depOut = ts.transpileModule(depSrc, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 const depTmp = path.join(__dirname, 'marketplace-types.tmp.js');
 fs.writeFileSync(depTmp, depOut);
+const items = require(depTmp).marketplaceItems;
 
 let compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 compiled = compiled.replace('../marketplace-types', './marketplace-types.tmp');
@@ -22,8 +23,8 @@ fs.unlinkSync(depTmp);
 
 fake.__resetFakeBidData();
 
-test('email pool sized for all offers', () => {
-  const expected = marketplace.marketplaceItems.length * 5;
+test('email pool size and uniqueness', () => {
+  const expected = items.length * 5;
   assert.equal(fake.EMAILS.length, expected);
   const set = new Set(fake.EMAILS);
   assert.equal(set.size, expected);
@@ -36,7 +37,7 @@ test('bid count range', () => {
 
 test('unique emails per session and across offers', () => {
   fake.__resetFakeBidData();
-  const ids = marketplace.marketplaceItems.map(i => i.id);
+  const ids = items.map(i => i.id);
   const allEmails = [];
   ids.forEach(id => {
     const d = fake.getFakeBidData(id);

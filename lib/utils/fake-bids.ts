@@ -1,10 +1,8 @@
 import { marketplaceItems } from '../marketplace-types';
 
 // Generate enough unique emails for every possible bid
-export const EMAILS = Array.from(
-  { length: marketplaceItems.length * 5 },
-  (_, i) => `user${i + 1}@gmail.com`
-);
+const TOTAL_EMAILS = marketplaceItems.length * 5;
+export const EMAILS = Array.from({ length: TOTAL_EMAILS }, (_, i) => `user${i + 1}@gmail.com`);
 
 function shuffle<T>(array: T[]): T[] {
   const a = [...array];
@@ -20,8 +18,8 @@ function getStore() {
   if (typeof sessionStorage !== 'undefined') return sessionStorage;
   if (!memoryStore) memoryStore = {};
   return {
-    getItem: (k: string) => (memoryStore as Record<string,string>)[k] || null,
-    setItem: (k: string, v: string) => { (memoryStore as Record<string,string>)[k] = v; }
+    getItem: (k: string) => (memoryStore as Record<string, string>)[k] || null,
+    setItem: (k: string, v: string) => { (memoryStore as Record<string, string>)[k] = v; }
   };
 }
 
