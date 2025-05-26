@@ -57,23 +57,34 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Item ID is required' }, { status: 400 });
   }
   
-  const auction = inMemoryAuctions[itemId];
+  const sql = getSql();
+
+  // Look up auction from DB if available
+  let auction = inMemoryAuctions[itemId];
+  const dbAuction = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
+  if (dbAuction.length) {
+    auction = { ...dbAuction[0] } as AuctionOption;
+  }
+
   if (!auction) {
     return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
   }
-  
-  // Get all bids for this item, sorted by amount in descending order
-  const itemBids = inMemoryBids
-    .filter(bid => bid.itemId === itemId)
-    .sort((a, b) => b.amount - a.amount);
-  
+
+  const bids = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
+  const itemBids = bids as any[];
+  if (itemBids.length === 0) {
+    // fall back to in-memory bids
+    const mem = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
+    itemBids.push(...mem);
+  }
+
   const highestBid = itemBids.length > 0 ? itemBids[0] : null;
   const result = {
     ...auction,
     currentHighestBid: highestBid?.amount,
     currentHighestBidder: highestBid ? maskEmail(highestBid.email) : undefined,
     bidCount: itemBids.length,
-  };
+  } as AuctionOption & { bidCount: number };
   
   return NextResponse.json(result);
 }
@@ -140,7 +151,7 @@ export async function POST(request: Request) {
     };
     
     inMemoryBids.push(newBid);
-    
+
     // Update the auction with new highest bid
     inMemoryAuctions[itemId] = {
       ...inMemoryAuctions[itemId],
@@ -148,6 +159,23 @@ export async function POST(request: Request) {
       currentHighestBidder: maskEmail(email),
       bidCount: (inMemoryAuctions[itemId].bidCount || 0) + 1
     };
+
+    // Persist bid and auction to database
+    try {
+      const sql = getSql();
+      await sql.query(
+        'INSERT INTO "Bid" (id, itemId, email, amount, createdAt, updatedAt) VALUES ($1,$2,$3,$4,NOW(),NOW())',
+        [newBid.id, itemId, email, amount]
+      );
+      await sql.query(
+        `INSERT INTO "AuctionOption" (id, itemId, startDate, endDate, minBid, currentHighestBid, currentHighestBidder)
+         VALUES ($1,$2,$3,$4,$5,$6,$7)
+         ON CONFLICT (itemId) DO UPDATE SET currentHighestBid = $6, currentHighestBidder = $7`,
+        [inMemoryAuctions[itemId].id, itemId, inMemoryAuctions[itemId].startDate, inMemoryAuctions[itemId].endDate, inMemoryAuctions[itemId].minBid, amount, email]
+      );
+    } catch (e) {
+      // ignore DB errors for persistence
+    }
     
     // Try to store in marketplace_stats and log sent email
     try {
