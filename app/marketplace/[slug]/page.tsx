@@ -11,9 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+import ReactMarkdown from "@/components/ReactMarkdown";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -540,11 +538,7 @@ export default function MarketplaceItemPage() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
             <div className="lg:col-span-2">
               {detailedDescription && (
-                <ReactMarkdown
-                  className="mb-6 prose dark:prose-invert max-w-none"
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                >
+                <ReactMarkdown className="mb-6 prose dark:prose-invert max-w-none">
                   {detailedDescription}
                 </ReactMarkdown>
               )}
