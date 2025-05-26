@@ -33,3 +33,16 @@ test('no duplicate scaling sections', () => {
     assert.equal(matches.length, 1, `Duplicate section for pattern: ${p}`);
   }
 });
+
+test('pricing uses 25% discount', () => {
+  const matches = src.match(/0\.75/g) || [];
+  assert.ok(matches.length >= 3, 'discount factor 0.75 missing');
+});
+
+test('fake bid initialization sets current highest bid', () => {
+  assert.ok(src.includes('data.currentHighestBid = data.minBid'), 'fake highest bid not assigned');
+});
+
+test('terms section compacted', () => {
+  assert.ok(src.includes("bidDisclaimer')} {t('participationNote')"), 'terms not compact');
+});

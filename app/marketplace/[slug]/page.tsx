@@ -354,6 +354,8 @@ export default function MarketplaceItemPage() {
           const fake = getFakeBidData(id);
           data.bidCount = fake.count;
           data.currentHighestBidder = maskEmail(fake.email);
+          // Show minimum bid as the current highest when using fake data
+          data.currentHighestBid = data.minBid;
         }
         setAuction(data);
       } else {
@@ -399,14 +401,14 @@ export default function MarketplaceItemPage() {
       const end = new Date(auction.endDate);
       setIsAuctionActive(now < end);
       
-      // Apply 35% price reduction to all prices
-      const applyMarkup = (price: number) => Math.round(price * 1.35);
-      
-      // Calculate suggested bids with 35% discount
-      const minAmount = applyMarkup(auction.currentHighestBid || auction.minBid);
+      // Apply 25% discount to all prices
+      const applyDiscount = (price: number) => Math.round(price * 0.75);
+
+      // Calculate suggested bids with 25% discount
+      const minAmount = applyDiscount(auction.currentHighestBid || auction.minBid);
       setSuggestedBid(minAmount + 100);
       
-      // Generate 3 bid suggestions with 35% discount
+      // Generate 3 bid suggestions with 25% discount
       setBidSuggestions([
         minAmount + 100,
         minAmount + 250,
@@ -431,8 +433,8 @@ export default function MarketplaceItemPage() {
     }
     
     if (auction) {
-      // Apply the 35% discount to current highest bid for validation
-      const minAmount = Math.round((auction.currentHighestBid || auction.minBid) * 1.35);
+      // Apply the 25% discount to current highest bid for validation
+      const minAmount = Math.round((auction.currentHighestBid || auction.minBid) * 0.75);
       if (amount <= minAmount) {
         setValidationError(`${t('bidTooLow')} $${minAmount}`);
         return;
@@ -443,7 +445,7 @@ export default function MarketplaceItemPage() {
     
     try {
       // Convert back to original price scale before sending to API
-      const originalAmount = Math.round(amount / 1.35);
+      const originalAmount = Math.round(amount / 0.75);
       
       const response = await fetch("/api/bids", {
         method: "POST",
@@ -564,8 +566,8 @@ export default function MarketplaceItemPage() {
                         <div className="flex flex-col space-y-1 bg-background/50 p-3 rounded-md border border-muted/20">
                           <span className="text-xs uppercase font-medium text-muted-foreground">{t('currentBid')}</span>
                           <span className="font-semibold text-2xl">
-                            {auction.currentHighestBid 
-                              ? `$${Math.round(auction.currentHighestBid * 1.35)}` 
+                            {auction.currentHighestBid
+                              ? `$${Math.round(auction.currentHighestBid * 0.75)}`
                               : t('noBids')}
                           </span>
                         </div>
@@ -573,7 +575,7 @@ export default function MarketplaceItemPage() {
                         <div className="grid grid-cols-2 gap-3">
                           <div className="bg-background/50 p-3 rounded-md border border-muted/20">
                             <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('minimumBid')}</span>
-                            <span className="font-medium">${Math.round(auction.minBid * 1.35)}</span>
+                            <span className="font-medium">${Math.round(auction.minBid * 0.75)}</span>
                           </div>
                           
                           <div className="bg-background/50 p-3 rounded-md border border-muted/20">
@@ -673,9 +675,8 @@ export default function MarketplaceItemPage() {
                             )}
                           </Button>
                           
-                          <div className="mt-2 border rounded-md bg-muted/5 p-3 text-xs text-muted-foreground space-y-1">
-                            <p>{t('bidDisclaimer')}</p>
-                            <p>{t('participationNote')}</p>
+                          <div className="mt-2 border rounded-md bg-muted/5 p-2 text-xs text-muted-foreground">
+                            <p>{t('bidDisclaimer')} {t('participationNote')}</p>
                           </div>
                         </div>
                       ) : (
