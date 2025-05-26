@@ -60,9 +60,7 @@ export function TimezoneMeetingPlanner() {
       "Pacific/Auckland"
     ];
     
-    const mergedZones = [...zones, ...commonZones].sort();
-    const uniqueZones = Array.from(new Set(mergedZones));
-    setAvailableTimezones(uniqueZones);
+    setAvailableTimezones(Array.from(new Set([...zones, ...commonZones])).sort());
   }, []);
 
   const addParticipant = () => {

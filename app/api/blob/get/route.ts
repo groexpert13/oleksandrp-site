@@ -26,7 +26,7 @@ export async function GET(request: Request) {
       }
       
       // Check if the presentation has expired
-      const expiresAtHeader = (blob as any).metadata?.['expires-at'];
+      const expiresAtHeader = (blob as any).customMetadata?.['expires-at'];
       if (expiresAtHeader) {
         const expiresAt = new Date(expiresAtHeader);
         if (new Date() > expiresAt) {

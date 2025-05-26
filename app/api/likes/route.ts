@@ -22,8 +22,8 @@ export async function POST(request: Request) {
      ON CONFLICT (card_id) DO UPDATE SET likes = card_stats.likes + 1`,
     [cardId]
   );
-  const rows = await sql.query('SELECT likes FROM card_stats WHERE card_id = $1', [cardId]);
-  return NextResponse.json({ success: true, cardId, likes: rows[0]?.likes ?? 0 });
+  const result = await sql.query('SELECT likes FROM card_stats WHERE card_id = $1', [cardId]);
+  return NextResponse.json({ success: true, cardId, likes: result[0]?.likes ?? 0 });
 }
 
 // Увеличить просмотр (с защитой от двойного инкремента)
@@ -35,8 +35,8 @@ export async function PUT(request: Request) {
   // Защита: если был PUT для этого cardId менее 2 секунд назад, не увеличиваем
   const now = Date.now();
   if (recentViews[cardId] && now - recentViews[cardId] < 2000) {
-    const rows = await sql.query('SELECT views FROM card_stats WHERE card_id = $1', [cardId]);
-    return NextResponse.json({ success: true, cardId, views: rows[0]?.views ?? 0 });
+    const result = await sql.query('SELECT views FROM card_stats WHERE card_id = $1', [cardId]);
+    return NextResponse.json({ success: true, cardId, views: result[0]?.views ?? 0 });
   }
   recentViews[cardId] = now;
 
@@ -46,6 +46,6 @@ export async function PUT(request: Request) {
      ON CONFLICT (card_id) DO UPDATE SET views = card_stats.views + 1`,
     [cardId]
   );
-  const rows = await sql.query('SELECT views FROM card_stats WHERE card_id = $1', [cardId]);
-  return NextResponse.json({ success: true, cardId, views: rows[0]?.views ?? 0 });
+  const result = await sql.query('SELECT views FROM card_stats WHERE card_id = $1', [cardId]);
+  return NextResponse.json({ success: true, cardId, views: result[0]?.views ?? 0 });
 } 
