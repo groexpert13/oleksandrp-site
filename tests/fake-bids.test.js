@@ -32,6 +32,21 @@ test('bid count range', () => {
   assert.ok(data.count >= 1 && data.count <= 5);
 });
 
+test('unique emails per session and across offers', () => {
+  fake.__resetFakeBidData();
+  const ids = ['1', '2', '3', '4', '5'];
+  const allEmails = [];
+  ids.forEach(id => {
+    const d = fake.getFakeBidData(id);
+    assert.ok(d.emails.length === d.count);
+    const set = new Set(d.emails);
+    assert.equal(set.size, d.emails.length);
+    allEmails.push(...d.emails);
+  });
+  const globalSet = new Set(allEmails);
+  assert.equal(globalSet.size, allEmails.length);
+});
+
 test('mask email formatting', () => {
   const masked = fake.maskEmail('example@gmail.com');
   assert.equal(masked.startsWith('ex'), true);
@@ -44,7 +59,9 @@ test('rotation persists per session', () => {
   const first = fake.getFakeBidData('1');
   const second = fake.getFakeBidData('1');
   assert.equal(first.email, second.email);
+  assert.deepEqual(first.emails, second.emails);
   fake.__resetFakeBidData();
   const third = fake.getFakeBidData('1');
   assert.notEqual(first.email, third.email);
+  assert.notDeepEqual(first.emails, third.emails);
 });

@@ -32,7 +32,11 @@ export function maskEmail(email: string): string {
   return `${masked}@${domain}`;
 }
 
-export interface FakeBidData { count: number; email: string; }
+export interface FakeBidData {
+  count: number;
+  email: string;
+  emails: string[];
+}
 
 function initFakeData() {
   const store = getStore();
@@ -41,10 +45,15 @@ function initFakeData() {
 
   const shuffledEmails = shuffle(EMAILS);
   const data: Record<string, FakeBidData> = {};
-  marketplaceItems.forEach((item, idx) => {
+  let emailIdx = 0;
+  marketplaceItems.forEach((item) => {
+    const count = Math.floor(Math.random() * 5) + 1;
+    const emails = shuffledEmails.slice(emailIdx, emailIdx + count);
+    emailIdx += count;
     data[item.id] = {
-      count: Math.floor(Math.random() * 5) + 1,
-      email: shuffledEmails[idx % shuffledEmails.length]
+      count,
+      email: emails[emails.length - 1],
+      emails,
     };
   });
   store.setItem('fakeBidData', JSON.stringify(data));
