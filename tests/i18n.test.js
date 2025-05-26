@@ -13,7 +13,7 @@ const { translations } = require(tmpPath);
 fs.unlinkSync(tmpPath);
 
 const langs = ['en', 'uk', 'ru', 'es'];
-const keys = ['placeBid', 'bidSuccess', 'auctionEnded'];
+const keys = ['placeBid', 'bidSuccess', 'auctionEnded', 'participationNote', 'projectDetailsNote'];
 
 test('translations contain auction keys', () => {
   for (const lang of langs) {

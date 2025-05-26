@@ -256,6 +256,8 @@ export type TranslationKey =
   | 'bidSuccess'
   | 'emailLabel'
   | 'submitBid'
+  | 'participationNote'
+  | 'projectDetailsNote'
   | 'itemNotFound'
   | 'itemNotFoundDesc';
 
@@ -517,6 +519,8 @@ export const translations: Translations = {
     bidSuccess: 'Bid placed successfully!',
     emailLabel: 'Email Address',
     submitBid: 'Submit Bid',
+    participationNote: 'Placing a bid does not obligate you to pay or purchase immediately.',
+    projectDetailsNote: 'Project details will be sent via private message. If the highest bidder declines, the next highest bidder will be contacted.',
     itemNotFound: 'Item not found',
     itemNotFoundDesc: 'The requested marketplace item could not be found.',
   },
@@ -771,6 +775,8 @@ export const translations: Translations = {
     bidSuccess: 'Ставка успішно розміщена!',
     emailLabel: 'Електронна пошта',
     submitBid: 'Розмістити ставку',
+    participationNote: 'Участь в аукціоні не зобов\'язує негайно платити чи купувати.',
+    projectDetailsNote: 'Деталі проєкту буде надіслано приватним повідомленням. Якщо переможець відмовиться, можливість перейде наступному за ставкою.',
     itemNotFound: 'Плагін не знайдено',
     itemNotFoundDesc: 'Запитаний плагін маркетплейсу не знайдено.',
   },
@@ -1025,6 +1031,8 @@ export const translations: Translations = {
     bidSuccess: 'Ставка успешно размещена!',
     emailLabel: 'Электронная почта',
     submitBid: 'Разместить ставку',
+    participationNote: 'Участие в аукционе не обязывает сразу платить или покупать.',
+    projectDetailsNote: 'Детали проекта будут отправлены личным сообщением. Если победитель откажется, предложение перейдёт следующему по ставке.',
     itemNotFound: 'Плагин не найден',
     itemNotFoundDesc: 'Запрашиваемый плагин маркетплейса не найден.',
   },
@@ -1279,6 +1287,8 @@ export const translations: Translations = {
     bidSuccess: 'Oferta colocada exitosamente!',
     emailLabel: 'Correo electrónico',
     submitBid: 'Colocar oferta',
+    participationNote: 'Participar en la subasta no te obliga a pagar o comprar de inmediato.',
+    projectDetailsNote: 'Los detalles del proyecto se enviarán por mensaje privado. Si el postor más alto rechaza, se contactará al siguiente postor.',
     itemNotFound: 'Complemento no encontrado',
     itemNotFoundDesc: 'El complemento solicitado del marketplace no fue encontrado.',
   },
