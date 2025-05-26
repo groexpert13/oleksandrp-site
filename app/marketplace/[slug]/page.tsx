@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { marketplaceItems } from "@/lib/marketplace-types";
 import { AuctionOption } from "@/lib/database-types";
@@ -10,6 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -19,7 +23,6 @@ import {
   Timer,
   Users,
   User,
-  CheckCircle,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Language } from "@/lib/i18n/translations";
@@ -330,6 +333,7 @@ export default function MarketplaceItemPage() {
   const router = useRouter();
   const params = useParams();
   const { currentLanguage, t } = useLanguage();
+  const { toast } = useToast();
   const [item, setItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [auction, setAuction] = useState<AuctionOption | null>(null);
@@ -340,10 +344,6 @@ export default function MarketplaceItemPage() {
   const [bidLoading, setBidLoading] = useState<boolean>(false);
   const [validationError, setValidationError] = useState<string>("");
   const [isAuctionActive, setIsAuctionActive] = useState<boolean>(true);
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [bidSubmitted, setBidSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     // Find the item by slug
@@ -398,17 +398,6 @@ export default function MarketplaceItemPage() {
 
 
 
-  const handleEmailSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError(t('invalidEmail'));
-      return;
-    }
-    
-    setEmailSubmitted(true);
-    setError("");
-  };
 
   const getRemainingTime = (endDate: Date) => {
     const now = new Date();
@@ -500,17 +489,15 @@ export default function MarketplaceItemPage() {
       
       if (!response.ok) {
         setValidationError(data.error || t('bidError'));
+        toast({ title: t('bidError') });
       } else {
-        // Success - update UI
         setBidAmount("");
-        setSuccess(t('bidSuccess'));
-        setBidSubmitted(true);
-        
-        // Refresh auction data
+        toast({ title: t('bidSuccess') });
         fetchAuctionData(item.id);
       }
     } catch (error) {
       setValidationError(t('bidError'));
+      toast({ title: t('bidError') });
     } finally {
       setBidLoading(false);
     }
@@ -585,21 +572,13 @@ export default function MarketplaceItemPage() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
             <div className="lg:col-span-2">
               {detailedDescription && (
-                <div className="mb-6 prose dark:prose-invert max-w-none">
-                  <div className="mb-6">
-                    {detailedDescription.split('\n\n').map((paragraph, idx) => (
-                      <div 
-                        key={idx}
-                        className="mb-4"
-                        dangerouslySetInnerHTML={{ 
-                          __html: paragraph
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\n/g, '<br />')
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ReactMarkdown
+                  className="mb-6 prose dark:prose-invert max-w-none"
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {detailedDescription}
+                </ReactMarkdown>
               )}
             </div>
 
@@ -663,12 +642,6 @@ export default function MarketplaceItemPage() {
                       
                       {isAuctionActive ? (
                         <div className="space-y-4">
-                          {bidSubmitted && (
-                            <Alert className="bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400">
-                              <CheckCircle className="h-4 w-4 mr-2" />
-                              <AlertTitle className="font-medium">{t('bidSuccess')}</AlertTitle>
-                            </Alert>
-                          )}
                           <div className="flex flex-col space-y-2">
                             <Label htmlFor="email" className="text-sm font-medium">{t('emailLabel')}</Label>
                             <div className="relative">
@@ -735,6 +708,9 @@ export default function MarketplaceItemPage() {
                           <p className="text-xs text-muted-foreground text-center mt-2">
                             {t('bidDisclaimer')}
                           </p>
+                          <p className="text-xs text-muted-foreground text-center">
+                            {t('participationNote')}
+                          </p>
                         </div>
                       ) : (
                         <Alert variant="destructive">
@@ -764,6 +740,9 @@ export default function MarketplaceItemPage() {
           </div>
         </CardContent>
       </Card>
+      <p className="mt-6 text-sm text-muted-foreground text-center">
+        {t('projectDetailsNote')}
+      </p>
     </div>
   );
-} 
+}
