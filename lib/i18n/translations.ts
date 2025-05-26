@@ -64,6 +64,10 @@ type TranslationKey =
   | 'repeat'
   | 'yes'
   | 'no'
+  | 'question'
+  | 'askQuestion'
+  | 'universeAnswer'
+  | 'takeScreenshot'
   // Countdown Timer
   | 'selectDateTime'
   | 'startCountdown'
@@ -117,6 +121,10 @@ export const translations: Translations = {
     repeat: 'Repeat',
     yes: 'Yes',
     no: 'No',
+    question: 'Your Question',
+    askQuestion: 'Ask the universe a yes/no question...',
+    universeAnswer: 'The Universe said to you:',
+    takeScreenshot: 'Take Screenshot',
     // Countdown Timer
     selectDateTime: 'Select Date & Time',
     startCountdown: 'Start Countdown',
@@ -193,6 +201,10 @@ export const translations: Translations = {
     repeat: 'Повторити',
     yes: 'Так',
     no: 'Ні',
+    question: 'Ваше питання',
+    askQuestion: 'Задайте Всесвіту питання...',
+    universeAnswer: 'Всесвіт сказав вам:',
+    takeScreenshot: 'Зробити знімок екрану',
     // Countdown Timer
     selectDateTime: 'Оберіть дату і час',
     startCountdown: 'Почати відлік',
@@ -269,6 +281,10 @@ export const translations: Translations = {
     repeat: 'Повторить',
     yes: 'Да',
     no: 'Нет',
+    question: 'Ваш вопрос',
+    askQuestion: 'Задайте Вселенной вопрос...',
+    universeAnswer: 'Вселенная сказала вам:',
+    takeScreenshot: 'Сделать снимок экрана',
     // Countdown Timer
     selectDateTime: 'Выберите дату и время',
     startCountdown: 'Начать отсчет',
@@ -345,6 +361,10 @@ export const translations: Translations = {
     repeat: 'Repetir',
     yes: 'Sí',
     no: 'No',
+    question: 'Tu Pregunta',
+    askQuestion: 'Haz una pregunta de sí/no al universo...',
+    universeAnswer: 'El Universo te ha dicho:',
+    takeScreenshot: 'Capturar Pantalla',
     // Countdown Timer
     selectDateTime: 'Seleccione fecha y hora',
     startCountdown: 'Iniciar cuenta regresiva',

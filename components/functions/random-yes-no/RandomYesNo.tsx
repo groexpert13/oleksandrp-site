@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfettiExplosion from "react-confetti-explosion";
+import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 export function RandomYesNo() {
   const { t } = useLanguage();
@@ -14,8 +16,14 @@ export function RandomYesNo() {
   const [result, setResult] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [question, setQuestion] = useState("");
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const startCountdown = () => {
+    if (!question.trim()) {
+      toast.error(t('emptyInputError'));
+      return;
+    }
     setResult(null);
     setRemaining(seconds);
     setIsRunning(true);
@@ -47,6 +55,26 @@ export function RandomYesNo() {
   return (
     <div className="flex flex-col items-center justify-center space-y-8">
       <div className="w-full max-w-md">
+        <Card className="shadow-lg overflow-hidden mb-8">
+          <CardContent className="flex flex-col items-center p-6">
+            <h3 className="text-lg font-medium text-center mb-4">
+              {t('question')}
+            </h3>
+            <Textarea
+              value={question}
+              onChange={(e) => setQuestion(e.target.value.slice(0, 600))}
+              placeholder={t('askQuestion')}
+              className="w-full min-h-[120px] resize-none p-4 border border-input bg-background text-base text-center focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              style={{ fontFamily: 'inherit' }}
+              disabled={isRunning}
+              maxLength={600}
+            />
+            <div className="text-xs text-right w-full mt-1 text-muted-foreground">
+              {question.length}/600
+            </div>
+          </CardContent>
+        </Card>
+        
         <AnimatePresence mode="wait">
           {result !== null ? (
             <motion.div
@@ -56,10 +84,14 @@ export function RandomYesNo() {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.5 }}
               className="flex flex-col items-center justify-center mb-8"
+              ref={resultRef}
             >
               {showConfetti && <ConfettiExplosion {...confettiProps} />}
               <Card className="w-full shadow-lg overflow-hidden">
                 <CardContent className="flex flex-col items-center justify-center p-8">
+                  <h3 className="text-lg font-medium text-center mb-4">
+                    {t('universeAnswer')}
+                  </h3>
                   <motion.div
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -68,18 +100,20 @@ export function RandomYesNo() {
                   >
                     {result}
                   </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button
-                      onClick={startCountdown}
-                      size="lg"
-                      className="px-8"
+                  <div className="flex gap-4">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      {t('repeat')}
-                    </Button>
-                  </motion.div>
+                      <Button
+                        onClick={startCountdown}
+                        size="lg"
+                        className="px-8"
+                      >
+                        {t('repeat')}
+                      </Button>
+                    </motion.div>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -122,7 +156,7 @@ export function RandomYesNo() {
                       onClick={startCountdown}
                       size="lg"
                       className="px-8"
-                      disabled={isRunning}
+                      disabled={isRunning || !question.trim()}
                     >
                       {isRunning ? t('seconds') : t('start')}
                     </Button>
