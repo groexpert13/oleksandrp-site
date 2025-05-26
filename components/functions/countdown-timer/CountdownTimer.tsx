@@ -110,6 +110,7 @@ export function CountdownTimer() {
                       timeIntervals={15}
                       dateFormat="MMMM d, yyyy h:mm aa"
                       minDate={new Date()}
+                      calendarStartDay={1}
                       className="w-full p-2 bg-gray-800 text-white placeholder-gray-400 border border-gray-600 rounded-md text-center"
                       calendarClassName="!bg-gray-800 !text-white !border !border-gray-600"
                       popperClassName="!shadow-lg"

@@ -27,7 +27,7 @@
   color: #ffffff !important;
 }
 .react-datepicker__day:hover {
-  background-color: #4b5563;
+  background-color: rgba(59, 130, 246, 0.3) !important; /* light blue with opacity */
   color: #ffffff;
 }
 .react-datepicker__time-container {
@@ -45,11 +45,16 @@
   color: #ffffff;
 }
 .react-datepicker__time-list-item:hover {
-  background-color: #4b5563;
+  background-color: rgba(59, 130, 246, 0.3) !important; /* light blue with opacity */
   color: #ffffff;
 }
 .react-datepicker__day--disabled,
 .react-datepicker__time-list-item--disabled {
   color: #6b7280 !important; /* gray-500 */
   opacity: 0.5;
+}
+/* Fix for Time header text color */
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list,
+.react-datepicker-time__header {
+  color: #e5e7eb; /* Make Time text header white */
 } 
