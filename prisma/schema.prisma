@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Bid {
+  id        String   @id @default(uuid())
+  itemId    String
+  email     String
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuctionOption {
+  id                 String   @id @default(uuid())
+  itemId             String   @unique
+  startDate          DateTime @default(now())
+  endDate            DateTime
+  minBid             Float
+  currentHighestBid  Float?
+  currentHighestBidder String?
+} 

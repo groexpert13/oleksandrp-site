@@ -6,8 +6,14 @@ export type TranslationKey =
   // Home
   | 'functionsShowcase'
   | 'functionsDescription'
+  | 'marketplace'
+  | 'marketplaceDescription'
   | 'noFunctionsFound'
+  | 'noItemsFound'
   | 'modifySearchQuery'
+  // Marketplace
+  | 'allCategories'
+  | 'telegramCategory'
   // Function cards
   | 'open'
   | 'back'
@@ -228,8 +234,14 @@ export const translations: Translations = {
     // Home
     functionsShowcase: 'Features Showcase',
     functionsDescription: 'A collection of useful tools and features for everyday tasks',
+    marketplace: 'Marketplace',
+    marketplaceDescription: 'Browse and install available plugins',
     noFunctionsFound: 'No features found',
+    noItemsFound: 'No marketplace items found',
     modifySearchQuery: 'Try modifying your search query',
+    // Marketplace
+    allCategories: 'All',
+    telegramCategory: 'Telegram',
     // Function cards
     open: 'Open',
     back: 'Back',
@@ -439,8 +451,14 @@ export const translations: Translations = {
     // Home
     functionsShowcase: 'Вітрина фіч',
     functionsDescription: 'Колекція корисних інструментів і фіч для щоденних завдань',
+    marketplace: 'Маркетплейс',
+    marketplaceDescription: 'Перегляд та встановлення доступних плагінів',
     noFunctionsFound: 'Фічі не знайдено',
+    noItemsFound: 'Плагіни не знайдено',
     modifySearchQuery: 'Спробуйте змінити пошуковий запит',
+    // Marketplace
+    allCategories: 'Всі',
+    telegramCategory: 'Telegram',
     // Function cards
     open: 'Відкрити',
     back: 'Назад',
@@ -650,8 +668,14 @@ export const translations: Translations = {
     // Home
     functionsShowcase: 'Витрина фич',
     functionsDescription: 'Коллекция полезных инструментов и фичей для повседневных задач',
+    marketplace: 'Маркетплейс',
+    marketplaceDescription: 'Обзор и установка доступных плагинов',
     noFunctionsFound: 'Фичи не найдены',
+    noItemsFound: 'Плагины не найдены',
     modifySearchQuery: 'Попробуйте изменить поисковый запрос',
+    // Marketplace
+    allCategories: 'Все',
+    telegramCategory: 'Telegram',
     // Function cards
     open: 'Открыть',
     back: 'Назад',
@@ -861,8 +885,14 @@ export const translations: Translations = {
     // Home
     functionsShowcase: 'Escaparate de Características',
     functionsDescription: 'Una colección de herramientas y características útiles para tareas cotidianas',
+    marketplace: 'Marketplace',
+    marketplaceDescription: 'Explorar e instalar complementos disponibles',
     noFunctionsFound: 'No se encontraron características',
+    noItemsFound: 'No se encontraron complementos',
     modifySearchQuery: 'Intente modificar su consulta de búsqueda',
+    // Marketplace
+    allCategories: 'Todos',
+    telegramCategory: 'Telegram',
     // Function cards
     open: 'Abrir',
     back: 'Volver',

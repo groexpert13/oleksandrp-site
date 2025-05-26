@@ -5,6 +5,7 @@ import { Language, translations } from './translations';
 
 type LanguageContextType = {
   language: Language;
+  currentLanguage: Language;
   setLanguage: (language: Language) => void;
   t: (key: keyof typeof translations['en']) => string;
 };
@@ -39,7 +40,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, currentLanguage: language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
