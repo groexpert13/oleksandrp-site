@@ -7,7 +7,6 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -274,7 +273,12 @@ export default function SlidesClient({ id }: SlidesClientProps) {
         </div>
         {/* Progress bar */}
         <div className="absolute bottom-12 inset-x-0">
-          <Progress value={progressPercentage} className="h-1 rounded-none" />
+          <div className="w-full h-1 bg-secondary rounded-none overflow-hidden">
+            <div
+              className="h-full bg-primary transition-all"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
         </div>
         {/* Control buttons in top-right */}
         <div className="absolute top-4 right-4 flex items-center gap-2">
