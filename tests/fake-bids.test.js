@@ -10,6 +10,7 @@ const depSrc = fs.readFileSync(path.join(__dirname, '../lib/marketplace-types.ts
 const depOut = ts.transpileModule(depSrc, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 const depTmp = path.join(__dirname, 'marketplace-types.tmp.js');
 fs.writeFileSync(depTmp, depOut);
+const items = require(depTmp).marketplaceItems;
 
 let compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 compiled = compiled.replace('../marketplace-types', './marketplace-types.tmp');
@@ -21,10 +22,11 @@ fs.unlinkSync(depTmp);
 
 fake.__resetFakeBidData();
 
-test('33 unique emails', () => {
-  assert.equal(fake.EMAILS.length, 33);
+test('email pool size and uniqueness', () => {
+  const expected = items.length * 5;
+  assert.equal(fake.EMAILS.length, expected);
   const set = new Set(fake.EMAILS);
-  assert.equal(set.size, 33);
+  assert.equal(set.size, expected);
 });
 
 test('bid count range', () => {

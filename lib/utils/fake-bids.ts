@@ -1,6 +1,7 @@
 import { marketplaceItems } from '../marketplace-types';
 
-export const EMAILS = Array.from({ length: 33 }, (_, i) => `user${i + 1}@gmail.com`);
+const TOTAL_EMAILS = marketplaceItems.length * 5;
+export const EMAILS = Array.from({ length: TOTAL_EMAILS }, (_, i) => `user${i + 1}@gmail.com`);
 
 function shuffle<T>(array: T[]): T[] {
   const a = [...array];
@@ -26,7 +27,8 @@ export function __resetFakeBidData() {
   cache = null;
 }
 
-export function maskEmail(email: string): string {
+export function maskEmail(email?: string): string {
+  if (!email) return '';
   const [name, domain] = email.split('@');
   const masked = name.slice(0, 2) + '*'.repeat(Math.max(name.length - 2, 0));
   return `${masked}@${domain}`;
