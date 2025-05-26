@@ -1,8 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/cleanup-expired-slides?secret=$CRON_SECRET",
-      "schedule": "0 * * * *"
-    }
-  ]
-} 
+{}
