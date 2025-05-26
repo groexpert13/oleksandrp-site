@@ -31,7 +31,10 @@ export function __resetFakeBidData() {
 export function maskEmail(email?: string): string {
   if (!email) return '';
   const [name, domain] = email.split('@');
-  const masked = name.slice(0, 2) + '*'.repeat(Math.max(name.length - 2, 0));
+  if (name.length <= 2) return `${name}@${domain}`;
+  const start = name.slice(0, 2);
+  const end = name.length > 4 ? name.slice(-2) : name.slice(-1);
+  const masked = start + '*'.repeat(Math.max(name.length - start.length - end.length, 0)) + end;
   return `${masked}@${domain}`;
 }
 

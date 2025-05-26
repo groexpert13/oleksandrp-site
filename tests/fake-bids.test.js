@@ -52,9 +52,12 @@ test('unique emails per session and across offers', () => {
 
 test('mask email formatting', () => {
   const masked = fake.maskEmail('example@gmail.com');
-  assert.equal(masked.startsWith('ex'), true);
-  assert.equal(masked.endsWith('@gmail.com'), true);
-  assert.ok(masked.includes('*'));
+  assert.equal(masked, 'ex***le@gmail.com');
+});
+
+test('mask email keeps unique suffix', () => {
+  const masked = fake.maskEmail('user7@gmail.com');
+  assert.equal(masked, 'us*r7@gmail.com');
 });
 
 test('mask email handles missing value', () => {
