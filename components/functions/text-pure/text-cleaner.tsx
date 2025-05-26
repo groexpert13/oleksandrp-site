@@ -129,7 +129,7 @@ export function TextCleaner() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="flex flex-col h-full">
+        <Card className="flex flex-col min-h-[500px]">
           <CardHeader className="!flex-row !space-y-0 items-center justify-between">
             <CardTitle>{t('originalText')}</CardTitle>
             <Button onClick={handleGenerate} variant="outline" className="px-6 py-2 text-base font-medium border-muted-foreground/20 bg-background hover:bg-muted/30 transition-colors">
@@ -141,7 +141,7 @@ export function TextCleaner() {
             <div className="relative flex-1 flex flex-col h-full">
               <Textarea
                 placeholder={t('pasteTextHere')}
-                className="h-full w-full resize-none pr-10 overflow-auto text-base"
+                className="min-h-[500px] w-full resize-none pr-10 overflow-auto text-base"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
               />
@@ -163,7 +163,7 @@ export function TextCleaner() {
           </CardContent>
         </Card>
 
-        <Card className="flex flex-col h-full">
+        <Card className="flex flex-col min-h-[500px]">
           <CardHeader>
             <CardTitle>{t('cleanedText')}</CardTitle>
           </CardHeader>
@@ -171,7 +171,7 @@ export function TextCleaner() {
             <div className="relative flex-1 flex flex-col h-full">
               <Textarea
                 placeholder={t('resultWillAppearHere')}
-                className="h-full w-full resize-none pr-10 overflow-auto text-base"
+                className="min-h-[500px] w-full resize-none pr-10 overflow-auto text-base"
                 value={outputText}
                 readOnly
               />
