@@ -34,26 +34,19 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
     en: `**What the AI does:** Posts evidence (photos, chat dialogues, audio) and suspects\n
 **Users:** Vote on who to interrogate / what to check\n
 **Unique feature:** Inside the bot are personal "cases" of participants: those who guess correctly get points, ranks "Detective of the day"\n
-**Revenue:** Paid "expert hints" from AI\n
-\n
-    
+**Revenue:** Paid "expert hints" from AI\n`,
     uk: `**Що робить ШІ:** Публікує докази (фото, діалоги-чат, аудіо) та підозрюваних\n
 **Користувачі:** Голосують, кого допитати / що перевірити\n
 **Особливість:** Всередині бота особисті «справи» учасників: хто вгадав — отримує очки, ранги «Детектив дня»\n
-**Дохід:** Платні «експертні підказки» від ШІ\n
-\n
-    
+**Дохід:** Платні «експертні підказки» від ШІ\n`,
     ru: `**Что делает ИИ:** Постит улики (фото, диалоги-чат, аудио) и подозреваемых\n
 **Пользователи:** Голосуют, кого допросить / что проверить\n
 **Изюминка:** Внутри бота личные «дела» участников: кто угадал — получает очки, ранги «Сыщик дня»\n
-**Доход:** Платные «экспертные подсказки» от ИИ\n
-\n
-    
+**Доход:** Платные «экспертные подсказки» от ИИ\n`,
     es: `**Qué hace la IA:** Publica evidencias (fotos, diálogos de chat, audio) y sospechosos\n
 **Usuarios:** Votan a quién interrogar / qué verificar\n
 **Característica única:** Dentro del bot hay "casos" personales de los participantes: quienes adivinan correctamente obtienen puntos, rangos "Detective del día"\n
-**Ingresos:** "Pistas expertas" pagas de la IA\n
-\n
+**Ingresos:** "Pistas expertas" pagas de la IA\n`
   },
   "exchange-2077": {
     en: `**What the AI does:** Models a virtual market for tokens of future companies. Posts news daily; through 😊😐😱 reactions, players "buy" or "sell".\n
