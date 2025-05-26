@@ -36,52 +36,24 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Unique feature:** Inside the bot are personal "cases" of participants: those who guess correctly get points, ranks "Detective of the day"\n
 **Revenue:** Paid "expert hints" from AI\n
 \n
-### How to Test and Scale\n
-\n
-1. **Lean-MVP with 500 participants** → check for poll CTR ≥ 35%.\n
-2. **A/B headline cycles** (2-3 per day) — Telegram allows changing post text without resetting statistics.\n
-3. **Automation**: \`aiogram\` + Redis cache for GPT-4o requests, scheduler \`APScheduler\` or GitHub-Actions cron.\n
-4. **Metrics**: 7-day retention, reaction-to-view ratio, ARPPU of paid tier.\n
-5. **Growth**: cross-promotion with niche channels (pre-ads cost 4-6$ CPM when targeting UA audience).`,
     
     uk: `**Що робить ШІ:** Публікує докази (фото, діалоги-чат, аудіо) та підозрюваних\n
 **Користувачі:** Голосують, кого допитати / що перевірити\n
 **Особливість:** Всередині бота особисті «справи» учасників: хто вгадав — отримує очки, ранги «Детектив дня»\n
 **Дохід:** Платні «експертні підказки» від ШІ\n
 \n
-### Як протестувати та масштабувати\n
-\n
-1. **Lean-MVP на 500 учасників** → перевіряємо CTR опитувань ≥ 35%.\n
-2. **A/B-цикли** заголовків (2–3 на добу) — Telegram дозволяє змінювати текст поста без скидання статистики.\n
-3. **Автоматизація**: \`aiogram\` + Redis-кеш для запитів до GPT-4o, планувальник \`APScheduler\` або GitHub-Actions cron.\n
-4. **Метрики**: утримання 7-го дня, частка реакцій до переглядів, ARPPU платного шару.\n
-5. **Зростання**: крос-промо з тематичними каналами (до-реклама коштує 4–6$ CPM при таргеті на UA-аудиторію).`,
     
     ru: `**Что делает ИИ:** Постит улики (фото, диалоги-чат, аудио) и подозреваемых\n
 **Пользователи:** Голосуют, кого допросить / что проверить\n
 **Изюминка:** Внутри бота личные «дела» участников: кто угадал — получает очки, ранги «Сыщик дня»\n
 **Доход:** Платные «экспертные подсказки» от ИИ\n
 \n
-### Как протестировать и масштабировать\n
-\n
-1. **Lean-MVP на 500 участников** → проверяем CTR опросов ≥ 35%.\n
-2. **A/B-циклы** заголовков (2–3 в сутки) — Telegram позволяет менять текст поста без сброса статистики.\n
-3. **Автоматизация**: \`aiogram\` + Redis-кэш для запросов к GPT-4o, планировщик \`APScheduler\` или GitHub-Actions cron.\n
-4. **Метрики**: удержание 7-го дня, доля реакций к просмотрам, ARPPU платного слоя.\n
-5. **Рост**: кросс-промо с тематическими каналами (до-реклама стоит 4–6$ CPM при таргете на UA-аудиторию).`,
     
     es: `**Qué hace la IA:** Publica evidencias (fotos, diálogos de chat, audio) y sospechosos\n
 **Usuarios:** Votan a quién interrogar / qué verificar\n
 **Característica única:** Dentro del bot hay "casos" personales de los participantes: quienes adivinan correctamente obtienen puntos, rangos "Detective del día"\n
 **Ingresos:** "Pistas expertas" pagas de la IA\n
 \n
-### Cómo probar y escalar\n
-\n
-1. **Lean-MVP con 500 participantes** → verificar CTR de encuestas ≥ 35%.\n
-2. **Ciclos A/B** de titulares (2-3 por día) — Telegram permite cambiar el texto del post sin reiniciar estadísticas.\n
-3. **Automatización**: \`aiogram\` + caché Redis para solicitudes a GPT-4o, programador \`APScheduler\` o cron de GitHub-Actions.\n
-4. **Métricas**: retención del día 7, proporción de reacciones a visualizaciones, ARPPU del nivel de pago.\n
-5. **Crecimiento**: promoción cruzada con canales temáticos (pre-anuncios cuestan 4-6$ CPM al dirigirse a audiencia UA).`
   },
   "exchange-2077": {
     en: `**What the AI does:** Models a virtual market for tokens of future companies. Posts news daily; through 😊😐😱 reactions, players "buy" or "sell".\n
