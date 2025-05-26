@@ -1,6 +1,7 @@
 import { marketplaceItems } from '../marketplace-types';
 
-export const EMAILS = Array.from({ length: 33 }, (_, i) => `user${i + 1}@gmail.com`);
+const TOTAL_EMAILS = marketplaceItems.length * 5;
+export const EMAILS = Array.from({ length: TOTAL_EMAILS }, (_, i) => `user${i + 1}@gmail.com`);
 
 function shuffle<T>(array: T[]): T[] {
   const a = [...array];
@@ -26,13 +27,18 @@ export function __resetFakeBidData() {
   cache = null;
 }
 
-export function maskEmail(email: string): string {
+export function maskEmail(email?: string): string {
+  if (!email) return '';
   const [name, domain] = email.split('@');
   const masked = name.slice(0, 2) + '*'.repeat(Math.max(name.length - 2, 0));
   return `${masked}@${domain}`;
 }
 
-export interface FakeBidData { count: number; email: string; }
+export interface FakeBidData {
+  count: number;
+  email: string;
+  emails: string[];
+}
 
 function initFakeData() {
   const store = getStore();
@@ -41,10 +47,15 @@ function initFakeData() {
 
   const shuffledEmails = shuffle(EMAILS);
   const data: Record<string, FakeBidData> = {};
-  marketplaceItems.forEach((item, idx) => {
+  let emailIdx = 0;
+  marketplaceItems.forEach((item) => {
+    const count = Math.floor(Math.random() * 5) + 1;
+    const emails = shuffledEmails.slice(emailIdx, emailIdx + count);
+    emailIdx += count;
     data[item.id] = {
-      count: Math.floor(Math.random() * 5) + 1,
-      email: shuffledEmails[idx % shuffledEmails.length]
+      count,
+      email: emails[emails.length - 1],
+      emails,
     };
   });
   store.setItem('fakeBidData', JSON.stringify(data));
