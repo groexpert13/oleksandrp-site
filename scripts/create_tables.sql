@@ -20,4 +20,15 @@ CREATE TABLE IF NOT EXISTS Bid (
 );
 
 -- Create index on itemId for better performance
-CREATE INDEX IF NOT EXISTS idx_bid_itemId ON Bid(itemId); 
+CREATE INDEX IF NOT EXISTS idx_bid_itemId ON Bid(itemId);
+
+-- Create Email Logs table with project and amount info
+CREATE TABLE IF NOT EXISTS email_logs (
+  id UUID PRIMARY KEY,
+  bid_id UUID NOT NULL,
+  item_id TEXT NOT NULL,
+  email TEXT NOT NULL,
+  project_name TEXT,
+  bid_amount FLOAT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);

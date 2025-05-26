@@ -23,4 +23,5 @@ test('logEmail issues SQL queries', async () => {
   assert.ok(calls[1].tag);
   assert.ok(calls[2].tag);
   assert.ok(calls[3].query);
+  assert.equal(calls[3].args[1].length, 6, 'insert query should include 6 values');
 });

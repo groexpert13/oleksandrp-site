@@ -297,7 +297,10 @@ const scalingSections: Record<Language, string> = {
 };
 Object.keys(detailedDescriptions).forEach(slug => {
   Object.entries(scalingSections).forEach(([lang, section]) => {
-    detailedDescriptions[slug][lang as Language] += section;
+    const header = section.trim().split("\n")[0];
+    if (!detailedDescriptions[slug][lang as Language].includes(header)) {
+      detailedDescriptions[slug][lang as Language] += section;
+    }
   });
 });
 
