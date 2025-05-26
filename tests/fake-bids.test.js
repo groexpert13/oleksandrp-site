@@ -16,6 +16,7 @@ let compiled = ts.transpileModule(source, { compilerOptions: { module: ts.Module
 compiled = compiled.replace('../marketplace-types', './marketplace-types.tmp');
 const tmpPath = path.join(__dirname, 'fake-bids.tmp.js');
 fs.writeFileSync(tmpPath, compiled);
+const marketplace = require(depTmp);
 const fake = require(tmpPath);
 fs.unlinkSync(tmpPath);
 fs.unlinkSync(depTmp);
@@ -36,7 +37,7 @@ test('bid count range', () => {
 
 test('unique emails per session and across offers', () => {
   fake.__resetFakeBidData();
-  const ids = ['1', '2', '3', '4', '5'];
+  const ids = items.map(i => i.id);
   const allEmails = [];
   ids.forEach(id => {
     const d = fake.getFakeBidData(id);
@@ -54,6 +55,10 @@ test('mask email formatting', () => {
   assert.equal(masked.startsWith('ex'), true);
   assert.equal(masked.endsWith('@gmail.com'), true);
   assert.ok(masked.includes('*'));
+});
+
+test('mask email handles missing value', () => {
+  assert.equal(fake.maskEmail(undefined), '');
 });
 
 test('rotation persists per session', () => {
