@@ -396,184 +396,13 @@ export default function MarketplaceItemPage() {
     router.back();
   };
 
-  const getTranslations = () => {
-    const translations = {
-      en: {
-        back: "Back to marketplace",
-        bidNow: "Place Bid",
-        enterEmail: "Enter your email to bid",
-        submitEmail: "Continue",
-        placeBid: "Place Bid",
-        currentBid: "Current Highest Bid",
-        noBids: "No bids yet",
-        auctionEnds: "Auction ends",
-        auctionStartPrice: "Starting price",
-        emailRequired: "Email is required to place a bid",
-        bidAmountLabel: "Your bid amount ($USD)",
-        bidderCount: "Bidders",
-        submit: "Submit Bid",
-        price: "Price",
-        emailInstructions: "Enter your email to receive auction updates",
-        bidInstructions: "Enter a bid amount higher than the current highest bid",
-        successBid: "Your bid has been placed successfully!",
-        days: "days",
-        hours: "hours",
-        minutes: "minutes",
-        timeLeft: "Time left",
-        auctionDetails: "Auction Details",
-        minimumBid: "Minimum Bid",
-        highestBidder: "Highest Bidder",
-        bids: "Bids",
-        remaining: "Remaining",
-        endDate: "End Date",
-        loadingAuction: "Loading auction data...",
-        processing: "Processing...",
-        bidDisclaimer: "By placing a bid, you agree to the terms and conditions of the auction.",
-        auctionEnded: "Auction ended",
-        auctionEndedDesc: "The auction has ended. You can no longer place bids.",
-        invalidEmail: "Please enter a valid email address",
-        invalidAmount: "Please enter a valid bid amount",
-        bidTooLow: "Bid amount must be higher than the current highest bid",
-        bidError: "An error occurred. Please try again later.",
-        bidSuccess: "Bid placed successfully!",
-        emailLabel: "Email Address",
-        submitBid: "Submit Bid",
-      },
-      uk: {
-        back: "Повернутися до маркетплейсу",
-        bidNow: "Зробити ставку",
-        enterEmail: "Введіть вашу електронну пошту для ставки",
-        submitEmail: "Продовжити",
-        placeBid: "Зробити ставку",
-        currentBid: "Поточна найвища ставка",
-        noBids: "Ставок ще немає",
-        auctionEnds: "Аукціон закінчується",
-        auctionStartPrice: "Початкова ціна",
-        emailRequired: "Електронна пошта необхідна для розміщення ставки",
-        bidAmountLabel: "Сума вашої ставки ($USD)",
-        bidderCount: "Учасників",
-        submit: "Підтвердити ставку",
-        price: "Ціна",
-        emailInstructions: "Введіть електронну пошту для отримання оновлень аукціону",
-        bidInstructions: "Введіть суму ставки, вищу за поточну найвищу ставку",
-        successBid: "Вашу ставку успішно розміщено!",
-        days: "днів",
-        hours: "годин",
-        minutes: "хвилин",
-        timeLeft: "Залишилось часу",
-        auctionDetails: "Деталі аукціону",
-        minimumBid: "Мінімальна ставка",
-        highestBidder: "Найвища ставка",
-        bids: "Ставок",
-        remaining: "Залишилось",
-        endDate: "Дата закінчення",
-        loadingAuction: "Завантаження даних аукціону...",
-        processing: "Обробка...",
-        bidDisclaimer: "Розмістивши ставку, ви погоджуєтеся з умовами та умовами аукціону.",
-        auctionEnded: "Аукціон закінчився",
-        auctionEndedDesc: "Аукціон закінчився. Ви не можете більше розміщувати ставки.",
-        invalidEmail: "Будь ласка, введіть дійсну електронну пошту",
-        invalidAmount: "Будь ласка, введіть дійсну суму ставки",
-        bidTooLow: "Сума ставки повинна бути вищою за поточну найвищу ставку",
-        bidError: "Сталася помилка. Будь ласка, спробуйте пізніше",
-        bidSuccess: "Ставка успішно розміщена!",
-        emailLabel: "Електронна пошта",
-        submitBid: "Розмістити ставку",
-      },
-      ru: {
-        back: "Вернуться в маркетплейс",
-        bidNow: "Сделать ставку",
-        enterEmail: "Введите вашу электронную почту для ставки",
-        submitEmail: "Продолжить",
-        placeBid: "Сделать ставку",
-        currentBid: "Текущая наивысшая ставка",
-        noBids: "Ставок ещё нет",
-        auctionEnds: "Аукцион заканчивается",
-        auctionStartPrice: "Начальная цена",
-        emailRequired: "Электронная почта необходима для размещения ставки",
-        bidAmountLabel: "Сумма вашей ставки ($USD)",
-        bidderCount: "Участников",
-        submit: "Подтвердить ставку",
-        price: "Цена",
-        emailInstructions: "Введите электронную почту для получения обновлений аукциона",
-        bidInstructions: "Введите сумму ставки, превышающую текущую наивысшую ставку",
-        successBid: "Ваша ставка успешно размещена!",
-        days: "дней",
-        hours: "часов",
-        minutes: "минут",
-        timeLeft: "Осталось времени",
-        auctionDetails: "Детали аукциона",
-        minimumBid: "Минимальная ставка",
-        highestBidder: "Наивысшая ставка",
-        bids: "Ставок",
-        remaining: "Осталось",
-        endDate: "Дата окончания",
-        loadingAuction: "Загрузка данных аукциона...",
-        processing: "Обработка...",
-        bidDisclaimer: "Разместив ставку, вы соглашаетесь с условиями и правилами аукциона.",
-        auctionEnded: "Аукцион закончился",
-        auctionEndedDesc: "Аукцион закончился. Вы не можете больше размещать ставки.",
-        invalidEmail: "Пожалуйста, введите действительный электронный адрес",
-        invalidAmount: "Пожалуйста, введите действительную сумму ставки",
-        bidTooLow: "Сумма ставки должна быть выше текущей наивысшей ставки",
-        bidError: "Произошла ошибка. Пожалуйста, попробуйте позже",
-        bidSuccess: "Ставка успешно размещена!",
-        emailLabel: "Электронная почта",
-        submitBid: "Разместить ставку",
-      },
-      es: {
-        back: "Volver al marketplace",
-        bidNow: "Hacer oferta",
-        enterEmail: "Ingrese su correo electrónico para ofertar",
-        submitEmail: "Continuar",
-        placeBid: "Hacer oferta",
-        currentBid: "Oferta más alta actual",
-        noBids: "Aún no hay ofertas",
-        auctionEnds: "La subasta termina",
-        auctionStartPrice: "Precio inicial",
-        emailRequired: "Se requiere correo electrónico para hacer una oferta",
-        bidAmountLabel: "Monto de su oferta ($USD)",
-        bidderCount: "Ofertantes",
-        submit: "Enviar oferta",
-        price: "Precio",
-        emailInstructions: "Ingrese su correo electrónico para recibir actualizaciones de la subasta",
-        bidInstructions: "Ingrese un monto de oferta superior a la oferta más alta actual",
-        successBid: "¡Su oferta ha sido realizada con éxito!",
-        days: "días",
-        hours: "horas",
-        minutes: "minutos",
-        timeLeft: "Tiempo restante",
-        auctionDetails: "Detalles de la subasta",
-        minimumBid: "Puja mínima",
-        highestBidder: "Puja más alta",
-        bids: "Pujar",
-        remaining: "Restante",
-        endDate: "Fecha de finalización",
-        loadingAuction: "Cargando datos de la subasta...",
-        processing: "Procesando...",
-        bidDisclaimer: "Al colocar una oferta, acepta los términos y condiciones de la subasta.",
-        auctionEnded: "Subasta finalizada",
-        auctionEndedDesc: "La subasta ha finalizado. Ya no puede colocar ofertas.",
-        invalidEmail: "Por favor, ingrese una dirección de correo electrónico válida",
-        invalidAmount: "Por favor, ingrese una cantidad de oferta válida",
-        bidTooLow: "La cantidad de oferta debe ser superior a la oferta más alta actual",
-        bidError: "Se produjo un error. Por favor, inténtelo más tarde",
-        bidSuccess: "Oferta colocada exitosamente!",
-        emailLabel: "Correo electrónico",
-        submitBid: "Colocar oferta",
-      }
-    };
-    
-    return translations[currentLanguage as Language] || translations.en;
-  };
 
-  const texts = getTranslations();
 
   const handleEmailSubmit = (e: FormEvent) => {
     e.preventDefault();
     
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email address");
+      setError(t('invalidEmail'));
       return;
     }
     
@@ -588,14 +417,14 @@ export default function MarketplaceItemPage() {
     
     if (diff <= 0) {
       setIsAuctionActive(false);
-      return texts.auctionEnded;
+      return t('auctionEnded');
     }
     
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     
-    return `${days} ${texts.days}, ${hours} ${texts.hours}, ${minutes} ${texts.minutes}`;
+    return `${days} ${t('days')}, ${hours} ${t('hours')}, ${minutes} ${t('minutes')}`;
   };
 
   const formatDate = (date: Date) => {
@@ -631,12 +460,12 @@ export default function MarketplaceItemPage() {
     
     // Validate inputs
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setValidationError(texts.invalidEmail);
+      setValidationError(t('invalidEmail'));
       return;
     }
     
     if (!amount || isNaN(amount)) {
-      setValidationError(texts.invalidAmount);
+      setValidationError(t('invalidAmount'));
       return;
     }
     
@@ -644,7 +473,7 @@ export default function MarketplaceItemPage() {
       // Apply the 35% discount to current highest bid for validation
       const minAmount = Math.round((auction.currentHighestBid || auction.minBid) * 1.35);
       if (amount <= minAmount) {
-        setValidationError(`${texts.bidTooLow} $${minAmount}`);
+        setValidationError(`${t('bidTooLow')} $${minAmount}`);
         return;
       }
     }
@@ -670,18 +499,18 @@ export default function MarketplaceItemPage() {
       const data = await response.json();
       
       if (!response.ok) {
-        setValidationError(data.error || texts.bidError);
+        setValidationError(data.error || t('bidError'));
       } else {
         // Success - update UI
         setBidAmount("");
-        setSuccess(texts.bidSuccess);
+        setSuccess(t('bidSuccess'));
         setBidSubmitted(true);
         
         // Refresh auction data
         fetchAuctionData(item.id);
       }
     } catch (error) {
-      setValidationError(texts.bidError);
+      setValidationError(t('bidError'));
     } finally {
       setBidLoading(false);
     }
@@ -700,12 +529,12 @@ export default function MarketplaceItemPage() {
       <div className="container max-w-4xl py-8">
         <Button variant="ghost" onClick={handleBack} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {texts.back}
+          {t('back')}
         </Button>
         <Card className="p-8 text-center">
-          <CardTitle className="text-2xl mb-4">Item not found</CardTitle>
+          <CardTitle className="text-2xl mb-4">{t('itemNotFound')}</CardTitle>
           <CardContent>
-            <p>The requested marketplace item could not be found.</p>
+            <p>{t('itemNotFoundDesc')}</p>
           </CardContent>
         </Card>
       </div>
@@ -721,7 +550,7 @@ export default function MarketplaceItemPage() {
     <div className="container max-w-6xl py-6 px-4 sm:px-6 sm:py-8">
       <Button variant="ghost" onClick={handleBack} className="mb-4 sm:mb-6 -ml-2">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        {texts.back}
+        {t('back')}
       </Button>
 
       <Card className="overflow-hidden border-none shadow-lg">
@@ -744,7 +573,7 @@ export default function MarketplaceItemPage() {
                 <div className="flex items-center text-sm mb-2">
                   <Timer className="mr-1 h-4 w-4" />
                   <span>
-                    <span className="font-medium">{texts.timeLeft}:</span> {getRemainingTime(auction.endDate)}
+                    <span className="font-medium">{t('timeLeft')}:</span> {getRemainingTime(auction.endDate)}
                   </span>
                 </div>
               )}
@@ -781,34 +610,34 @@ export default function MarketplaceItemPage() {
                     <div className="p-5 space-y-4">
                       <h3 className="text-lg font-medium tracking-tight flex items-center gap-2">
                         <Icons.Award className="h-5 w-5 text-primary" />
-                        {texts.auctionDetails}
+                        {t('auctionDetails')}
                       </h3>
                       
                       <div className="bg-accent/5 rounded-lg p-4 space-y-3">
                         <div className="flex flex-col space-y-1 bg-background/50 p-3 rounded-md border border-muted/20">
-                          <span className="text-xs uppercase font-medium text-muted-foreground">{texts.currentBid}</span>
+                          <span className="text-xs uppercase font-medium text-muted-foreground">{t('currentBid')}</span>
                           <span className="font-semibold text-2xl">
                             {auction.currentHighestBid 
                               ? `$${Math.round(auction.currentHighestBid * 1.35)}` 
-                              : texts.noBids}
+                              : t('noBids')}
                           </span>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-3">
                           <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{texts.minimumBid}</span>
+                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('minimumBid')}</span>
                             <span className="font-medium">${Math.round(auction.minBid * 1.35)}</span>
                           </div>
                           
                           <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{texts.bids}</span>
+                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('bids')}</span>
                             <span className="font-medium">{auction.bidCount || 0}</span>
                           </div>
                         </div>
                         
                         {auction.currentHighestBidder && (
                           <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{texts.highestBidder}</span>
+                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('highestBidder')}</span>
                             <span className="font-medium flex items-center">
                               <User className="h-4 w-4 mr-2 text-muted-foreground" />
                               {auction.currentHighestBidder}
@@ -817,7 +646,7 @@ export default function MarketplaceItemPage() {
                         )}
                         
                         <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                          <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{texts.endDate}</span>
+                          <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('endDate')}</span>
                           <span className="font-medium flex items-center">
                             <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
                             {formatDate(auction.endDate)}
@@ -829,7 +658,7 @@ export default function MarketplaceItemPage() {
                     <div className="p-5 space-y-4">
                       <h3 className="text-lg font-medium tracking-tight flex items-center gap-2">
                         <Icons.CreditCard className="h-5 w-5 text-primary" />
-                        {texts.placeBid}
+                        {t('placeBid')}
                       </h3>
                       
                       {isAuctionActive ? (
@@ -837,11 +666,11 @@ export default function MarketplaceItemPage() {
                           {bidSubmitted && (
                             <Alert className="bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400">
                               <CheckCircle className="h-4 w-4 mr-2" />
-                              <AlertTitle className="font-medium">{texts.bidSuccess}</AlertTitle>
+                              <AlertTitle className="font-medium">{t('bidSuccess')}</AlertTitle>
                             </Alert>
                           )}
                           <div className="flex flex-col space-y-2">
-                            <Label htmlFor="email" className="text-sm font-medium">{texts.emailLabel}</Label>
+                            <Label htmlFor="email" className="text-sm font-medium">{t('emailLabel')}</Label>
                             <div className="relative">
                               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                               <Input
@@ -857,7 +686,7 @@ export default function MarketplaceItemPage() {
                           
                           <div className="flex flex-col space-y-2">
                             <div className="flex justify-between items-center">
-                              <Label htmlFor="amount" className="text-sm font-medium">{texts.bidAmountLabel}</Label>
+                              <Label htmlFor="amount" className="text-sm font-medium">{t('bidAmountLabel')}</Label>
                               {validationError && (
                                 <p className="text-xs text-destructive">{validationError}</p>
                               )}
@@ -896,25 +725,25 @@ export default function MarketplaceItemPage() {
                             {bidLoading ? (
                               <>
                                 <Icons.Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {texts.processing}
+                                {t('processing')}
                               </>
                             ) : (
-                              texts.submitBid
+                              t('submitBid')
                             )}
                           </Button>
                           
                           <p className="text-xs text-muted-foreground text-center mt-2">
-                            {texts.bidDisclaimer}
+                            {t('bidDisclaimer')}
                           </p>
                         </div>
                       ) : (
                         <Alert variant="destructive">
                           <AlertTitle>
                             <Icons.AlertTriangle className="h-4 w-4 inline-block mr-2" />
-                            {texts.auctionEnded}
+                            {t('auctionEnded')}
                           </AlertTitle>
                           <AlertDescription>
-                            {texts.auctionEndedDesc}
+                            {t('auctionEndedDesc')}
                           </AlertDescription>
                         </Alert>
                       )}
@@ -926,7 +755,7 @@ export default function MarketplaceItemPage() {
                   <div className="p-5 flex items-center justify-center min-h-[300px]">
                     <div className="flex flex-col items-center space-y-4">
                       <Icons.Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                      <p className="text-muted-foreground">{texts.loadingAuction}</p>
+                      <p className="text-muted-foreground">{t('loadingAuction')}</p>
                     </div>
                   </div>
                 )}

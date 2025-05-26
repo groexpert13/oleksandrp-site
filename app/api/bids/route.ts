@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AuctionOption } from "@/lib/database-types";
 import { marketplaceItems } from "@/lib/marketplace-types";
 import { getSql } from '@/lib/neon';
+import { logEmail } from '@/lib/utils/log-email';
 
 // In-memory storage
 const inMemoryBids: any[] = [];
@@ -153,7 +154,7 @@ export async function POST(request: Request) {
       bidCount: (inMemoryAuctions[itemId].bidCount || 0) + 1
     };
     
-    // Try to store in marketplace_stats
+    // Try to store in marketplace_stats and log sent email
     try {
       const sql = getSql();
       await sql.query(
@@ -162,8 +163,10 @@ export async function POST(request: Request) {
          ON CONFLICT (item_id) DO NOTHING`,
         [itemId]
       );
+
+      await logEmail(sql, newBid.id, itemId, email);
     } catch (error) {
-      // Ignore errors with marketplace_stats
+      // Ignore errors with marketplace_stats or email logging
     }
     
     return NextResponse.json({

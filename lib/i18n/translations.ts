@@ -219,7 +219,45 @@ export type TranslationKey =
   | 'addParticipant'
   | 'participantName'
   | 'selectTimezone'
-  | 'add';
+  | 'add'
+  // Marketplace Auction
+  | 'bidNow'
+  | 'enterEmail'
+  | 'submitEmail'
+  | 'placeBid'
+  | 'currentBid'
+  | 'noBids'
+  | 'auctionEnds'
+  | 'auctionStartPrice'
+  | 'emailRequired'
+  | 'bidAmountLabel'
+  | 'bidderCount'
+  | 'submit'
+  | 'price'
+  | 'emailInstructions'
+  | 'bidInstructions'
+  | 'successBid'
+  | 'timeLeft'
+  | 'auctionDetails'
+  | 'minimumBid'
+  | 'highestBidder'
+  | 'bids'
+  | 'remaining'
+  | 'endDate'
+  | 'loadingAuction'
+  | 'processing'
+  | 'bidDisclaimer'
+  | 'auctionEnded'
+  | 'auctionEndedDesc'
+  | 'invalidEmail'
+  | 'invalidAmount'
+  | 'bidTooLow'
+  | 'bidError'
+  | 'bidSuccess'
+  | 'emailLabel'
+  | 'submitBid'
+  | 'itemNotFound'
+  | 'itemNotFoundDesc';
 
 type Translations = {
   [key in Language]: {
@@ -444,6 +482,43 @@ export const translations: Translations = {
     participantName: 'Participant Name',
     selectTimezone: 'Select Timezone',
     add: 'Add',
+    bidNow: 'Place Bid',
+    enterEmail: 'Enter your email to bid',
+    submitEmail: 'Continue',
+    placeBid: 'Place Bid',
+    currentBid: 'Current Highest Bid',
+    noBids: 'No bids yet',
+    auctionEnds: 'Auction ends',
+    auctionStartPrice: 'Starting price',
+    emailRequired: 'Email is required to place a bid',
+    bidAmountLabel: 'Your bid amount ($USD)',
+    bidderCount: 'Bidders',
+    submit: 'Submit Bid',
+    price: 'Price',
+    emailInstructions: 'Enter your email to receive auction updates',
+    bidInstructions: 'Enter a bid amount higher than the current highest bid',
+    successBid: 'Your bid has been placed successfully!',
+    timeLeft: 'Time left',
+    auctionDetails: 'Auction Details',
+    minimumBid: 'Minimum Bid',
+    highestBidder: 'Highest Bidder',
+    bids: 'Bids',
+    remaining: 'Remaining',
+    endDate: 'End Date',
+    loadingAuction: 'Loading auction data...',
+    processing: 'Processing...',
+    bidDisclaimer: 'By placing a bid, you agree to the terms and conditions of the auction.',
+    auctionEnded: 'Auction ended',
+    auctionEndedDesc: 'The auction has ended. You can no longer place bids.',
+    invalidEmail: 'Please enter a valid email address',
+    invalidAmount: 'Please enter a valid bid amount',
+    bidTooLow: 'Bid amount must be higher than the current highest bid',
+    bidError: 'An error occurred. Please try again later.',
+    bidSuccess: 'Bid placed successfully!',
+    emailLabel: 'Email Address',
+    submitBid: 'Submit Bid',
+    itemNotFound: 'Item not found',
+    itemNotFoundDesc: 'The requested marketplace item could not be found.',
   },
   uk: {
     // Header
@@ -661,6 +736,43 @@ export const translations: Translations = {
     participantName: 'Ім\'я учасника',
     selectTimezone: 'Виберіть часовий пояс',
     add: 'Додати',
+    bidNow: 'Зробити ставку',
+    enterEmail: 'Введіть вашу електронну пошту для ставки',
+    submitEmail: 'Продовжити',
+    placeBid: 'Зробити ставку',
+    currentBid: 'Поточна найвища ставка',
+    noBids: 'Ставок ще немає',
+    auctionEnds: 'Аукціон закінчується',
+    auctionStartPrice: 'Початкова ціна',
+    emailRequired: 'Електронна пошта необхідна для розміщення ставки',
+    bidAmountLabel: 'Сума вашої ставки ($USD)',
+    bidderCount: 'Учасників',
+    submit: 'Підтвердити ставку',
+    price: 'Ціна',
+    emailInstructions: 'Введіть електронну пошту для отримання оновлень аукціону',
+    bidInstructions: 'Введіть суму ставки, вищу за поточну найвищу ставку',
+    successBid: 'Вашу ставку успішно розміщено!',
+    timeLeft: 'Залишилось часу',
+    auctionDetails: 'Деталі аукціону',
+    minimumBid: 'Мінімальна ставка',
+    highestBidder: 'Найвища ставка',
+    bids: 'Ставок',
+    remaining: 'Залишилось',
+    endDate: 'Дата закінчення',
+    loadingAuction: 'Завантаження даних аукціону...',
+    processing: 'Обробка...',
+    bidDisclaimer: 'Розмістивши ставку, ви погоджуєтеся з умовами та умовами аукціону.',
+    auctionEnded: 'Аукціон закінчився',
+    auctionEndedDesc: 'Аукціон закінчився. Ви не можете більше розміщувати ставки.',
+    invalidEmail: 'Будь ласка, введіть дійсну електронну пошту',
+    invalidAmount: 'Будь ласка, введіть дійсну суму ставки',
+    bidTooLow: 'Сума ставки повинна бути вищою за поточну найвищу ставку',
+    bidError: 'Сталася помилка. Будь ласка, спробуйте пізніше',
+    bidSuccess: 'Ставка успішно розміщена!',
+    emailLabel: 'Електронна пошта',
+    submitBid: 'Розмістити ставку',
+    itemNotFound: 'Плагін не знайдено',
+    itemNotFoundDesc: 'Запитаний плагін маркетплейсу не знайдено.',
   },
   ru: {
     // Header
@@ -878,6 +990,43 @@ export const translations: Translations = {
     participantName: 'Имя участника',
     selectTimezone: 'Выберите часовой пояс',
     add: 'Добавить',
+    bidNow: 'Сделать ставку',
+    enterEmail: 'Введите вашу электронную почту для ставки',
+    submitEmail: 'Продолжить',
+    placeBid: 'Сделать ставку',
+    currentBid: 'Текущая наивысшая ставка',
+    noBids: 'Ставок ещё нет',
+    auctionEnds: 'Аукцион заканчивается',
+    auctionStartPrice: 'Начальная цена',
+    emailRequired: 'Электронная почта необходима для размещения ставки',
+    bidAmountLabel: 'Сумма вашей ставки ($USD)',
+    bidderCount: 'Участников',
+    submit: 'Подтвердить ставку',
+    price: 'Цена',
+    emailInstructions: 'Введите электронную почту для получения обновлений аукциона',
+    bidInstructions: 'Введите сумму ставки, превышающую текущую наивысшую ставку',
+    successBid: 'Ваша ставка успешно размещена!',
+    timeLeft: 'Осталось времени',
+    auctionDetails: 'Детали аукциона',
+    minimumBid: 'Минимальная ставка',
+    highestBidder: 'Наивысшая ставка',
+    bids: 'Ставок',
+    remaining: 'Осталось',
+    endDate: 'Дата окончания',
+    loadingAuction: 'Загрузка данных аукциона...',
+    processing: 'Обработка...',
+    bidDisclaimer: 'Разместив ставку, вы соглашаетесь с условиями и правилами аукциона.',
+    auctionEnded: 'Аукцион закончился',
+    auctionEndedDesc: 'Аукцион закончился. Вы не можете больше размещать ставки.',
+    invalidEmail: 'Пожалуйста, введите действительный электронный адрес',
+    invalidAmount: 'Пожалуйста, введите действительную сумму ставки',
+    bidTooLow: 'Сумма ставки должна быть выше текущей наивысшей ставки',
+    bidError: 'Произошла ошибка. Пожалуйста, попробуйте позже',
+    bidSuccess: 'Ставка успешно размещена!',
+    emailLabel: 'Электронная почта',
+    submitBid: 'Разместить ставку',
+    itemNotFound: 'Плагин не найден',
+    itemNotFoundDesc: 'Запрашиваемый плагин маркетплейса не найден.',
   },
   es: {
     // Header
@@ -1095,5 +1244,42 @@ export const translations: Translations = {
     participantName: 'Nombre de participante',
     selectTimezone: 'Selecciona zona horaria',
     add: 'Agregar',
+    bidNow: 'Hacer oferta',
+    enterEmail: 'Ingrese su correo electrónico para ofertar',
+    submitEmail: 'Continuar',
+    placeBid: 'Hacer oferta',
+    currentBid: 'Oferta más alta actual',
+    noBids: 'Aún no hay ofertas',
+    auctionEnds: 'La subasta termina',
+    auctionStartPrice: 'Precio inicial',
+    emailRequired: 'Se requiere correo electrónico para hacer una oferta',
+    bidAmountLabel: 'Monto de su oferta ($USD)',
+    bidderCount: 'Ofertantes',
+    submit: 'Enviar oferta',
+    price: 'Precio',
+    emailInstructions: 'Ingrese su correo electrónico para recibir actualizaciones de la subasta',
+    bidInstructions: 'Ingrese un monto de oferta superior a la oferta más alta actual',
+    successBid: '¡Su oferta ha sido realizada con éxito!',
+    timeLeft: 'Tiempo restante',
+    auctionDetails: 'Detalles de la subasta',
+    minimumBid: 'Puja mínima',
+    highestBidder: 'Puja más alta',
+    bids: 'Pujar',
+    remaining: 'Restante',
+    endDate: 'Fecha de finalización',
+    loadingAuction: 'Cargando datos de la subasta...',
+    processing: 'Procesando...',
+    bidDisclaimer: 'Al colocar una oferta, acepta los términos y condiciones de la subasta.',
+    auctionEnded: 'Subasta finalizada',
+    auctionEndedDesc: 'La subasta ha finalizado. Ya no puede colocar ofertas.',
+    invalidEmail: 'Por favor, ingrese una dirección de correo electrónico válida',
+    invalidAmount: 'Por favor, ingrese una cantidad de oferta válida',
+    bidTooLow: 'La cantidad de oferta debe ser superior a la oferta más alta actual',
+    bidError: 'Se produjo un error. Por favor, inténtelo más tarde',
+    bidSuccess: 'Oferta colocada exitosamente!',
+    emailLabel: 'Correo electrónico',
+    submitBid: 'Colocar oferta',
+    itemNotFound: 'Complemento no encontrado',
+    itemNotFoundDesc: 'El complemento solicitado del marketplace no fue encontrado.',
   },
-}; 
+};
