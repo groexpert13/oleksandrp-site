@@ -35,7 +35,7 @@ export function markdownToTelegram(md: string): string {
 
   /* 3.1 Ссылки */
   text = text.replace(/\[([^\]]+)]\(([^)]+)\)/g,
-    (_, label, url) => hold('[' + esc(label) + '](' + esc(url) + ')'));
+    (match) => hold(match));
 
   /* 3.2 Изображения → alt-текст */
   text = text.replace(/!\[([^\]]*)]\([^)]+\)/g,
@@ -59,7 +59,7 @@ export function markdownToTelegram(md: string): string {
 
   /* 3.7 Цитаты > … */
   text = text.replace(/^>\s?(.*)$/gm,
-    (_, q) => hold('> ' + esc(q)));
+    (_, q) => hold('>' + esc(q)));
 
   /* 3.8 Буллет-списки -, *, + */
   text = text.replace(/^\s*[-*+]\s+/gm, '• ');
