@@ -17,8 +17,10 @@ test('logEmail issues SQL queries', async () => {
   const sql = (...args) => { calls.push({tag: true, args}); return Promise.resolve(); };
   sql.query = (...args) => { calls.push({query: true, args}); return Promise.resolve(); };
 
-  await logEmail(sql, 'bid123', 'item1', 'a@example.com');
-  assert.equal(calls.length, 2);
+  await logEmail(sql, 'bid123', 'item1', 'a@example.com', 'Case 404', 123.45);
+  assert.equal(calls.length, 4);
   assert.ok(calls[0].tag);
-  assert.ok(calls[1].query);
+  assert.ok(calls[1].tag);
+  assert.ok(calls[2].tag);
+  assert.ok(calls[3].query);
 });

@@ -20,3 +20,16 @@ test('participation note translation key present', () => {
 test('project details note translation key present', () => {
   assert.ok(src.includes("t('projectDetailsNote')"), 'projectDetailsNote not used');
 });
+
+test('no duplicate scaling sections', () => {
+  const patterns = [
+    '### How to Test and Scale',
+    '### Как протестировать и масштабировать',
+    '### Як протестувати та масштабувати',
+    '### Cómo probar y escalar'
+  ];
+  for (const p of patterns) {
+    const matches = src.match(new RegExp(p, 'g')) || [];
+    assert.equal(matches.length, 1, `Duplicate section for pattern: ${p}`);
+  }
+});

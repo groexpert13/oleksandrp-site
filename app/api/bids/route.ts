@@ -164,7 +164,7 @@ export async function POST(request: Request) {
         [itemId]
       );
 
-      await logEmail(sql, newBid.id, itemId, email);
+      await logEmail(sql, newBid.id, itemId, email, item.title, amount);
     } catch (error) {
       // Ignore errors with marketplace_stats or email logging
     }
