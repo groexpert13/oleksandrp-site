@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Heart, Eye, DollarSign } from "lucide-react";
+import { Heart, Eye, DollarSign, Users, User } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { MarketplaceItem } from "@/lib/marketplace-types";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Language } from "@/lib/i18n/translations";
+import { getFakeBidData, maskEmail } from "@/lib/utils/fake-bids";
 
 interface MarketplaceItemCardProps {
   item: MarketplaceItem;
@@ -20,6 +21,7 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
+  const [fakeBid, setFakeBid] = useState(() => getFakeBidData(item.id));
   const { t, currentLanguage } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -87,6 +89,9 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
         </CardHeader>
         <CardContent className="flex-1 pb-6">
           <p className="text-sm text-muted-foreground mb-4">{description}</p>
+          <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+            <User className="h-3 w-3" /> {maskEmail(fakeBid.email)}
+          </p>
           <div className="flex flex-wrap gap-2">
             <Badge variant="secondary" className="text-xs">
               telegram
@@ -120,10 +125,14 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
               <Eye className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">{views}</span>
             </div>
+            <div className="flex items-center gap-1.5">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">{fakeBid.count}</span>
+            </div>
           </div>
-          
-          <Button 
-            variant="ghost" 
+
+          <Button
+            variant="ghost"
             size="sm"
             className="h-8 px-3"
           >
