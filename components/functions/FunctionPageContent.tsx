@@ -8,6 +8,12 @@ import { TextCleaner } from "@/components/functions/text-pure/text-cleaner";
 import { PromptForge } from "@/components/functions/codex-prompt-forge/prompt-forge";
 import { RandomYesNo } from "@/components/functions/random-yes-no/RandomYesNo";
 import { CountdownTimer } from "@/components/functions/countdown-timer/CountdownTimer";
+import { UtmBuilderParser } from "@/components/functions/utm-builder-parser/UtmBuilderParser";
+import { ColorContrastChecker } from "@/components/functions/color-contrast-checker/ColorContrastChecker";
+import { MarkdownSlides } from "@/components/functions/markdown-slides/MarkdownSlides";
+import { TimezoneMeetingPlanner } from "@/components/functions/timezone-meeting-planner/TimezoneMeetingPlanner";
+import { CommitMessageLinter } from "@/components/functions/commit-message-linter/CommitMessageLinter";
+import { useEffect } from "react";
 
 interface FunctionPageContentProps {
   card: FunctionCardType;
@@ -18,6 +24,16 @@ export default function FunctionPageContent({ card }: FunctionPageContentProps) 
   const title = card.i18n?.[language]?.title || card.title;
   const description = card.i18n?.[language]?.description || card.description;
   const slug = card.slug;
+
+  useEffect(() => {
+    // Увеличиваем просмотры при заходе на страницу
+    fetch('/api/likes', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cardId: card.id }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [card.id]);
 
   return (
     <div className="flex flex-col space-y-8">
@@ -44,6 +60,11 @@ export default function FunctionPageContent({ card }: FunctionPageContentProps) 
           {slug === 'codex-prompt-forge' && <PromptForge />}
           {slug === 'random-yes-no' && <RandomYesNo />}
           {slug === 'countdown-timer' && <CountdownTimer />}
+          {slug === 'utm-builder-parser' && <UtmBuilderParser />}
+          {slug === 'color-contrast-checker' && <ColorContrastChecker />}
+          {slug === 'markdown-slides' && <MarkdownSlides />}
+          {slug === 'timezone-meeting-planner' && <TimezoneMeetingPlanner />}
+          {slug === 'commit-message-linter' && <CommitMessageLinter />}
         </div>
       </div>
     </div>

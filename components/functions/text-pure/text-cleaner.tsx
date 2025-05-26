@@ -115,11 +115,7 @@ export function TextCleaner() {
             <SelectContent>
               <SelectItem value={TextTransformationType.MARKDOWN_TO_PLAIN}>{t('markdownToPlain')}</SelectItem>
               <SelectItem value={TextTransformationType.MARKDOWN_TO_TELEGRAM}>{t('markdownToTelegram')}</SelectItem>
-              <SelectItem value={TextTransformationType.PLAIN_TO_HTML_EMAIL}>{t('plainToHtmlEmail')}</SelectItem>
-              <SelectItem value={TextTransformationType.PLAIN_TO_OG}>{t('plainToOg')}</SelectItem>
-              <SelectItem value={TextTransformationType.PLAIN_TO_SSML}>{t('plainToSsml')}</SelectItem>
-              <SelectItem value={TextTransformationType.SMART_TYPOGRAPHY}>{t('smartTypography')}</SelectItem>
-              <SelectItem value={TextTransformationType.PLAIN_TO_JSON_YAML}>{t('plainToJsonYaml')}</SelectItem>
+              <SelectItem value={TextTransformationType.PRAISE}>{t('praiseEbtyMolodec')}</SelectItem>
             </SelectContent>
           </Select>
         </div>

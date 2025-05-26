@@ -26,7 +26,7 @@ export function Footer() {
                     href="https://www.jamai.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center rounded-full bg-secondary px-2 py-0.5 text-sm font-medium text-muted-foreground transition-shadow hover:shadow-lg hover:bg-secondary/80"
+                    className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 font-medium text-xs text-muted-foreground"
                   >
                     JamAI Assistant
                   </a>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Heart, Eye } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,17 +15,44 @@ interface FunctionCardProps {
 }
 
 export function FunctionCard({ card, className }: FunctionCardProps) {
-  const [likes, setLikes] = useState(card.likes);
+  const [likes, setLikes] = useState(0);
+  const [views, setViews] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const { t, language } = useLanguage();
-
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleLike = (e: React.MouseEvent) => {
+  // Fetch likes/views from API
+  async function fetchStats() {
+    try {
+      const response = await fetch('/api/likes');
+      const data = await response.json();
+      if (data.cards && data.cards[card.id]) {
+        setLikes(data.cards[card.id].count || 0);
+        setViews(data.cards[card.id].views || 0);
+      }
+    } catch (error) {
+      console.error('Error fetching likes:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchStats();
+  }, [card.id]);
+
+  const handleLike = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setLikes(prev => prev + 1);
-    setIsLiked(true);
-    setTimeout(() => setIsLiked(false), 1000);
+    try {
+      await fetch('/api/likes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardId: card.id }),
+      });
+      setIsLiked(true);
+      setTimeout(() => setIsLiked(false), 1000);
+      fetchStats();
+    } catch (error) {
+      console.error('Error updating likes:', error);
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -58,21 +85,29 @@ export function FunctionCard({ card, className }: FunctionCardProps) {
           <p className="text-sm text-muted-foreground">{description}</p>
         </CardContent>
         <CardFooter className="flex-none items-center justify-between border-t bg-muted/10 px-4 py-3">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className={cn(
-              "h-8 gap-1.5 px-2 transition-transform",
-              isLiked && "scale-125"
-            )}
-            onClick={handleLike}
-          >
-            <Heart className={cn(
-              "h-4 w-4 transition-colors",
-              isLiked ? "fill-destructive text-destructive" : "text-muted-foreground"
-            )} />
-            <span className="text-xs text-muted-foreground">{likes}</span>
-          </Button>
+          <div className="flex items-center space-x-3">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className={cn(
+                "h-8 gap-1.5 px-2 transition-transform",
+                isLiked && "scale-125"
+              )}
+              onClick={handleLike}
+            >
+              <Heart className={cn(
+                "h-4 w-4 transition-colors",
+                isLiked ? "fill-destructive text-destructive" : "text-muted-foreground"
+              )} />
+              <span className="text-xs text-muted-foreground">{likes}</span>
+            </Button>
+            
+            <div className="flex items-center gap-1.5">
+              <Eye className="h-4 w-4 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">{views}</span>
+            </div>
+          </div>
+          
           <Button 
             variant="ghost" 
             size="sm"

@@ -12,7 +12,8 @@ export enum TextTransformationType {
   PLAIN_TO_OG = 'plain-to-og',
   PLAIN_TO_SSML = 'plain-to-ssml',
   SMART_TYPOGRAPHY = 'smart-typography',
-  PLAIN_TO_JSON_YAML = 'plain-to-json-yaml'
+  PLAIN_TO_JSON_YAML = 'plain-to-json-yaml',
+  PRAISE = 'praise-ebty-molodec'
 }
 
 /**
@@ -305,6 +306,18 @@ export function transformText(text: string, type: TextTransformationType): strin
       return smartTypography(text);
     case TextTransformationType.PLAIN_TO_JSON_YAML:
       return plainToJsonYaml(text);
+    case TextTransformationType.PRAISE:
+      const words = text.split(/\s+/).filter(Boolean);
+      const emojis = ['👏','👍','🎉','🤩','🙌','💯','🚀','🌟'];
+      let result = '';
+      for (let i = 0; i < words.length; i++) {
+        result += words[i];
+        if (i < words.length - 1) {
+          const rand = emojis[Math.floor(Math.random() * emojis.length)];
+          result += rand;
+        }
+      }
+      return result;
     default:
       return cleanText(text);
   }

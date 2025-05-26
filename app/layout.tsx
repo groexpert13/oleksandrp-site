@@ -5,15 +5,17 @@ import { Toaster } from '@/components/ui/sonner';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
-
+import { SplashScreen } from '@/components/ui/SplashScreen';
 
 export const metadata: Metadata = {
-  title: 'feature by Oleksandr P.',
+  title: 'oleksandr P.',
   description: 'A showcase of useful features and tools',
   icons: {
-    icon: [{ url: '/oleksandrp_logo.png', type: 'image/png' }],
-    shortcut: '/oleksandrp_logo.png',
-    apple: '/oleksandrp_logo.png',
+    icon: [
+      { url: '/oleksandrp_logo.webp', type: 'image/webp' },
+    ],
+    shortcut: '/oleksandrp_logo.webp',
+    apple: '/oleksandrp_logo.webp',
   },
 };
 
@@ -25,6 +27,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <body>
+        <SplashScreen />
         <ThemeProvider defaultTheme="system" storageKey="function-showcase-theme">
           <LanguageProvider>
             <Toaster />

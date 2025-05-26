@@ -17,6 +17,7 @@ export function RandomYesNo() {
   const [isRunning, setIsRunning] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [question, setQuestion] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   const startCountdown = () => {
@@ -63,7 +64,9 @@ export function RandomYesNo() {
             <Textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value.slice(0, 600))}
-              placeholder={t('askQuestion')}
+              placeholder={isFocused ? '' : t('askQuestion')}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               className="w-full min-h-[120px] resize-none p-4 border border-input bg-background text-base text-center focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               style={{ fontFamily: 'inherit' }}
               disabled={isRunning}
