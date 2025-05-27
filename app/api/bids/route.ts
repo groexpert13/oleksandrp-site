@@ -50,44 +50,54 @@ const auctionOptions = generateAuctionOptions();
 
 // GET handler to retrieve auction details for an item
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const itemId = searchParams.get('itemId');
-  
-  if (!itemId) {
-    return NextResponse.json({ error: 'Item ID is required' }, { status: 400 });
-  }
-  
-  const sql = getSql();
+  try {
+    const { searchParams } = new URL(request.url);
+    const itemId = searchParams.get('itemId');
 
-  // Look up auction from DB if available
-  let auction = inMemoryAuctions[itemId];
-  const auctionResult = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
-  const dbAuction = Array.isArray(auctionResult) ? auctionResult : (auctionResult as any).rows as any[];
-  if (dbAuction.length) {
-    auction = { ...dbAuction[0] } as AuctionOption;
-  }
+    if (!itemId) {
+      return NextResponse.json({ error: 'Item ID is required' }, { status: 400 });
+    }
 
-  if (!auction) {
-    return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
-  }
+    let auction = inMemoryAuctions[itemId];
+    let itemBids: any[] = [];
 
-  const bids = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
-  const itemBids = bids as any[];
-  if (itemBids.length === 0) {
-    // fall back to in-memory bids
-    const mem = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
-    itemBids.push(...mem);
-  }
+    try {
+      const sql = getSql();
+      const auctionResult = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
+      const dbAuction = Array.isArray(auctionResult) ? auctionResult : (auctionResult as any).rows as any[];
+      if (dbAuction.length) {
+        auction = { ...dbAuction[0] } as AuctionOption;
+      }
 
-  const highestBid = itemBids.length > 0 ? itemBids[0] : null;
-  const result = {
-    ...auction,
-    currentHighestBid: highestBid?.amount,
-    currentHighestBidder: highestBid ? maskEmail(highestBid.email) : undefined,
-    bidCount: itemBids.length,
-  } as AuctionOption & { bidCount: number };
-  
-  return NextResponse.json(result);
+      const bids = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
+      itemBids = bids as any[];
+    } catch (dbError) {
+      // Log database errors but continue with in-memory data
+      console.error('DB error retrieving auction:', dbError);
+    }
+
+    if (!auction) {
+      return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
+    }
+
+    if (itemBids.length === 0) {
+      const mem = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
+      itemBids.push(...mem);
+    }
+
+    const highestBid = itemBids.length > 0 ? itemBids[0] : null;
+    const result = {
+      ...auction,
+      currentHighestBid: highestBid?.amount,
+      currentHighestBidder: highestBid ? maskEmail(highestBid.email) : undefined,
+      bidCount: itemBids.length,
+    } as AuctionOption & { bidCount: number };
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('Error fetching auction data:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
 
 // POST handler for submitting a bid
