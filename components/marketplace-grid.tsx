@@ -18,6 +18,7 @@ export function MarketplaceGrid({
   activeCategory = "all" 
 }: MarketplaceGridProps) {
   const [filteredItems, setFilteredItems] = useState<MarketplaceItem[]>(items);
+  const [refreshKey, setRefreshKey] = useState(0); // Для принудительного обновления карточек
   const { t, currentLanguage } = useLanguage();
 
   useEffect(() => {
@@ -48,6 +49,19 @@ export function MarketplaceGrid({
     setFilteredItems(filtered);
   }, [searchQuery, items, activeCategory, currentLanguage]);
 
+  // Настройка периодического обновления данных о ставках
+  useEffect(() => {
+    // Обновляем каждые 60 секунд
+    const refreshInterval = setInterval(() => {
+      console.log('Refreshing marketplace grid items...');
+      setRefreshKey(prev => prev + 1);
+    }, 60000);
+    
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, []);
+
   if (filteredItems.length === 0) {
     return (
       <div className="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center animate-in fade-in-50">
@@ -62,7 +76,7 @@ export function MarketplaceGrid({
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {filteredItems.map((item) => (
-        <MarketplaceItemCard key={item.id} item={item} />
+        <MarketplaceItemCard key={`${item.id}-${refreshKey}`} item={item} />
       ))}
     </div>
   );

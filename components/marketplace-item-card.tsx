@@ -11,17 +11,26 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Language } from "@/lib/i18n/translations";
 import { getFakeBidData, maskEmail } from "@/lib/utils/fake-bids";
+import type { FakeBidData } from "@/lib/utils/fake-bids";
 
 interface MarketplaceItemCardProps {
   item: MarketplaceItem;
   className?: string;
 }
 
+interface AuctionData {
+  currentHighestBid?: number;
+  currentHighestBidder?: string;
+  bidCount?: number;
+  hasRealBids?: boolean;
+}
+
 export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProps) {
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [fakeBid, setFakeBid] = useState(() => getFakeBidData(item.id));
+  const [fakeBid, setFakeBid] = useState<FakeBidData | null>(null);
+  const [auctionData, setAuctionData] = useState<AuctionData | null>(null);
   const { t, currentLanguage } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -43,8 +52,33 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
     }
   }
 
+  // Fetch auction data from API
+  async function fetchAuctionData() {
+    try {
+      const response = await fetch(`/api/bids?itemId=${item.id}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Auction data for card ${item.id}:`, data);
+        setAuctionData(data);
+      }
+    } catch (error) {
+      console.error('Error fetching auction data for card:', error);
+    }
+  }
+
   useEffect(() => {
     fetchStats();
+    fetchAuctionData();
+    
+    // Fallback to fake data if API fails
+    const data = getFakeBidData(item.id);
+    setFakeBid(data);
   }, [item.id]);
 
   const handleLike = async (e: React.MouseEvent) => {
@@ -72,6 +106,12 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
     cardRef.current.style.setProperty('--mouse-y', `${y}px`);
   };
 
+  // Determine which bidder email to show
+  const bidderEmail = auctionData?.currentHighestBidder || (fakeBid ? maskEmail(fakeBid.email) : '');
+  
+  // Determine bid count to show
+  const bidCount = auctionData?.bidCount || (fakeBid ? fakeBid.count : 0);
+
   return (
     <Link href={`/marketplace/${item.slug}`} className="block h-full no-underline">
       <Card
@@ -90,7 +130,7 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
         <CardContent className="flex-1 pb-6">
           <p className="text-sm text-muted-foreground mb-4">{description}</p>
           <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-            <User className="h-3 w-3" /> {maskEmail(fakeBid.email)}
+            <User className="h-3 w-3" /> {bidderEmail}
           </p>
           <div className="flex flex-wrap gap-2">
             <Badge variant="secondary" className="text-xs">
@@ -127,7 +167,7 @@ export function MarketplaceItemCard({ item, className }: MarketplaceItemCardProp
             </div>
             <div className="flex items-center gap-1.5">
               <Users className="h-4 w-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">{fakeBid.count}</span>
+              <span className="text-xs text-muted-foreground">{bidCount}</span>
             </div>
           </div>
 

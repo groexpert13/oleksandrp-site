@@ -18,6 +18,7 @@ export interface AuctionOption {
   currentHighestBid?: number;
   currentHighestBidder?: string; // Masked email
   bidCount?: number;
+  hasRealBids?: boolean; // Flag to indicate if there are real bids
 }
 
 // In-memory database for demonstration

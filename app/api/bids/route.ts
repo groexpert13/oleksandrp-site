@@ -53,46 +53,134 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const itemId = searchParams.get('itemId');
+    console.log(`GET request for auction data, itemId: ${itemId}`);
 
     if (!itemId) {
       return NextResponse.json({ error: 'Item ID is required' }, { status: 400 });
     }
 
+    // Start with the in-memory auction data as fallback
     let auction = inMemoryAuctions[itemId];
     let itemBids: any[] = [];
+    let hasRealBids = false;
+    let highestBid = null;
+    let fakeBidCount = 0;
 
+    // Always try to get data from the database first
     try {
       const sql = getSql();
-      const auctionResult = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
-      const dbAuction = Array.isArray(auctionResult) ? auctionResult : (auctionResult as any).rows as any[];
-      if (dbAuction.length) {
-        auction = { ...dbAuction[0] } as AuctionOption;
+      console.log('Querying database for auction data');
+      
+      // Get bids from database - this is our primary source of truth
+      const bidsResult = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
+      console.log('Bid query result:', JSON.stringify(bidsResult));
+      
+      itemBids = Array.isArray(bidsResult) ? bidsResult : (bidsResult as any).rows || [];
+      
+      // If we have bids in the database, use those for highest bid
+      if (itemBids.length > 0) {
+        hasRealBids = true;
+        highestBid = itemBids[0];
+        console.log('Found highest bid in database Bid table:', JSON.stringify(highestBid));
       }
-
-      const bids = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
-      itemBids = bids as any[];
+      
+      // Get auction data from database
+      const auctionResult = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
+      console.log('AuctionOption query result:', JSON.stringify(auctionResult));
+      
+      const dbAuction = Array.isArray(auctionResult) ? auctionResult : (auctionResult as any).rows || [];
+      if (dbAuction.length > 0) {
+        auction = { ...dbAuction[0] } as AuctionOption;
+        console.log('Found auction in database:', JSON.stringify(auction));
+        
+        // If the auction has currentHighestBid and currentHighestBidder in the database,
+        // it means we have real bids - this takes precedence over Bid table
+        if (auction.currentHighestBid && auction.currentHighestBidder) {
+          hasRealBids = true;
+          // Only override the highest bid if we don't have one from the Bid table
+          // or if the one in AuctionOption is higher
+          if (!highestBid || auction.currentHighestBid > highestBid.amount) {
+            highestBid = {
+              amount: auction.currentHighestBid,
+              email: auction.currentHighestBidder // Already masked in the database
+            };
+            console.log('Using highest bid data from AuctionOption table:', JSON.stringify(highestBid));
+          }
+        }
+      }
     } catch (dbError) {
       // Log database errors but continue with in-memory data
       console.error('DB error retrieving auction:', dbError);
     }
 
     if (!auction) {
+      console.log('Auction not found, returning 404');
       return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
     }
 
-    if (itemBids.length === 0) {
-      const mem = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
-      itemBids.push(...mem);
+    // Get fake bids for count purposes
+    try {
+      const { getFakeBidData } = await import('@/lib/utils/fake-bids');
+      const fakeBids = getFakeBidData(itemId);
+      fakeBidCount = fakeBids.count || 0;
+      
+      // Only use fake data for highest bid if we don't have real bids
+      if (!hasRealBids) {
+        console.log(`No real bids found. Using ${fakeBidCount} fake bids for item ${itemId}`);
+        highestBid = {
+          email: fakeBids.email,
+          amount: auction.minBid // Use minimum bid as the amount for fake highest bid
+        };
+        console.log('Using fake bid data for highest bid:', JSON.stringify(highestBid));
+      } else {
+        console.log(`Found real bids. Adding ${fakeBidCount} fake bids to count only.`);
+      }
+    } catch (error) {
+      console.error('Error getting fake bid data:', error);
     }
-
-    const highestBid = itemBids.length > 0 ? itemBids[0] : null;
+    
+    // Check in-memory bids only if we don't have real bids from database
+    if (!hasRealBids) {
+      console.log('Checking in-memory bids');
+      const memBids = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
+      if (memBids.length > 0) {
+        // Only use in-memory bids if they're higher than fake bids
+        if (!highestBid || memBids[0].amount > highestBid.amount) {
+          highestBid = memBids[0];
+          console.log('Found higher bid in memory:', JSON.stringify(highestBid));
+        }
+      }
+    }
+    
+    // Determine the current highest bid and bidder
+    let currentHighestBid = auction.minBid; // Default to minimum bid
+    let currentHighestBidder = undefined;
+    
+    // If we have a highest bid, use it
+    if (highestBid) {
+      currentHighestBid = highestBid.amount;
+      // If the email is already masked (from AuctionOption table), use it as is
+      // Otherwise, mask it
+      currentHighestBidder = typeof highestBid.email === 'string' && 
+                            highestBid.email.includes('*') ? 
+                            highestBid.email : maskEmail(highestBid.email);
+      console.log(`Using highest bid: $${currentHighestBid} from ${currentHighestBidder}`);
+    }
+    
+    // Calculate total bid count
+    // If we have real bids, use the real bid count + fake bids
+    // If we don't have real bids, just use fake bid count
+    const totalBidCount = hasRealBids ? (itemBids.length + fakeBidCount) : fakeBidCount;
+    
     const result = {
       ...auction,
-      currentHighestBid: highestBid?.amount,
-      currentHighestBidder: highestBid ? maskEmail(highestBid.email) : undefined,
-      bidCount: itemBids.length,
-    } as AuctionOption & { bidCount: number };
+      currentHighestBid,
+      currentHighestBidder,
+      bidCount: totalBidCount,
+      hasRealBids // Add flag to indicate if there are real bids
+    } as AuctionOption & { bidCount: number, hasRealBids: boolean };
 
+    console.log('Returning auction result:', JSON.stringify(result));
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching auction data:', error);
@@ -105,6 +193,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { itemId, email, amount } = body;
+    console.log(`POST request for bid, itemId: ${itemId}, email: ${email}, amount: ${amount}`);
     
     // Validate inputs
     if (!itemId || !email || !amount) {
@@ -139,12 +228,53 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
     
-    // Check if higher than current highest bid
-    const currentBids = inMemoryBids.filter(bid => bid.itemId === itemId);
-    const highestBid = currentBids.length > 0 
-      ? Math.max(...currentBids.map(bid => bid.amount)) 
-      : 0;
+    // Check against both in-memory and database bids
+    let highestBid = 0;
+    let hasRealBids = false;
+    
+    // First check database bids - they are the source of truth
+    try {
+      const sql = getSql();
       
+      // Check AuctionOption table first - it has the most up-to-date highest bid
+      const dbAuctionResult = await sql`SELECT currentHighestBid FROM "AuctionOption" WHERE itemId = ${itemId}`;
+      const dbAuction = Array.isArray(dbAuctionResult) ? dbAuctionResult : (dbAuctionResult as any).rows || [];
+      
+      if (dbAuction.length > 0 && dbAuction[0].currentHighestBid) {
+        highestBid = dbAuction[0].currentHighestBid;
+        hasRealBids = true;
+        console.log(`Found highest bid in AuctionOption table: $${highestBid}`);
+      }
+      
+      // Also check Bid table as a backup
+      if (!hasRealBids) {
+        const dbBidsResult = await sql`SELECT amount FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC LIMIT 1`;
+        const dbBids = Array.isArray(dbBidsResult) ? dbBidsResult : (dbBidsResult as any).rows || [];
+        
+        if (dbBids.length > 0) {
+          hasRealBids = true;
+          if (dbBids[0].amount > highestBid) {
+            highestBid = dbBids[0].amount;
+            console.log(`Found higher bid in Bid table: $${highestBid}`);
+          }
+        }
+      }
+    } catch (dbError) {
+      console.error('DB error checking highest bid:', dbError);
+    }
+    
+    // Then check in-memory bids if we don't have real bids
+    if (!hasRealBids) {
+      const currentBids = inMemoryBids.filter(bid => bid.itemId === itemId);
+      if (currentBids.length > 0) {
+        const memHighestBid = Math.max(...currentBids.map(bid => bid.amount));
+        if (memHighestBid > highestBid) {
+          highestBid = memHighestBid;
+          console.log(`Found higher bid in memory: $${highestBid}`);
+        }
+      }
+    }
+    
     if (amount <= highestBid) {
       return NextResponse.json({ 
         error: `Bid must be higher than current highest bid ($${highestBid})` 
@@ -161,45 +291,99 @@ export async function POST(request: Request) {
       updatedAt: new Date()
     };
     
+    // Add to in-memory storage
     inMemoryBids.push(newBid);
 
+    // Create masked email for display
+    const maskedEmail = maskEmail(email);
+    console.log(`Original email: ${email}, masked email: ${maskedEmail}`);
+    
     // Update the auction with new highest bid
     inMemoryAuctions[itemId] = {
       ...inMemoryAuctions[itemId],
       currentHighestBid: amount,
-      currentHighestBidder: maskEmail(email),
-      bidCount: (inMemoryAuctions[itemId].bidCount || 0) + 1
+      currentHighestBidder: maskedEmail,
+      bidCount: (inMemoryAuctions[itemId].bidCount || 0) + 1,
+      hasRealBids: true
     };
 
     // Persist bid and auction to database
     try {
       const sql = getSql();
-      await sql.query(
-        'INSERT INTO "Bid" (id, itemId, email, amount, createdAt, updatedAt) VALUES ($1,$2,$3,$4,NOW(),NOW())',
-        [newBid.id, itemId, email, amount]
-      );
-      await sql.query(
-        `INSERT INTO "AuctionOption" (id, itemId, startDate, endDate, minBid, currentHighestBid, currentHighestBidder)
-         VALUES ($1,$2,$3,$4,$5,$6,$7)
-         ON CONFLICT (itemId) DO UPDATE SET currentHighestBid = $6, currentHighestBidder = $7`,
-        [inMemoryAuctions[itemId].id, itemId, inMemoryAuctions[itemId].startDate, inMemoryAuctions[itemId].endDate, inMemoryAuctions[itemId].minBid, amount, email]
-      );
+      
+      // First insert the bid with full email (for record keeping)
+      try {
+        await sql.query(
+          'INSERT INTO "Bid" (id, itemId, email, amount, createdAt, updatedAt) VALUES ($1,$2,$3,$4,NOW(),NOW())',
+          [newBid.id, itemId, email, amount]
+        );
+        console.log('Successfully inserted bid into database');
+      } catch (bidError) {
+        console.error('Failed to insert bid into database:', bidError);
+        // Continue execution even if bid insertion fails
+      }
+      
+      // Then update the auction with the new highest bid using masked email
+      try {
+        // Check if auction already exists
+        const existingAuction = await sql`SELECT id FROM "AuctionOption" WHERE itemId = ${itemId}`;
+        const auctionExists = Array.isArray(existingAuction) ? 
+                              existingAuction.length > 0 : 
+                              ((existingAuction as any).rows || []).length > 0;
+        
+        if (auctionExists) {
+          // Update existing auction
+          await sql.query(
+            `UPDATE "AuctionOption" 
+             SET currentHighestBid = $1, currentHighestBidder = $2 
+             WHERE itemId = $3`,
+            [amount, maskedEmail, itemId]
+          );
+          console.log('Successfully updated existing auction in database');
+        } else {
+          // Insert new auction
+          await sql.query(
+            `INSERT INTO "AuctionOption" (id, itemId, startDate, endDate, minBid, currentHighestBid, currentHighestBidder)
+             VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+            [inMemoryAuctions[itemId].id, itemId, inMemoryAuctions[itemId].startDate, inMemoryAuctions[itemId].endDate, inMemoryAuctions[itemId].minBid, amount, maskedEmail]
+          );
+          console.log('Successfully inserted new auction in database');
+        }
+      } catch (auctionError) {
+        console.error('Failed to update auction in database:', auctionError);
+        // Continue execution even if auction update fails
+      }
     } catch (e) {
+      console.error('DB error persisting bid:', e);
       // ignore DB errors for persistence
     }
     
     // Try to store in marketplace_stats and log sent email
     try {
       const sql = getSql();
-      await sql.query(
-        `INSERT INTO marketplace_stats (item_id, likes, views)
-         VALUES ($1, 0, 0)
-         ON CONFLICT (item_id) DO NOTHING`,
-        [itemId]
-      );
+      
+      // Insert marketplace stats
+      try {
+        await sql.query(
+          `INSERT INTO marketplace_stats (item_id, likes, views)
+           VALUES ($1, 0, 0)
+           ON CONFLICT (item_id) DO NOTHING`,
+          [itemId]
+        );
+        console.log('Successfully inserted/updated marketplace stats');
+      } catch (statsError) {
+        console.error('Failed to insert/update marketplace stats:', statsError);
+      }
 
-      await logEmail(sql, newBid.id, itemId, email, item.title, amount);
+      // Log the email
+      try {
+        await logEmail(sql, newBid.id, itemId, email, item.title, amount);
+        console.log('Successfully logged email');
+      } catch (emailError) {
+        console.error('Failed to log email:', emailError);
+      }
     } catch (error) {
+      console.error('Error with marketplace stats or email logging:', error);
       // Ignore errors with marketplace_stats or email logging
     }
     

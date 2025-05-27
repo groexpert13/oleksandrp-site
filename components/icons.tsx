@@ -6,6 +6,10 @@ import {
   CreditCard,
   Loader2,
   AlertTriangle,
+  Search,
+  FileText,
+  Zap,
+  Gavel,
   LucideProps
 } from "lucide-react";
 
@@ -16,5 +20,9 @@ export const Icons = {
   Clock,
   CreditCard,
   Loader2,
-  AlertTriangle
+  AlertTriangle,
+  Search,
+  FileText,
+  Zap,
+  Gavel
 }; 

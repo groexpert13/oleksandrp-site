@@ -1,8 +1,40 @@
 import { marketplaceItems } from '../marketplace-types';
 
+// Different email prefixes for variety
+const EMAIL_PREFIXES = [
+  'user', 'john', 'jane', 'alex', 'sarah', 'mike', 'emily', 'david', 'lisa', 'chris',
+  'anna', 'mark', 'sofia', 'peter', 'maria', 'andrew', 'kate', 'daniel', 'elena', 'nick',
+  'admin', 'developer', 'designer', 'manager', 'artist', 'writer', 'editor', 'buyer',
+  'seller', 'trader', 'collector', 'bidder', 'customer', 'client', 'expert', 'pro'
+];
+
+// Different email domains for variety
+const EMAIL_DOMAINS = [
+  'gmail.com', 'outlook.com', 'yahoo.com', 'hotmail.com', 'icloud.com',
+  'protonmail.com', 'tutanota.com', 'zoho.com',
+  'aol.com', 'live.com', 'msn.com', 'fastmail.com', 'mail.com'
+];
+
+// Generate diverse emails
+function generateEmail(index: number): string {
+  const prefix = EMAIL_PREFIXES[index % EMAIL_PREFIXES.length];
+  const domain = EMAIL_DOMAINS[index % EMAIL_DOMAINS.length];
+  
+  // Add variety to email generation
+  const variations = [
+    `${prefix}${Math.floor(index / EMAIL_PREFIXES.length) + 1}@${domain}`,
+    `${prefix}.${String.fromCharCode(97 + (index % 26))}@${domain}`,
+    `${prefix}_${Math.floor(Math.random() * 99) + 1}@${domain}`,
+    `${prefix}${String.fromCharCode(97 + (index % 26))}${Math.floor(index / 10) + 1}@${domain}`,
+    `${prefix}.user${Math.floor(index / 5) + 1}@${domain}`
+  ];
+  
+  return variations[index % variations.length];
+}
+
 // Generate enough unique emails for every possible bid
 const TOTAL_EMAILS = marketplaceItems.length * 5;
-export const EMAILS = Array.from({ length: TOTAL_EMAILS }, (_, i) => `user${i + 1}@gmail.com`);
+export const EMAILS = Array.from({ length: TOTAL_EMAILS }, (_, i) => generateEmail(i));
 
 function shuffle<T>(array: T[]): T[] {
   const a = [...array];
@@ -30,7 +62,15 @@ export function __resetFakeBidData() {
 
 export function maskEmail(email?: string): string {
   if (!email) return '';
+  
+  // If the email already contains asterisks, it's already masked
+  if (email.includes('*')) {
+    return email;
+  }
+  
   const [name, domain] = email.split('@');
+  if (!domain) return email; // Return as is if not a valid email format
+  
   if (name.length <= 2) return `${name}@${domain}`;
   const start = name.slice(0, 2);
   const end = name.length > 4 ? name.slice(-2) : name.slice(-1);

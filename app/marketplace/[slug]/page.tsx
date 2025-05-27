@@ -21,6 +21,10 @@ import {
   Timer,
   Users,
   User,
+  Clock,
+  TrendingUp,
+  Star,
+  Eye,
 } from "lucide-react";
 import { getFakeBidData, maskEmail } from "@/lib/utils/fake-bids";
 import { Badge } from "@/components/ui/badge";
@@ -137,11 +141,11 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Revenue:** Revenue share from sales, affiliate links.`,
     
     uk: `**Тригер:** FOMO + дефіцит (24-годинні таймери).\n
-**Механіка:** ШІ публікує 3 тизери рідкісних цифрових або фізичних "дропів"; голосування визначає, який відкриється повністю. Дроп-переможець доступний рівно 2 години.\n
+**Механіка:** ШІ публікує 3 тизери рідкісних цифрових або фізичних "дропів"; голосування визначає, який відкриється повністю. Переможний дроп доступний рівно 2 години.\n
 **Дохід:** Частка доходу з продажів, партнерські посилання.`,
     
     ru: `**Триггер:** FOMO + дефицит (24-часовые таймеры).\n
-**Механика:** ИИ публикует 3 тизера редких цифровых или физических "дропов"; голосование определяет, какой откроется полностью. Победивший дроп доступен ровно 2 часа.\n
+**Механика:** ИИ публикует 3 тизера редких цифровых или физических "дропов"; голосование определяет, какой откроется полностью. Победный дроп доступен ровно 2 часа.\n
 **Доход:** Рев-доля с продаж, партнёрские ссылки.`,
     
     es: `**Disparador:** FOMO + escasez (temporizadores de 24 horas).\n
@@ -154,11 +158,11 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Revenue:** "Skip-puzzle" passes, merchandise with "Labyrinth" symbolism.`,
     
     uk: `**Тригер:** Змінна винагорода + гейміфікація.\n
-**Механіка:** Кожні 6 годин бот викладає "кімнату" з 3 загадками; опитування вирішує, який предмет досліджувати. Правильний вибір відкриває наступне приміщення та рідкісні досягнення.\n
+**Механіка:** Кожні 6 годин бот викладає "кімнату" з 3 загадками; опитування вирішує, який предмет досліджувати. Правильний вибір відкриває наступну кімнату та рідкісні досягнення.\n
 **Дохід:** Пропуск "скіп-пазла", мерч із символікою "Лабіринту".`,
     
     ru: `**Триггер:** Переменное вознаграждение + геймификация.\n
-**Механика:** Каждые 6 часов бот выкладывает "комнату" с 3 загадками; опрос решает, какой предмет исследовать. Правильный выбор открывает следующее помещение и редкие ачивки.\n
+**Механика:** Каждые 6 часов бот выкладывает "комнату" с 3 загадками; опрос решает, какой предмет исследовать. Правильный выбор открывает следующую комнату и редкие достижения.\n
 **Доход:** Пропуск "скип-пазла", мерч с символикой "Лабиринта".`,
     
     es: `**Disparador:** Recompensa variable + gamificación.\n
@@ -175,7 +179,7 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Дохід:** Спонсорські рубрики брендів self-care.`,
     
     ru: `**Триггер:** Любопытство + социальное доказательство "как я".\n
-**Механика:** ИИ агрегирует присланные анонимные признания, стирает детали и публикует 3 сюжета-затравки. Голосование выбирает, какую историю раскрыть целиком.\n
+**Механика:** ИИ агрегирует присланные анонимные признания, стирает детали и публикует 3 сюжета-затравки. Голосование выбирает, какую историю раскрыть полностью.\n
 **Доход:** Спонсорские рубрики брендов self-care.`,
     
     es: `**Disparador:** Curiosidad + prueba social "como yo".\n
@@ -209,7 +213,7 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Дохід:** Сертифікати, B2B-ліцензування контенту.`,
     
     ru: `**Триггер:** Потребность в компетентности + микрообучение.\n
-**Механика:** Каждый день ИИ даёт 100-сл. кейс-ситуацию; голосование решает стратегию. Победный вариант разворачивается завтра.\n
+**Механика:** Каждый день ИИ даёт 100-сл. кейс-ситуацию; голосование решает стратегию. Победный вариант разворачивается на следующий день.\n
 **Доход:** Сертификаты, B2B-лицензия контента.`,
     
     es: `**Disparador:** Necesidad de competencia + microaprendizaje.\n
@@ -222,11 +226,11 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Revenue:** B2B fee for campaign, revenue share from sales.`,
     
     uk: `**Тригер:** Соціальна ідентичність + ефект участі.\n
-**Механіка:** Бренд-партнер приносить завдання (новий смак напою). ШІ генерує 3 варіанти позиціонування; аудиторія голосує, тестує, ділиться відгуками.\n
+**Механіка:** Бренд-партнер приносить завдання (новий смак напою). ШІ генерує 3 варіанти позиціонування; аудиторія голосує, тестує та ділиться відгуками.\n
 **Дохід:** B2B-плата за кампанію, частка доходу з продажів.`,
     
     ru: `**Триггер:** Социальная идентичность + эффект участия.\n
-**Механика:** Бренд-партнёр приносит задачу (новый вкус напитка). AI генерирует 3 варианта позиционирования; аудитория голосует, тестирует, делится отзывами.\n
+**Механика:** Бренд-партнёр приносит задачу (новый вкус напитка). AI генерирует 3 варианта позиционирования; аудитория голосует, тестирует и делится фидбеком.\n
 **Доход:** B2B-fee за кампанию, рев-доля с продаж.`,
     
     es: `**Disparador:** Identidad social + efecto de participación.\n
@@ -239,11 +243,11 @@ const detailedDescriptions: Record<string, Record<Language, string>> = {
 **Revenue:** Sales of sticker packs and NFT frames.`,
     
     uk: `**Тригер:** Ностальгія посилює позитивний афект і репости.\n
-**Механіка:** ШІ публікує кадр-ескіз у стилі 90-х, 00-х і 10-х; опитування обирає епоху. Переможна епоха розкривається у форматі short-video з фільтром VHS/HD та ретро-звуком.\n
+**Механіка:** ШІ публікує кадр-ескіз у стилі 90-х, 00-х і 10-х; опитування обирає епоху. Переможна епоха розкривається у форматі короткого відео з VHS/HD фільтром та ретро-звуком.\n
 **Дохід:** Продажі стікерпаків і NFT-кадрів.`,
     
     ru: `**Триггер:** Ностальгия усиливает позитивный аффект и репосты.\n
-**Механика:** ИИ публикует кадр-эскиз в стиле 90-х, 00-х и 10-х; опрос выбирает эпоху. Победная эпоха раскрывается в формате short-video с фильтром VHS/HD и ретро-саундом.\n
+**Механика:** ИИ публикует кадр-эскиз в стиле 90-х, 00-х и 10-х; опрос выбирает эпоху. Победная эпоха раскрывается в формате короткого видео с VHS/HD фильтром и ретро-звуком.\n
 **Доход:** Продажи стикерпаков и NFT-кадров.`,
     
     es: `**Disparador:** La nostalgia aumenta el afecto positivo y los reenvíos.\n
@@ -287,6 +291,7 @@ const scalingSections: Record<Language, string> = {
 4. Métricas: retención del día 7, proporción de reacciones a visualizaciones, ARPPU del nivel de pago.
 5. Crecimiento: promoción cruzada con canales temáticos (pre-anuncios cuestan 4-6$ CPM al dirigirse a audiencia UA).`,
 };
+
 Object.keys(detailedDescriptions).forEach(slug => {
   Object.entries(scalingSections).forEach(([lang, section]) => {
     const header = section.trim().split("\n")[0];
@@ -295,6 +300,66 @@ Object.keys(detailedDescriptions).forEach(slug => {
     }
   });
 });
+
+// Add translations for features
+const featureTranslations = {
+  en: {
+    aiPowered: {
+      title: "AI-Powered Automation",
+      description: "Fully automated content generation and user interaction management"
+    },
+    communityEngagement: {
+      title: "Community Engagement",
+      description: "Interactive voting system with gamification elements"
+    },
+    monetizationReady: {
+      title: "Monetization Ready",
+      description: "Multiple revenue streams built into the core mechanics"
+    }
+  },
+  uk: {
+    aiPowered: {
+      title: "Автоматизація на базі ШІ",
+      description: "Повністю автоматизоване створення контенту та керування взаємодією з користувачами"
+    },
+    communityEngagement: {
+      title: "Залучення спільноти",
+      description: "Інтерактивна система голосування з елементами гейміфікації"
+    },
+    monetizationReady: {
+      title: "Готовність до монетизації",
+      description: "Кілька потоків доходу, вбудованих в основну механіку"
+    }
+  },
+  ru: {
+    aiPowered: {
+      title: "Автоматизация на базе ИИ",
+      description: "Полностью автоматизированное создание контента и управление взаимодействием с пользователями"
+    },
+    communityEngagement: {
+      title: "Вовлечение сообщества",
+      description: "Интерактивная система голосования с элементами геймификации"
+    },
+    monetizationReady: {
+      title: "Готовность к монетизации",
+      description: "Несколько потоков дохода, встроенных в основную механику"
+    }
+  },
+  es: {
+    aiPowered: {
+      title: "Automatización con IA",
+      description: "Generación de contenido y gestión de interacción con usuarios totalmente automatizada"
+    },
+    communityEngagement: {
+      title: "Participación comunitaria",
+      description: "Sistema interactivo de votación con elementos de gamificación"
+    },
+    monetizationReady: {
+      title: "Listo para monetizar",
+      description: "Múltiples fuentes de ingresos integradas en las mecánicas principales"
+    }
+  }
+};
 
 export default function MarketplaceItemPage() {
   const router = useRouter();
@@ -338,6 +403,16 @@ export default function MarketplaceItemPage() {
       
       // Fetch auction data
       fetchAuctionData(foundItem.id);
+      
+      // Set up periodic refresh of auction data
+      const refreshInterval = setInterval(() => {
+        console.log('Refreshing auction data...');
+        fetchAuctionData(foundItem.id);
+      }, 30000); // Refresh every 30 seconds
+      
+      return () => {
+        clearInterval(refreshInterval);
+      };
     }
     
     setLoading(false);
@@ -347,19 +422,25 @@ export default function MarketplaceItemPage() {
     try {
       // Ensure itemId is a string
       const id = Array.isArray(itemId) ? itemId[0] : itemId;
-      const response = await fetch(`/api/bids?itemId=${id}`);
+      console.log(`Fetching auction data for item: ${id}`);
+      
+      const response = await fetch(`/api/bids?itemId=${id}`, {
+        // Add cache: 'no-store' to prevent caching
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
       if (response.ok) {
         const data = await response.json();
-        if (!data.bidCount || data.bidCount === 0) {
-          const fake = getFakeBidData(id);
-          data.bidCount = fake.count;
-          data.currentHighestBidder = maskEmail(fake.email);
-          // Show minimum bid as the current highest when using fake data
-          data.currentHighestBid = data.minBid;
-        }
+        console.log('Received auction data:', data);
+        
+        // API now handles the combination of real and fake bids
+        // We don't need to modify data here, just use it as is
         setAuction(data);
       } else {
-        console.error('Failed to fetch auction data');
+        console.error('Failed to fetch auction data:', await response.text());
       }
     } catch (error) {
       console.error('Error fetching auction data:', error);
@@ -369,9 +450,6 @@ export default function MarketplaceItemPage() {
   const handleBack = () => {
     router.back();
   };
-
-
-
 
   const getRemainingTime = (endDate: Date) => {
     const now = new Date();
@@ -451,7 +529,9 @@ export default function MarketplaceItemPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache"
         },
+        cache: "no-store",
         body: JSON.stringify({
           itemId: item.id,
           email,
@@ -465,11 +545,46 @@ export default function MarketplaceItemPage() {
         setValidationError(data.error || t('bidError'));
         toast({ title: t('bidError') });
       } else {
+        // Clear form fields
         setBidAmount("");
+        setEmail("");
+        
+        // Show success message
         toast({ title: t('bidSuccess') });
-        fetchAuctionData(item.id);
+        
+        // Update local auction state to show the new bid immediately
+        // This provides instant feedback before the server data arrives
+        if (auction) {
+          // Always set hasRealBids to true when we place a real bid
+          const hasRealBids = true;
+          
+          // Calculate the new bid count
+          // If we already had real bids, just increment the count
+          // If this is the first real bid, add it to the fake bid count
+          const fakeBidCount = auction.hasRealBids ? 0 : (auction.bidCount || 0);
+          const realBidCount = auction.hasRealBids ? ((auction.bidCount || 0) - fakeBidCount) + 1 : 1;
+          const newBidCount = fakeBidCount + realBidCount;
+          
+          console.log(`Updating local auction state: amount=${originalAmount}, bidder=${maskEmail(email)}, count=${newBidCount}`);
+          
+          setAuction({
+            ...auction,
+            currentHighestBid: originalAmount,
+            currentHighestBidder: maskEmail(email),
+            bidCount: newBidCount,
+            hasRealBids: true
+          });
+        }
+        
+        // Then fetch the latest data from server after a short delay
+        // to ensure database has been updated
+        setTimeout(() => {
+          console.log('Fetching updated auction data after bid');
+          fetchAuctionData(item.id);
+        }, 1000); // Increased delay to ensure database update completes
       }
     } catch (error) {
+      console.error('Error submitting bid:', error);
       setValidationError(t('bidError'));
       toast({ title: t('bidError') });
     } finally {
@@ -487,17 +602,33 @@ export default function MarketplaceItemPage() {
 
   if (!item) {
     return (
-      <div className="container max-w-4xl py-8">
-        <Button variant="ghost" onClick={handleBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('back')}
-        </Button>
-        <Card className="p-8 text-center">
-          <CardTitle className="text-2xl mb-4">{t('itemNotFound')}</CardTitle>
-          <CardContent>
-            <p>{t('itemNotFoundDesc')}</p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-transparent">
+        <div className="container max-w-5xl py-12">
+          <Button 
+            variant="ghost" 
+            onClick={handleBack} 
+            className="mb-8 group hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
+            {t('back')}
+          </Button>
+          
+          <div className="flex items-center justify-center min-h-[400px]">
+            <Card className="max-w-md mx-auto border-0 shadow-lg">
+              <CardContent className="p-12 text-center">
+                <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Icons.Search className="h-8 w-8 text-slate-400" />
+                </div>
+                <CardTitle className="text-2xl mb-3 text-slate-900 dark:text-slate-100">
+                  {t('itemNotFound')}
+                </CardTitle>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {t('itemNotFoundDesc')}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }
@@ -508,162 +639,308 @@ export default function MarketplaceItemPage() {
   const detailedDescription = detailedDescriptions[item.slug]?.[currentLanguage as Language] || detailedDescriptions[item.slug]?.en;
 
   return (
-    <div className="container max-w-6xl py-6 px-4 sm:px-6 sm:py-8">
-      <Button variant="ghost" onClick={handleBack} className="mb-4 sm:mb-6 -ml-2">
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        {t('back')}
-      </Button>
-
-      <Card className="overflow-hidden border-none shadow-lg">
-        <div className="bg-gradient-to-r from-primary/20 to-secondary/20 p-4 sm:p-8">
-          <div className="flex flex-col items-start justify-between">
-            <div className="w-full">
-              <div className="flex items-center flex-wrap gap-2 mb-1">
-                <Badge variant="secondary">
-                  telegram
-                </Badge>
-                {item.tags?.map((tag: string) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold mb-2">{title}</h1>
-              <p className="text-muted-foreground mb-4">{description}</p>
-              {auction && (
-                <div className="flex items-center text-sm mb-2">
-                  <Timer className="mr-1 h-4 w-4" />
-                  <span>
-                    <span className="font-medium">{t('timeLeft')}:</span> {getRemainingTime(auction.endDate)}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
+    <div className="min-h-screen bg-transparent">
+      <div className="container max-w-7xl py-8 px-4 sm:px-6 lg:px-8">
+        {/* Navigation */}
+        <div className="mb-8">
+          <Button 
+            variant="ghost" 
+            onClick={handleBack} 
+            className="group hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200 -ml-2"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
+            {t('back')}
+          </Button>
         </div>
 
-        <CardContent className="p-4 sm:p-8">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-            <div className="lg:col-span-2">
-              {detailedDescription && (
-                <ReactMarkdown className="mb-6 prose dark:prose-invert max-w-none">
-                  {detailedDescription}
-                </ReactMarkdown>
-              )}
-            </div>
+        {/* Hero Section */}
+        <div className="mb-12">
+          <Card className="border border-slate-200 dark:border-slate-700 shadow-sm bg-transparent overflow-hidden">
+            <div className="relative bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700 px-8 py-12 lg:px-12 lg:py-16">
+              {/* Background Pattern */}
+              <div className="relative">
+                {/* Tags */}
+                <div className="flex items-center flex-wrap gap-2 mb-4">
+                  <Badge 
+                    variant="secondary" 
+                    className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 border-0 px-3 py-1 text-sm font-medium"
+                  >
+                    telegram
+                  </Badge>
+                  {item.tags?.map((tag: string) => (
+                    <Badge 
+                      key={tag} 
+                      variant="outline" 
+                      className="border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-400 bg-white/50 dark:bg-slate-800/50"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
 
-            <div className="lg:col-span-1">
-              <Card className="bg-card border border-muted/30 shadow-sm overflow-hidden rounded-xl sticky top-4">
+                {/* Title and Description */}
+                <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4 leading-tight">
+                  {title}
+                </h1>
+                <p className="text-xl text-slate-600 dark:text-slate-400 mb-6 leading-relaxed max-w-3xl">
+                  {description}
+                </p>
+
+                {/* Auction Timer */}
                 {auction && (
-                  <div className="divide-y divide-border">
-                    <div className="p-5 space-y-4">
-                      <h3 className="text-lg font-medium tracking-tight flex items-center gap-2">
-                        <Icons.Award className="h-5 w-5 text-primary" />
+                  <div className="inline-flex items-center bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700">
+                    <Clock className="mr-2 h-4 w-4 text-amber-500" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      <span className="font-semibold">{t('timeLeft')}:</span> {getRemainingTime(auction.endDate)}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Content Column */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Description Card */}
+            <Card className="border border-slate-200 dark:border-slate-700 shadow-sm bg-transparent overflow-hidden">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <Icons.FileText className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  Project Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {detailedDescription && (
+                  <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:text-slate-900 dark:prose-headings:text-slate-100 prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-strong:text-slate-900 dark:prose-strong:text-slate-100">
+                    <ReactMarkdown>{detailedDescription}</ReactMarkdown>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Features Highlights */}
+            <Card className="border border-slate-200 dark:border-slate-700 shadow-sm bg-transparent">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                    <Star className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  </div>
+                  Key Features
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div className="flex items-start gap-3 p-4 border border-slate-200 dark:border-slate-700 bg-transparent rounded-xl">
+                    <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mt-0.5">
+                      <Icons.Zap className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{featureTranslations[currentLanguage as Language]?.aiPowered?.title || featureTranslations.en.aiPowered.title}</h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{featureTranslations[currentLanguage as Language]?.aiPowered?.description || featureTranslations.en.aiPowered.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 border border-slate-200 dark:border-slate-700 bg-transparent rounded-xl">
+                    <div className="w-6 h-6 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mt-0.5">
+                      <Users className="h-3 w-3 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{featureTranslations[currentLanguage as Language]?.communityEngagement?.title || featureTranslations.en.communityEngagement.title}</h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{featureTranslations[currentLanguage as Language]?.communityEngagement?.description || featureTranslations.en.communityEngagement.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 border border-slate-200 dark:border-slate-700 bg-transparent rounded-xl">
+                    <div className="w-6 h-6 bg-amber-100 dark:bg-amber-900 rounded-full flex items-center justify-center mt-0.5">
+                      <DollarSign className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{featureTranslations[currentLanguage as Language]?.monetizationReady?.title || featureTranslations.en.monetizationReady.title}</h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{featureTranslations[currentLanguage as Language]?.monetizationReady?.description || featureTranslations.en.monetizationReady.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Auction Sidebar */}
+          <div className="lg:col-span-2">
+            <div className="sticky top-8">
+              <Card className="border border-slate-200 dark:border-slate-700 shadow-sm bg-transparent overflow-hidden">
+                {auction && (
+                  <>
+                    {/* Auction Header */}
+                    <div className="bg-transparent px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+                      <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+                        <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900 rounded-lg flex items-center justify-center">
+                          <Icons.Award className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        </div>
                         {t('auctionDetails')}
                       </h3>
-                      
-                      <div className="bg-accent/5 rounded-lg p-4 space-y-3">
-                        <div className="flex flex-col space-y-1 bg-background/50 p-3 rounded-md border border-muted/20">
-                          <span className="text-xs uppercase font-medium text-muted-foreground">{t('currentBid')}</span>
-                          <span className="font-semibold text-2xl">
-                            {auction.currentHighestBid
-                              ? `$${Math.round(auction.currentHighestBid * 0.75)}`
-                              : t('noBids')}
-                          </span>
+                    </div>
+                    
+                    {/* Auction Stats */}
+                    <div className="p-6 space-y-6">
+                      {/* Current Bid - Prominent Display */}
+                      <div className="text-center p-6 bg-transparent rounded-2xl border border-slate-200 dark:border-slate-600">
+                        <div className="text-sm font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-2">
+                          {t('currentBid')}
                         </div>
-                        
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('minimumBid')}</span>
-                            <span className="font-medium">${Math.round(auction.minBid * 0.75)}</span>
-                          </div>
-                          
-                          <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('bids')}</span>
-                            <span className="font-medium">{auction.bidCount || 0}</span>
-                          </div>
+                        <div className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-1">
+                          {auction.currentHighestBid
+                            ? `$${Math.round(auction.currentHighestBid * 0.75).toLocaleString()}`
+                            : t('noBids')}
                         </div>
-                        
-                        {auction.currentHighestBidder && (
-                          <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                            <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('highestBidder')}</span>
-                            <span className="font-medium flex items-center">
-                              <User className="h-4 w-4 mr-2 text-muted-foreground" />
-                              {auction.currentHighestBidder}
-                            </span>
+                        {auction.currentHighestBid && (
+                          <div className="text-xs text-slate-500 dark:text-slate-400">
+                            25% launch discount applied
                           </div>
                         )}
+                      </div>
+                      
+                      {/* Stats Grid */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 bg-transparent rounded-xl border border-slate-200 dark:border-slate-700">
+                          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">
+                            {t('minimumBid')}
+                          </div>
+                          <div className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                            ${Math.round(auction.minBid * 0.75).toLocaleString()}
+                          </div>
+                        </div>
                         
-                        <div className="bg-background/50 p-3 rounded-md border border-muted/20">
-                          <span className="text-xs uppercase font-medium text-muted-foreground block mb-1">{t('endDate')}</span>
-                          <span className="font-medium flex items-center">
-                            <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
-                            {formatDate(auction.endDate)}
-                          </span>
+                        <div className="p-4 bg-transparent rounded-xl border border-slate-200 dark:border-slate-700">
+                          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">
+                            {t('bids')}
+                          </div>
+                          <div className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                            {auction.bidCount || 0}
+                            <TrendingUp className="h-4 w-4 text-green-500" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Additional Info */}
+                      {auction.currentHighestBidder && (
+                        <div className="p-4 bg-transparent rounded-xl border border-slate-200 dark:border-slate-700">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                              <User className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <div>
+                              <div className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
+                                {t('highestBidder')}
+                              </div>
+                              <div className="font-medium text-blue-900 dark:text-blue-100">
+                                {auction.currentHighestBidder}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="p-4 bg-transparent rounded-xl border border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900 rounded-full flex items-center justify-center">
+                            <Calendar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wide">
+                              {t('endDate')}
+                            </div>
+                            <div className="font-medium text-amber-900 dark:text-amber-100">
+                              {formatDate(auction.endDate)}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="p-5 space-y-4">
-                      <h3 className="text-lg font-medium tracking-tight flex items-center gap-2">
-                        <Icons.CreditCard className="h-5 w-5 text-primary" />
+                    <hr className="border-slate-200 dark:border-slate-700" />
+                    
+                    {/* Bidding Form */}
+                    <div className="p-6 space-y-6">
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+                        <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                          <Icons.CreditCard className="h-3 w-3 text-green-600 dark:text-green-400" />
+                        </div>
                         {t('placeBid')}
                       </h3>
                       
                       {isAuctionActive ? (
-                        <div className="space-y-4">
-                          <div className="flex flex-col space-y-2">
-                            <Label htmlFor="email" className="text-sm font-medium">{t('emailLabel')}</Label>
+                        <div className="space-y-5">
+                          {/* Email Input */}
+                          <div className="space-y-2">
+                            <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                              {t('emailLabel')}
+                            </Label>
                             <div className="relative">
-                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                               <Input
                                 id="email"
                                 type="email"
                                 placeholder="your@email.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="pl-10 w-full bg-background/50 border-muted/30"
+                                className="pl-10 h-11 bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                               />
                             </div>
                           </div>
                           
-                          <div className="flex flex-col space-y-2">
+                          {/* Bid Amount Input */}
+                          <div className="space-y-2">
                             <div className="flex justify-between items-center">
-                              <Label htmlFor="amount" className="text-sm font-medium">{t('bidAmountLabel')}</Label>
+                              <Label htmlFor="amount" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                                {t('bidAmountLabel')}
+                              </Label>
                               {validationError && (
-                                <p className="text-xs text-destructive">{validationError}</p>
+                                <p className="text-xs text-red-600 dark:text-red-400 font-medium">
+                                  {validationError}
+                                </p>
                               )}
                             </div>
                             <div className="relative">
-                              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                               <Input
                                 id="amount"
                                 type="number"
                                 placeholder={suggestedBid.toString()}
                                 value={bidAmount}
                                 onChange={(e) => setBidAmount(e.target.value)}
-                                className="pl-10 w-full bg-background/50 border-muted/30"
+                                className="pl-10 h-11 bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                               />
                             </div>
                           </div>
                           
-                          <div className="flex flex-wrap gap-2 pt-1">
-                            {bidSuggestions.map((suggestion) => (
-                              <Button
-                                key={suggestion}
-                                variant="outline"
-                                size="sm"
-                                onClick={() => setBidAmount(suggestion.toString())}
-                                className="flex-grow bg-background/50 border-muted/30 hover:bg-primary/10 hover:text-primary"
-                              >
-                                ${suggestion}
-                              </Button>
-                            ))}
+                          {/* Quick Bid Buttons */}
+                          <div className="space-y-2">
+                            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+                              Quick Bids
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                              {bidSuggestions.map((suggestion) => (
+                                <Button
+                                  key={suggestion}
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => setBidAmount(suggestion.toString())}
+                                  className="h-9 text-xs font-medium bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200"
+                                >
+                                  ${suggestion.toLocaleString()}
+                                </Button>
+                              ))}
+                            </div>
                           </div>
                           
+                          {/* Submit Button */}
                           <Button
-                            className="w-full bg-primary hover:bg-primary/90"
+                            className="w-full h-11 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                             onClick={handleBidSubmit}
+                            disabled={bidLoading}
                           >
                             {bidLoading ? (
                               <>
@@ -671,45 +948,55 @@ export default function MarketplaceItemPage() {
                                 {t('processing')}
                               </>
                             ) : (
-                              t('submitBid')
+                              <>
+                                <Icons.Gavel className="mr-2 h-4 w-4" />
+                                {t('submitBid')}
+                              </>
                             )}
                           </Button>
                           
-                          <div className="mt-2 border rounded-md bg-muted/5 p-2 text-xs text-muted-foreground">
-                            <p>{t('bidDisclaimer')} {t('participationNote')}</p>
+                          {/* Disclaimer */}
+                          <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                              {t('bidDisclaimer')} {t('participationNote')}
+                            </p>
                           </div>
                         </div>
                       ) : (
-                        <Alert variant="destructive">
-                          <AlertTitle>
-                            <Icons.AlertTriangle className="h-4 w-4 inline-block mr-2" />
+                        <Alert className="border border-slate-200 dark:border-slate-700 bg-transparent">
+                          <Icons.AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                          <AlertTitle className="text-red-900 dark:text-red-100">
                             {t('auctionEnded')}
                           </AlertTitle>
-                          <AlertDescription>
+                          <AlertDescription className="text-red-700 dark:text-red-300">
                             {t('auctionEndedDesc')}
                           </AlertDescription>
                         </Alert>
                       )}
                     </div>
-                  </div>
+                  </>
                 )}
                 
                 {!auction && (
-                  <div className="p-5 flex items-center justify-center min-h-[300px]">
+                  <div className="p-12 flex items-center justify-center">
                     <div className="flex flex-col items-center space-y-4">
-                      <Icons.Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                      <p className="text-muted-foreground">{t('loadingAuction')}</p>
+                      <Icons.Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+                      <p className="text-slate-500 dark:text-slate-400">{t('loadingAuction')}</p>
                     </div>
                   </div>
                 )}
               </Card>
             </div>
           </div>
-        </CardContent>
-      </Card>
-      <p className="mt-6 text-sm text-muted-foreground text-center">
-        {t('projectDetailsNote')}
-      </p>
+        </div>
+
+        {/* Footer Note */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            {t('projectDetailsNote')}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
