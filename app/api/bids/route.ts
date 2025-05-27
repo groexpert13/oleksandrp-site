@@ -61,7 +61,7 @@ export async function GET(request: Request) {
 
   // Look up auction from DB if available
   let auction = inMemoryAuctions[itemId];
-  const dbAuction = (await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`) as any[];
+  const dbAuction = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
   if (dbAuction.length) {
     auction = { ...dbAuction[0] } as AuctionOption;
   }
@@ -70,7 +70,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
   }
 
-  const itemBids = (await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`) as any[];
+  const bids = await sql`SELECT * FROM "Bid" WHERE itemId = ${itemId} ORDER BY amount DESC`;
+  const itemBids = bids as any[];
   if (itemBids.length === 0) {
     // fall back to in-memory bids
     const mem = inMemoryBids.filter(bid => bid.itemId === itemId).sort((a,b) => b.amount - a.amount);
@@ -200,4 +201,4 @@ export async function POST(request: Request) {
     console.error('Error processing bid:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-} 
+}
