@@ -61,7 +61,8 @@ export async function GET(request: Request) {
 
   // Look up auction from DB if available
   let auction = inMemoryAuctions[itemId];
-  const dbAuction = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
+  const auctionResult = await sql`SELECT * FROM "AuctionOption" WHERE itemId = ${itemId}`;
+  const dbAuction = Array.isArray(auctionResult) ? auctionResult : (auctionResult as any).rows as any[];
   if (dbAuction.length) {
     auction = { ...dbAuction[0] } as AuctionOption;
   }
