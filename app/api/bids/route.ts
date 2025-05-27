@@ -201,4 +201,4 @@ export async function POST(request: Request) {
     console.error('Error processing bid:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-} 
+}
