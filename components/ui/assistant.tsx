@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/co
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { GlassCard } from "@/components/ui/glass-card"
+import { Markdown } from "@/components/ui/markdown"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { agents } from "@/lib/agents"
@@ -17,9 +18,7 @@ export function Assistant() {
   const { t } = useTranslation()
   const [open, setOpen] = React.useState(false)
   const [input, setInput] = React.useState("")
-  const [messages, setMessages] = React.useState<Message[]>([
-    { id: "m1", role: "assistant", content: t("assistant.welcome") },
-  ])
+  const [messages, setMessages] = React.useState<Message[]>([])
   const [persona, setPersona] = React.useState<string>("advisor")
   // Persist persona and messages
   React.useEffect(() => {
@@ -35,6 +34,11 @@ export function Assistant() {
   }, [])
   React.useEffect(() => {
     try { localStorage.setItem("assistant-persona", persona) } catch {}
+    // info message on persona switch
+    setMessages((m) => [
+      ...m,
+      { id: `sys-${Date.now()}`, role: "assistant", content: `Switched to: ${agents[persona as keyof typeof agents].name}. ${agents[persona as keyof typeof agents].hint}` },
+    ])
   }, [persona])
   React.useEffect(() => {
     try { localStorage.setItem("assistant-history", JSON.stringify(messages.slice(-100))) } catch {}
@@ -366,7 +370,7 @@ export function Assistant() {
           </div>
         </SheetHeader>
         <div className="flex flex-col h-full">
-          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 12 }}>
+          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 24 }}>
             {/* Persona banner - sticky */}
             <div className="sticky top-0 z-10 -mt-4 pt-4 pb-2 bg-gradient-to-b from-background to-transparent">
               <div className="glass-card px-3 py-2 rounded-md text-xs text-muted-foreground">
@@ -375,8 +379,8 @@ export function Assistant() {
             </div>
             {messages.map((m, i) => (
               <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : "mr-auto max-w-[85%]"}>
-                <div className="text-sm whitespace-pre-wrap leading-relaxed">
-                  {m.content}
+                <div className="text-sm leading-relaxed">
+                  <Markdown content={m.content} />
                   {i === messages.length - 1 && isStreaming && m.role === "assistant" && (
                     <span className="inline-flex items-center pl-1 align-middle">
                       <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 animate-bounce [animation-delay:-0.2s]"></span>
