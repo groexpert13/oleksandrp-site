@@ -144,23 +144,60 @@ export function Assistant() {
       if (contentType.includes("text/event-stream")) {
         const reader = res.body?.getReader()
         if (!reader) return
-        let acc = ""
+        const decoder = new TextDecoder()
+        let sseBuffer = ""
+        let rendered = ""
+        let pending = ""
         setMessages((m) => [...m, { id: id + "a", role: "assistant", content: "" }])
         setIsStreaming(true)
         while (true) {
           const { done, value } = await reader.read()
           if (done) break
-          acc += new TextDecoder().decode(value)
-          // naive chunk append
-          setMessages((m) => {
-            const last = m[m.length - 1]
-            if (last && last.id === id + "a") {
-              return [...m.slice(0, -1), { ...last, content: acc }]
-            }
-            return m
-          })
-          if (!nearBottom) {
-            setUnreadCount(Math.max(0, messages.length + 1 - lastSeenCountRef.current))
+          sseBuffer += decoder.decode(value, { stream: true })
+          const events = sseBuffer.split("\n\n")
+          sseBuffer = events.pop() || ""
+          for (const evt of events) {
+            const dataLine = evt.split("\n").find((l) => l.startsWith("data: "))
+            if (!dataLine) continue
+            try {
+              const payload = JSON.parse(dataLine.slice(6))
+              if (payload?.type === "response.output_text.delta") {
+                const deltaText: string = payload.delta || ""
+                pending += deltaText
+                const flushable = /[\s\.,!?:;\)]$/.test(pending) || pending.length > 24
+                const hasNewline = /\n/.test(deltaText)
+                if (flushable) {
+                  rendered += pending
+                  pending = ""
+                  setMessages((m) => {
+                    const last = m[m.length - 1]
+                    if (last && last.id === id + "a") {
+                      return [...m.slice(0, -1), { ...last, content: rendered }]
+                    }
+                    return m
+                  })
+                  if (!nearBottom) {
+                    setUnreadCount(Math.max(0, (messages.length + 1) - lastSeenCountRef.current))
+                  }
+                  if (hasNewline) {
+                    const el = messagesRef.current
+                    if (el && nearBottom) el.scrollTop = el.scrollHeight
+                  }
+                }
+              } else if (payload?.type === "response.output_text.done") {
+                if (pending) {
+                  rendered += pending
+                  pending = ""
+                  setMessages((m) => {
+                    const last = m[m.length - 1]
+                    if (last && last.id === id + "a") {
+                      return [...m.slice(0, -1), { ...last, content: rendered }]
+                    }
+                    return m
+                  })
+                }
+              }
+            } catch {}
           }
         }
         setIsStreaming(false)
