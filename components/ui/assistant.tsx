@@ -393,10 +393,10 @@ export function Assistant() {
         chunksRef.current = []
         const form = new FormData()
         form.append("audio", blob, "speech-part.webm")
-        // Whisper can bias language; here we explicitly set target language code
-        // uk -> українська, ru -> русская, en -> English; auto uses browser locale
-        const l = sttLang === "auto" ? (navigator.language?.slice(0,2) || "en") : sttLang
-        form.append("language", l)
+        // Use auto-detect, but if user wants Ukrainian output while speaking Russian,
+        // request server-side translation by specifying target="uk".
+        if (sttLang !== "auto") form.append("language", sttLang)
+        if (sttLang === "uk") form.append("target", "uk")
         try {
           const res = await fetch("/api/stt", { method: "POST", body: form })
           const data = await res.json()
@@ -551,7 +551,8 @@ export function Assistant() {
               >
                 {isRecording ? <Square className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
               </button>
-              {/* STT language selector */}
+              {/* STT language selector (hidden by default, auto-detect). Unhide if user wants manual control. */}
+              {/*
               <div className="absolute left-10 top-1/2 -translate-y-1/2">
                 <Select value={sttLang} onValueChange={(v)=>setSttLang(v as any)}>
                   <SelectTrigger className="h-8 w-24 text-xs glass">
@@ -565,6 +566,7 @@ export function Assistant() {
                   </SelectContent>
                 </Select>
               </div>
+              */}
               {/* Attach */}
               <label
                 className="absolute right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full glass flex items-center justify-center hover:shadow cursor-pointer"
