@@ -121,6 +121,7 @@ export const translations = {
       voice: "Voice",
       listening: "Listening…",
       attach: "Attach",
+      welcome: "Hi! I can help with AI, automation and projects. How can I assist?",
       personas: {
         advisor: "Automation Advisor",
         lead: "Tech Lead",
@@ -251,6 +252,7 @@ export const translations = {
       voice: "Голос",
       listening: "Прослуховування…",
       attach: "Додати файл",
+      welcome: "Привіт! Допоможу з AI, автоматизацією та проектами. З чого почнемо?",
       personas: {
         advisor: "Консультант з автоматизації",
         lead: "Технічний лід",

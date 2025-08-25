@@ -18,7 +18,7 @@ export function Assistant() {
   const [open, setOpen] = React.useState(false)
   const [input, setInput] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([
-    { id: "m1", role: "assistant", content: "Hi! I can help with AI, automation and projects. How can I assist?" },
+    { id: "m1", role: "assistant", content: t("assistant.welcome") },
   ])
   const [persona, setPersona] = React.useState<string>("advisor")
   // Persist persona and messages

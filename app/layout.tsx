@@ -79,7 +79,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
           <LanguageProvider defaultLanguage="en">{children}</LanguageProvider>
         </ThemeProvider>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/oleksandrp_logo.webp" type="image/webp" />
         <link rel="manifest" href="/manifest.webmanifest" />
       </body>
     </html>
