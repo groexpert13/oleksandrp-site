@@ -1,6 +1,6 @@
 "use client"
 import * as React from "react"
-import { Bot, Send, Command, Mic, Paperclip, Square } from "lucide-react"
+import { Bot, Send, Command, Mic, Paperclip, Square, ChevronUp, ChevronDown } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -61,6 +61,17 @@ export function Assistant() {
   const [isStreaming, setIsStreaming] = React.useState(false)
   const [nearBottom, setNearBottom] = React.useState(true)
   const lastSeenCountRef = React.useRef<number>(1)
+  const [bannerCollapsed, setBannerCollapsed] = React.useState(false)
+
+  React.useEffect(() => {
+    try {
+      const b = localStorage.getItem("assistant-banner-collapsed")
+      if (b === "1") setBannerCollapsed(true)
+    } catch {}
+  }, [])
+  React.useEffect(() => {
+    try { localStorage.setItem("assistant-banner-collapsed", bannerCollapsed ? "1" : "0") } catch {}
+  }, [bannerCollapsed])
 
   // Ensure message list has enough bottom padding not to be hidden by sticky footer
   React.useEffect(() => {
@@ -371,10 +382,16 @@ export function Assistant() {
         </SheetHeader>
         <div className="flex flex-col h-full">
           <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 24 }}>
-            {/* Persona banner - sticky */}
+            {/* Persona banner - sticky, collapsible */}
             <div className="sticky top-0 z-10 -mt-4 pt-4 pb-2 bg-gradient-to-b from-background to-transparent">
-              <div className="glass-card px-3 py-2 rounded-md text-xs text-muted-foreground">
-                {agents[persona as keyof typeof agents]?.hint}
+              <div className="glass-card px-3 py-2 rounded-md text-xs text-muted-foreground flex items-center justify-between">
+                <div className={`transition-all ${bannerCollapsed ? "line-clamp-1" : ""}`}>
+                  <span className="font-medium text-foreground/80">{agents[persona as keyof typeof agents]?.name}:</span>
+                  <span className="ml-1">{agents[persona as keyof typeof agents]?.hint}</span>
+                </div>
+                <button aria-label="Toggle banner" className="ml-3 glass rounded-md px-2 py-1 text-foreground hover:shadow" onClick={() => setBannerCollapsed(!bannerCollapsed)}>
+                  {bannerCollapsed ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronUp className="h-3.5 w-3.5" />}
+                </button>
               </div>
             </div>
             {messages.map((m, i) => (

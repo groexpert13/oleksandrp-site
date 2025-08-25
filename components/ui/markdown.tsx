@@ -1,4 +1,6 @@
 import React from "react"
+import hljs from "highlight.js"
+import "highlight.js/styles/github-dark.css"
 
 function escapeHtml(input: string) {
   return input
@@ -74,6 +76,11 @@ function renderMarkdown(md: string): string {
 
 export function Markdown({ content }: { content: string }) {
   const html = React.useMemo(() => renderMarkdown(content), [content])
+  React.useEffect(() => {
+    document.querySelectorAll("pre code").forEach((el) => {
+      try { hljs.highlightElement(el as HTMLElement) } catch {}
+    })
+  }, [html])
   return <div className="prose prose-invert text-sm max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
 }
 
