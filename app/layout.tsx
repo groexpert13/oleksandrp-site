@@ -80,6 +80,7 @@ export default function RootLayout({
           <LanguageProvider defaultLanguage="en">{children}</LanguageProvider>
         </ThemeProvider>
         <link rel="icon" href="/oleksandrp_logo.webp" type="image/webp" />
+        <link rel="apple-touch-icon" href="/oleksandrp_logo.webp" />
         <link rel="manifest" href="/manifest.webmanifest" />
       </body>
     </html>
