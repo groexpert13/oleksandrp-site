@@ -426,9 +426,9 @@ export function Assistant() {
           </div>
         </SheetHeader>
         <div className="flex flex-col h-full">
-          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto pt-2 px-4 pb-4 space-y-3" style={{ paddingBottom: uiState.footerHeight + 80 }}>
-            {/* Persona banner - sticky, collapsible, higher position */}
-            <div className="sticky top-2 z-10 pb-2 bg-gradient-to-b from-background via-background/95 to-transparent">
+          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto px-4 pb-4 space-y-3" style={{ paddingBottom: uiState.footerHeight + 80 }}>
+            {/* Persona banner - sticky, collapsible, at the very top */}
+            <div className="sticky top-0 z-10 pt-2 pb-2 bg-gradient-to-b from-background via-background/95 to-transparent">
               <div className={`glass-card px-3 py-2 rounded-md text-xs text-muted-foreground flex items-center justify-between transition-all duration-500 ${
                 uiState.recentlyChangedAgent 
                   ? 'border-green-500/60 shadow-[0_0_10px_rgba(34,197,94,0.3)] ring-1 ring-green-500/30' 
@@ -463,7 +463,7 @@ export function Assistant() {
                 </div>
               </GlassCard>
             ))}
-            <div className={`pointer-events-none sticky bottom-2 w-full flex justify-center transition-opacity ${uiState.showJump ? "opacity-100" : "opacity-0"}`}>
+            <div className={`pointer-events-none sticky w-full flex justify-center transition-opacity ${uiState.showJump ? "opacity-100" : "opacity-0"}`} style={{ bottom: uiState.footerHeight + 20 }}>
               <div className="pointer-events-auto">
                 <Button size="sm" className="glass" onClick={() => { const el = messagesRef.current; if (el) { el.scrollTop = el.scrollHeight + 2000; setUiState(prev => ({ ...prev, unreadCount: 0 })); lastSeenCountRef.current = messages.length; } }}>
                   {uiState.unreadCount > 0 ? `Jump to latest · ${uiState.unreadCount}` : "Jump to latest"}
