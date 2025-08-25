@@ -336,16 +336,23 @@ export function Assistant() {
                 {agents[persona as keyof typeof agents]?.hint}
               </div>
             </div>
-            {messages.map((m) => (
+            {messages.map((m, i) => (
               <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : "mr-auto max-w-[85%]"}>
                 <div className="text-sm whitespace-pre-wrap leading-relaxed">
                   {m.content}
+                  {i === messages.length - 1 && isStreaming && m.role === "assistant" && (
+                    <span className="inline-flex items-center pl-1 align-middle">
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 animate-bounce [animation-delay:-0.2s]"></span>
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 mx-0.5 animate-bounce [animation-delay:-0.1s]"></span>
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 animate-bounce"></span>
+                    </span>
+                  )}
                 </div>
               </GlassCard>
             ))}
             <div className={`pointer-events-none sticky bottom-2 w-full flex justify-center transition-opacity ${showJump ? "opacity-100" : "opacity-0"}`}>
               <div className="pointer-events-auto">
-                <Button size="sm" className="glass" onClick={() => { const el = messagesRef.current; if (el) el.scrollTop = el.scrollHeight }}>
+                <Button size="sm" className="glass" onClick={() => { const el = messagesRef.current; if (el) { el.scrollTop = el.scrollHeight; setUnreadCount(0); lastSeenCountRef.current = messages.length; } }}>
                   {unreadCount > 0 ? `Jump to latest · ${unreadCount}` : "Jump to latest"}
                 </Button>
               </div>
