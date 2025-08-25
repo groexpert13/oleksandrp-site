@@ -62,6 +62,24 @@ export function Assistant() {
   const recognitionRef = React.useRef<any>(null)
   const baseInputRef = React.useRef<string>("")
   const [interim, setInterim] = React.useState("")
+  // STT language preference
+  const [sttLang, setSttLang] = React.useState<"auto" | "uk" | "ru" | "en">("auto")
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem("assistant-stt-lang") as any
+      if (saved === "uk" || saved === "ru" || saved === "en" || saved === "auto") setSttLang(saved)
+    } catch {}
+  }, [])
+  React.useEffect(() => {
+    try { localStorage.setItem("assistant-stt-lang", sttLang) } catch {}
+  }, [sttLang])
+
+  const sttLangToLocale = React.useCallback((l: "auto"|"uk"|"ru"|"en") => {
+    if (l === "uk") return "uk-UA"
+    if (l === "ru") return "ru-RU"
+    if (l === "en") return "en-US"
+    return navigator.language || "en-US"
+  }, [])
   const mediaRecorderRef = React.useRef<MediaRecorder | null>(null)
   const chunksRef = React.useRef<Blob[]>([])
   const streamTimerRef = React.useRef<number | null>(null)
@@ -283,7 +301,8 @@ export function Assistant() {
       }
       const rec = new SpeechRecognition()
       recognitionRef.current = rec
-      rec.lang = navigator.language || "en-US"
+      // Force recognition language based on user preference (e.g., speak RU but transcribe in UK)
+      rec.lang = sttLangToLocale(sttLang)
       rec.continuous = true
       rec.interimResults = true
       baseInputRef.current = input
@@ -374,7 +393,10 @@ export function Assistant() {
         chunksRef.current = []
         const form = new FormData()
         form.append("audio", blob, "speech-part.webm")
-        form.append("language", navigator.language || "en")
+        // Whisper can bias language; here we explicitly set target language code
+        // uk -> українська, ru -> русская, en -> English; auto uses browser locale
+        const l = sttLang === "auto" ? (navigator.language?.slice(0,2) || "en") : sttLang
+        form.append("language", l)
         try {
           const res = await fetch("/api/stt", { method: "POST", body: form })
           const data = await res.json()
@@ -460,6 +482,15 @@ export function Assistant() {
                       <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 animate-bounce"></span>
                     </span>
                   )}
+                  {/* Contextual CTA buttons when agent suggests actions */}
+                  {agents[persona as keyof typeof agents]?.ui?.showCTAButtons && m.role === "assistant" && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>Contact developer</Button>
+                      <Button size="sm" variant="outline" onClick={() => toggleVoice()}>
+                        {isRecording ? "Stop recording" : "Record voice"}
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </GlassCard>
             ))}
@@ -520,6 +551,20 @@ export function Assistant() {
               >
                 {isRecording ? <Square className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
               </button>
+              {/* STT language selector */}
+              <div className="absolute left-10 top-1/2 -translate-y-1/2">
+                <Select value={sttLang} onValueChange={(v)=>setSttLang(v as any)}>
+                  <SelectTrigger className="h-8 w-24 text-xs glass">
+                    <SelectValue placeholder="Lang" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="auto">Auto</SelectItem>
+                    <SelectItem value="uk">Українська</SelectItem>
+                    <SelectItem value="ru">Русский</SelectItem>
+                    <SelectItem value="en">English</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               {/* Attach */}
               <label
                 className="absolute right-12 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full glass flex items-center justify-center hover:shadow cursor-pointer"

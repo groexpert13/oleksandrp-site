@@ -6,6 +6,11 @@ export interface AgentSpec {
   system: string
   model: string
   hint: string
+  ui?: {
+    // Suggest interactive UI elements in chat
+    showRecordButton?: boolean
+    showCTAButtons?: boolean
+  }
 }
 
 // Pragmatic 2025 pick (price/perf): GPT-4o mini or 4.1-mini; fallback to gpt-4o
@@ -35,6 +40,7 @@ ALWAYS END WITH: "For a detailed automation strategy tailored to your business, 
 
 Remember: You're not just answering questions, you're uncovering business needs and creating opportunities for professional consultation.`,
     hint: "Business automation opportunities and ROI-focused solutions",
+    ui: { showRecordButton: true, showCTAButtons: true },
   },
   lead: {
     id: "lead", 
@@ -66,6 +72,7 @@ ALWAYS END WITH: "To develop a comprehensive AI implementation strategy for your
 
 Focus on business value, not technical complexity.`,
     hint: "AI strategy, implementation planning, and technical architecture",
+    ui: { showRecordButton: true, showCTAButtons: true },
   },
   product: {
     id: "product",
@@ -97,6 +104,7 @@ ALWAYS END WITH: "To create a detailed AI product strategy with technical specif
 
 Think product success, not just technical features.`,
     hint: "AI product strategy, user experience, and market positioning",
+    ui: { showRecordButton: true, showCTAButtons: true },
   },
   analyst: {
     id: "analyst",
@@ -128,6 +136,7 @@ ALWAYS END WITH: "For a comprehensive data strategy with custom analytics soluti
 
 Focus on business insights and decision-making, not technical data processing.`,
     hint: "Data strategy, business intelligence, and AI-powered analytics",
+    ui: { showRecordButton: true, showCTAButtons: true },
   },
 }
 
