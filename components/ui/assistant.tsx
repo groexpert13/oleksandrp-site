@@ -484,10 +484,30 @@ export function Assistant() {
                   )}
                   {/* Contextual CTA buttons when agent suggests actions */}
                   {agents[persona as keyof typeof agents]?.ui?.showCTAButtons && m.role === "assistant" && (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>Contact developer</Button>
-                      <Button size="sm" variant="outline" onClick={() => toggleVoice()}>
-                        {isRecording ? "Stop recording" : "Record voice"}
+                    <div className="mt-3 flex flex-col sm:flex-row gap-2">
+                      <Button 
+                        size="sm" 
+                        variant="default" 
+                        onClick={() => {
+                          const contactSection = document.getElementById('contact')
+                          if (contactSection) {
+                            setOpen(false) // Close assistant first
+                            setTimeout(() => {
+                              contactSection.scrollIntoView({ behavior: 'smooth' })
+                            }, 200)
+                          }
+                        }}
+                        className="flex-1 sm:flex-initial"
+                      >
+                        {t("assistant.buttons.contactDeveloper")}
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => toggleVoice()}
+                        className="flex-1 sm:flex-initial"
+                      >
+                        {isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
                       </Button>
                     </div>
                   )}

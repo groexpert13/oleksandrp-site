@@ -128,6 +128,13 @@ export const translations = {
         product: "AI Product Strategist",
         analyst: "Business Intelligence Analyst",
       },
+      buttons: {
+        contactDeveloper: "Contact developer",
+        recordVoice: "Record voice",
+        stopRecording: "Stop recording",
+        scheduleConsultation: "Schedule consultation",
+        learnMore: "Learn more",
+      },
     },
   },
   uk: {
@@ -258,6 +265,13 @@ export const translations = {
         lead: "AI архітектор рішень",
         product: "AI продуктовий стратег", 
         analyst: "Бізнес-аналітик",
+      },
+      buttons: {
+        contactDeveloper: "Зв'язатися з розробником",
+        recordVoice: "Записати голос",
+        stopRecording: "Зупинити запис",
+        scheduleConsultation: "Домовитися про консультацію",
+        learnMore: "Дізнатися більше",
       },
     },
   },
