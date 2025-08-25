@@ -12,7 +12,7 @@ import { agents } from "@/lib/agents"
 import { useTranslation } from "@/lib/i18n/language-context"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
-type Message = { id: string; role: "user" | "assistant"; content: string }
+type Message = { id: string; role: "user" | "assistant" | "system"; content: string }
 
 export function Assistant() {
   const { t } = useTranslation()
@@ -37,7 +37,7 @@ export function Assistant() {
     // info message on persona switch
     setMessages((m) => [
       ...m,
-      { id: `sys-${Date.now()}`, role: "assistant", content: `Switched to: ${agents[persona as keyof typeof agents].name}. ${agents[persona as keyof typeof agents].hint}` },
+      { id: `sys-${Date.now()}`, role: "system", content: `Switched to: ${agents[persona as keyof typeof agents].name}. ${agents[persona as keyof typeof agents].hint}` },
     ])
   }, [persona])
   React.useEffect(() => {
@@ -151,7 +151,7 @@ export function Assistant() {
         res = await fetch("/api/assistant", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, persona, history: messages.map(({ role, content }) => ({ role, content })) }),
+          body: JSON.stringify({ message: text, persona, history: messages.filter((mm)=>mm.role!=="system").map(({ role, content }) => ({ role, content })) }),
         })
       }
       // If streaming – parse SSE-like stream
@@ -196,7 +196,7 @@ export function Assistant() {
                   }
                   if (hasNewline) {
                     const el = messagesRef.current
-                    if (el && nearBottom) el.scrollTop = el.scrollHeight
+                    if (el && nearBottom) el.scrollTop = el.scrollHeight + 1000
                   }
                 }
               } else if (payload?.type === "response.output_text.done") {
@@ -395,9 +395,15 @@ export function Assistant() {
               </div>
             </div>
             {messages.map((m, i) => (
-              <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : "mr-auto max-w-[85%]"}>
+              <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : m.role === "system" ? "mx-auto max-w-[90%] border-dashed" : "mr-auto max-w-[85%]"}>
                 <div className="text-sm leading-relaxed">
-                  <Markdown content={m.content} />
+                  {m.role === "system" ? (
+                    <div className="text-xs text-muted-foreground">
+                      <Markdown content={m.content} />
+                    </div>
+                  ) : (
+                    <Markdown content={m.content} />
+                  )}
                   {i === messages.length - 1 && isStreaming && m.role === "assistant" && (
                     <span className="inline-flex items-center pl-1 align-middle">
                       <span className="inline-block w-1.5 h-1.5 rounded-full bg-foreground/60 animate-bounce [animation-delay:-0.2s]"></span>
