@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { agents } from "@/lib/agents"
 import { useTranslation } from "@/lib/i18n/language-context"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
 type Message = { id: string; role: "user" | "assistant"; content: string }
 
@@ -52,6 +53,10 @@ export function Assistant() {
   const footerRef = React.useRef<HTMLDivElement | null>(null)
   const [footerHeight, setFooterHeight] = React.useState(0)
   const [showJump, setShowJump] = React.useState(false)
+  const [unreadCount, setUnreadCount] = React.useState(0)
+  const [isStreaming, setIsStreaming] = React.useState(false)
+  const [nearBottom, setNearBottom] = React.useState(true)
+  const lastSeenCountRef = React.useRef<number>(1)
 
   // Ensure message list has enough bottom padding not to be hidden by sticky footer
   React.useEffect(() => {
@@ -67,19 +72,27 @@ export function Assistant() {
   React.useEffect(() => {
     const el = messagesRef.current
     if (!el) return
-    const nearBottom = el.scrollHeight - (el.scrollTop + el.clientHeight) < 120
-    if (nearBottom) {
+    const nb = el.scrollHeight - (el.scrollTop + el.clientHeight) < 120
+    setNearBottom(nb)
+    if (nb) {
       el.scrollTop = el.scrollHeight
+      setUnreadCount(0)
+      lastSeenCountRef.current = messages.length
     }
-    setShowJump(!nearBottom)
+    setShowJump(!nb)
   }, [messages, open])
 
   // Track scroll to toggle Jump button
   const onMessagesScroll = React.useCallback(() => {
     const el = messagesRef.current
     if (!el) return
-    const nearBottom = el.scrollHeight - (el.scrollTop + el.clientHeight) < 120
-    setShowJump(!nearBottom)
+    const nb = el.scrollHeight - (el.scrollTop + el.clientHeight) < 120
+    setNearBottom(nb)
+    setShowJump(!nb)
+    if (nb) {
+      setUnreadCount(0)
+      lastSeenCountRef.current = messages.length
+    }
   }, [])
 
   // Allow external open from mobile bottom bar
@@ -133,6 +146,7 @@ export function Assistant() {
         if (!reader) return
         let acc = ""
         setMessages((m) => [...m, { id: id + "a", role: "assistant", content: "" }])
+        setIsStreaming(true)
         while (true) {
           const { done, value } = await reader.read()
           if (done) break
@@ -145,7 +159,11 @@ export function Assistant() {
             }
             return m
           })
+          if (!nearBottom) {
+            setUnreadCount(Math.max(0, messages.length + 1 - lastSeenCountRef.current))
+          }
         }
+        setIsStreaming(false)
       } else {
         const data = await res.json()
         setMessages((m) => [...m, { id: id + "a", role: "assistant", content: data.reply || "" }])
@@ -312,8 +330,8 @@ export function Assistant() {
         </SheetHeader>
         <div className="flex flex-col h-full">
           <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 12 }}>
-            {/* Persona banner */}
-            <div className="w-full">
+            {/* Persona banner - sticky */}
+            <div className="sticky top-0 z-10 -mt-4 pt-4 pb-2 bg-gradient-to-b from-background to-transparent">
               <div className="glass-card px-3 py-2 rounded-md text-xs text-muted-foreground">
                 {agents[persona as keyof typeof agents]?.hint}
               </div>
@@ -325,13 +343,13 @@ export function Assistant() {
                 </div>
               </GlassCard>
             ))}
-            {showJump && (
-              <div className="sticky bottom-2 w-full flex justify-center">
+            <div className={`pointer-events-none sticky bottom-2 w-full flex justify-center transition-opacity ${showJump ? "opacity-100" : "opacity-0"}`}>
+              <div className="pointer-events-auto">
                 <Button size="sm" className="glass" onClick={() => { const el = messagesRef.current; if (el) el.scrollTop = el.scrollHeight }}>
-                  Jump to latest
+                  {unreadCount > 0 ? `Jump to latest · ${unreadCount}` : "Jump to latest"}
                 </Button>
               </div>
-            )}
+            </div>
           </div>
           <div ref={footerRef} className="border-t border-border/30 p-3 bg-background/80 backdrop-blur-md safe-bottom sticky bottom-0">
             {isRecording && (
