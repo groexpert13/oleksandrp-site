@@ -8,6 +8,10 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    dangerouslyAllowSVG: true,
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
   },
 }
 

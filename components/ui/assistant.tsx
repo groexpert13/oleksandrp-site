@@ -21,6 +21,11 @@ export function Assistant() {
   const [persona, setPersona] = React.useState<string>("advisor")
   const [isRecording, setIsRecording] = React.useState(false)
   const recognitionRef = React.useRef<any>(null)
+  const baseInputRef = React.useRef<string>("")
+  const [interim, setInterim] = React.useState("")
+  const mediaRecorderRef = React.useRef<MediaRecorder | null>(null)
+  const chunksRef = React.useRef<Blob[]>([])
+  const streamTimerRef = React.useRef<number | null>(null)
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null)
   const messagesRef = React.useRef<HTMLDivElement | null>(null)
   const footerRef = React.useRef<HTMLDivElement | null>(null)
@@ -97,31 +102,124 @@ export function Assistant() {
     }
   }
 
-  const toggleVoice = () => {
+  const toggleVoice = async () => {
     // Try Web Speech API first
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
     if (SpeechRecognition) {
       if (isRecording) {
         try { recognitionRef.current?.stop() } catch {}
         setIsRecording(false)
+        setInterim("")
+        baseInputRef.current = ""
         return
       }
       const rec = new SpeechRecognition()
       recognitionRef.current = rec
       rec.lang = navigator.language || "en-US"
-      rec.continuous = false
-      rec.interimResults = false
+      rec.continuous = true
+      rec.interimResults = true
+      baseInputRef.current = input
       rec.onresult = (e: any) => {
-        const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join(" ")
-        setInput((prev) => (prev ? prev + " " : "") + transcript)
+        let finalText = ""
+        let interimText = ""
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const res = e.results[i]
+          if (res.isFinal) {
+            finalText += res[0].transcript
+          } else {
+            interimText += res[0].transcript
+          }
+        }
+        if (finalText) {
+          baseInputRef.current = (baseInputRef.current ? baseInputRef.current + " " : "") + finalText.trim()
+          setInterim("")
+          setInput(baseInputRef.current)
+          // keep caret at end
+          requestAnimationFrame(() => textareaRef.current && (textareaRef.current.selectionStart = textareaRef.current.selectionEnd = textareaRef.current.value.length))
+        } else if (interimText) {
+          setInterim(interimText)
+          setInput((baseInputRef.current + " " + interimText).trim())
+        }
       }
-      rec.onerror = () => setIsRecording(false)
-      rec.onend = () => setIsRecording(false)
+      rec.onerror = () => {
+        setIsRecording(false)
+        setInterim("")
+      }
+      rec.onend = () => {
+        if (isRecording) {
+          try { rec.start() } catch {}
+        } else {
+          setInterim("")
+        }
+      }
       setIsRecording(true)
       rec.start()
       return
     }
-    alert("Voice input not supported in this browser. Please use Chrome or Safari.")
+    // Fallback: record short chunks and send to Whisper
+    try {
+      if (isRecording) {
+        if (streamTimerRef.current) {
+          window.clearInterval(streamTimerRef.current)
+          streamTimerRef.current = null
+        }
+        // Flush remaining audio once on stop
+        const flush = async () => {
+          if (chunksRef.current.length === 0) return
+          const blob = new Blob(chunksRef.current, { type: "audio/webm" })
+          chunksRef.current = []
+          const form = new FormData()
+          form.append("audio", blob, "speech-part.webm")
+          form.append("language", navigator.language || "en")
+          const res = await fetch("/api/stt", { method: "POST", body: form })
+          const data = await res.json()
+          if (data?.text) {
+            baseInputRef.current = (baseInputRef.current ? baseInputRef.current + " " : "") + data.text
+            setInput(baseInputRef.current)
+          }
+        }
+        await flush()
+        mediaRecorderRef.current?.stop()
+        setIsRecording(false)
+        return
+      }
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mr = new MediaRecorder(stream, { mimeType: "audio/webm" })
+      mediaRecorderRef.current = mr
+      chunksRef.current = []
+      baseInputRef.current = input
+      mr.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) chunksRef.current.push(e.data)
+      }
+      mr.onstop = () => {
+        if (streamTimerRef.current) {
+          window.clearInterval(streamTimerRef.current)
+          streamTimerRef.current = null
+        }
+        setIsRecording(false)
+      }
+      // Start fetching chunks frequently for near-real-time updates
+      mr.start(500)
+      streamTimerRef.current = window.setInterval(async () => {
+        if (chunksRef.current.length === 0) return
+        const blob = new Blob(chunksRef.current, { type: "audio/webm" })
+        chunksRef.current = []
+        const form = new FormData()
+        form.append("audio", blob, "speech-part.webm")
+        form.append("language", navigator.language || "en")
+        try {
+          const res = await fetch("/api/stt", { method: "POST", body: form })
+          const data = await res.json()
+          if (data?.text) {
+            baseInputRef.current = (baseInputRef.current ? baseInputRef.current + " " : "") + data.text
+            setInput(baseInputRef.current)
+          }
+        } catch {}
+      }, 1500)
+      setIsRecording(true)
+    } catch (err) {
+      alert("Microphone is not available. Please allow access and try again.")
+    }
   }
 
   // Side tab trigger that avoids scroll-to-top

@@ -9,10 +9,12 @@ import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { MobileContactBar } from "@/components/ui/mobile-contact-bar"
 import { Assistant } from "@/components/ui/assistant"
+import { SplashScreen } from "@/components/ui/SplashScreen"
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
+      <SplashScreen />
       {/* Navigation */}
       <Header />
 

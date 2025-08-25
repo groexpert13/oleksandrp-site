@@ -5,6 +5,7 @@ import { DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/i18n/language-context"
 import "./globals.css"
+import Link from "next/link"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -78,6 +79,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
           <LanguageProvider defaultLanguage="en">{children}</LanguageProvider>
         </ThemeProvider>
+        <link rel="icon" href="/oleksandrp_logo.webp" type="image/webp" />
+        <link rel="manifest" href="/manifest.webmanifest" />
       </body>
     </html>
   )
