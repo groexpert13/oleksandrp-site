@@ -74,6 +74,7 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
+    --container-xs: 20rem;
     --container-sm: 24rem;
     --container-md: 28rem;
     --container-lg: 32rem;
@@ -846,6 +847,9 @@
   .max-w-max {
     max-width: max-content;
   }
+  .max-w-xs {
+    max-width: var(--container-xs);
+  }
   .min-w-\(--cell-size\) {
     min-width: var(--cell-size);
   }
@@ -1027,6 +1031,9 @@
   }
   .grid-cols-\[1fr_auto\] {
     grid-template-columns: 1fr auto;
+  }
+  .grid-cols-\[1fr_auto_auto\] {
+    grid-template-columns: 1fr auto auto;
   }
   .grid-rows-\[auto_auto\] {
     grid-template-rows: auto auto;

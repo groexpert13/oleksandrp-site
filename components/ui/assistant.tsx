@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { agents } from "@/lib/agents"
 import { useTranslation } from "@/lib/i18n/language-context"
 
 type Message = { id: string; role: "user" | "assistant"; content: string }
@@ -17,6 +19,25 @@ export function Assistant() {
   const [messages, setMessages] = React.useState<Message[]>([
     { id: "m1", role: "assistant", content: "Hi! I can help with AI, automation and projects. How can I assist?" },
   ])
+  // Persist persona and messages
+  React.useEffect(() => {
+    try {
+      const p = localStorage.getItem("assistant-persona")
+      if (p) setPersona(p)
+      const raw = localStorage.getItem("assistant-history")
+      if (raw) {
+        const arr = JSON.parse(raw)
+        if (Array.isArray(arr)) setMessages(arr)
+      }
+    } catch {}
+  }, [])
+  React.useEffect(() => {
+    try { localStorage.setItem("assistant-persona", persona) } catch {}
+  }, [persona])
+  React.useEffect(() => {
+    try { localStorage.setItem("assistant-history", JSON.stringify(messages.slice(-100))) } catch {}
+  }, [messages])
+
   const [files, setFiles] = React.useState<File[]>([])
   const [persona, setPersona] = React.useState<string>("advisor")
   const [isRecording, setIsRecording] = React.useState(false)
@@ -92,7 +113,7 @@ export function Assistant() {
         res = await fetch("/api/assistant", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, persona }),
+          body: JSON.stringify({ message: text, persona, history: messages.map(({ role, content }) => ({ role, content })) }),
         })
       }
       const data = await res.json()
@@ -237,7 +258,7 @@ export function Assistant() {
       <SheetContent side="right" className="w-full sm:max-w-md p-0">
         <SheetHeader className="p-4 pr-12 border-b border-border/30">
           <SheetTitle className="sr-only">{t("common.assistant")}</SheetTitle>
-          <div className="grid grid-cols-[1fr_auto] items-end gap-3">
+          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-3">
             <div className="flex flex-col gap-1 w-full">
               <span className="text-xs text-muted-foreground">{t("assistant.personaLabel")}</span>
               <Select value={persona} onValueChange={setPersona}>
@@ -252,6 +273,16 @@ export function Assistant() {
                 </SelectContent>
               </Select>
             </div>
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger className="text-xs text-muted-foreground hidden sm:block px-2 py-1">
+                  {agents[persona as keyof typeof agents]?.hint || ""}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs text-sm">{agents[persona as keyof typeof agents]?.hint}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <div className="text-muted-foreground text-xs hidden sm:flex items-center gap-2 whitespace-nowrap self-end pb-[2px]">
               <Command className="h-3.5 w-3.5" /> Cmd/Ctrl + K
             </div>
@@ -268,16 +299,22 @@ export function Assistant() {
             ))}
           </div>
           <div ref={footerRef} className="border-t border-border/30 p-3 bg-background/80 backdrop-blur-md safe-bottom sticky bottom-0">
-            {isRecording && (
-              <div className="flex justify-center mb-2">
-                <div className="text-xs text-muted-foreground flex items-center gap-2">
+            <div className="flex items-center justify-between mb-2">
+              {isRecording && (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="relative inline-flex h-2.5 w-2.5">
                     <span className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-destructive/80 opacity-75 animate-ping"></span>
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-destructive"></span>
                   </span>
                   {t("assistant.listening")}
                 </div>
+              )}
+              <div className="ml-auto">
+                <Button variant="ghost" size="sm" onClick={() => setMessages([])}>Clear chat</Button>
               </div>
+            </div>
+            {isRecording && (
+              <div />
             )}
             {files.length > 0 && (
               <div className="text-xs text-muted-foreground mb-1">{files.length} file(s) ready</div>
