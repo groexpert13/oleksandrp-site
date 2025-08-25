@@ -1,30 +1,28 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { ArrowUp } from "lucide-react"
 import { Button } from "./button"
+import { throttle, createEventListener, prefersReducedMotion } from "@/lib/utils/performance"
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
-    }
-
-    window.addEventListener("scroll", toggleVisibility)
-    return () => window.removeEventListener("scroll", toggleVisibility)
+  const toggleVisibility = useCallback(() => {
+    setIsVisible(window.pageYOffset > 300)
   }, [])
 
-  const scrollToTop = () => {
+  const throttledToggleVisibility = useCallback(throttle(toggleVisibility, 100), [toggleVisibility])
+
+  useEffect(() => {
+    return createEventListener(window, "scroll", throttledToggleVisibility, { passive: true })
+  }, [throttledToggleVisibility])
+
+  const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
     })
-  }
+  }, [])
 
   if (!isVisible) {
     return null

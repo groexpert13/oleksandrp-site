@@ -10,6 +10,7 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { MobileContactBar } from "@/components/ui/mobile-contact-bar"
 import { Assistant } from "@/components/ui/assistant"
 import { SplashScreen } from "@/components/ui/SplashScreen"
+import { GlobalKeyboardShortcuts } from "@/components/ui/keyboard-shortcuts"
 
 export default function HomePage() {
   return (
@@ -34,6 +35,7 @@ export default function HomePage() {
       <ScrollToTop />
       <MobileContactBar />
       <Assistant />
+      <GlobalKeyboardShortcuts />
     </div>
   )
 }

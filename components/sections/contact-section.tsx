@@ -35,7 +35,7 @@ export function ContactSection() {
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       setSubmitStatus("success")
-      setFormData({ name: "", email: "", message: "" })
+      setFormData({ name: "", email: "", message: "", service: "" })
     } catch (error) {
       setSubmitStatus("error")
     } finally {

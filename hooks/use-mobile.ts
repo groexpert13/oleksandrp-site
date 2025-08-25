@@ -7,13 +7,25 @@ export function useIsMobile() {
 
   React.useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    const onChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches)
     }
-    mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener("change", onChange)
+    
+    // Set initial state
+    setIsMobile(mql.matches)
+    
+    // Use the modern API if available, fallback to the deprecated one
+    if (mql.addEventListener) {
+      mql.addEventListener("change", onChange)
+      return () => mql.removeEventListener("change", onChange)
+    } else {
+      // Fallback for older browsers
+      mql.addListener(onChange)
+      return () => mql.removeListener(onChange)
+    }
   }, [])
 
-  return !!isMobile
+  // Return false for SSR to avoid hydration mismatch, 
+  // but use proper state after hydration
+  return isMobile ?? false
 }

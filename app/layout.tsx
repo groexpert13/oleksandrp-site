@@ -4,8 +4,8 @@ import { Space_Grotesk } from "next/font/google"
 import { DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/i18n/language-context"
+import { ErrorBoundary } from "@/components/ui/error-boundary"
 import "./globals.css"
-import Link from "next/link"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -20,19 +20,24 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Oleksandr P. - Full-Stack Developer",
+  title: "Oleksandr P. - AI & Automation Engineer",
   description:
-    "Personal website of Oleksandr P. - Full-stack developer specializing in React, Next.js, TypeScript, and modern web technologies. Available for freelance projects and collaborations.",
+    "AI & Automation Engineer specializing in Python, LLMs, RAG assistants, and modern cloud-native solutions. Helping businesses automate processes and deliver AI solutions.",
   generator: "Next.js",
   keywords: [
-    "developer",
-    "full-stack",
-    "react",
-    "next.js",
+    "AI engineer",
+    "automation",
+    "python",
+    "llm",
+    "rag",
+    "chatbots",
+    "machine learning",
+    "data pipelines",
+    "mlops",
+    "langchain",
+    "fastapi",
+    "nextjs",
     "typescript",
-    "web development",
-    "frontend",
-    "backend",
     "ukraine",
     "freelance",
   ],
@@ -42,15 +47,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://oleksandrp.me",
-    title: "Oleksandr P. - Full-Stack Developer",
+    title: "Oleksandr P. - AI & Automation Engineer",
     description:
-      "Full-stack developer specializing in React, Next.js, TypeScript, and modern web technologies. Available for freelance projects.",
+      "AI & Automation Engineer specializing in Python, LLMs, RAG assistants, and automation solutions. Available for AI projects and consultations.",
     siteName: "Oleksandr P. Portfolio",
+    images: [
+      {
+        url: "/oleksandrp_logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Oleksandr P. - AI & Automation Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oleksandr P. - Full-Stack Developer",
-    description: "Full-stack developer specializing in React, Next.js, TypeScript, and modern web technologies.",
+    title: "Oleksandr P. - AI & Automation Engineer",
+    description: "AI & Automation Engineer specializing in Python, LLMs, RAG assistants, and automation solutions.",
+    images: ["/oleksandrp_logo.webp"],
   },
   robots: {
     index: true,
@@ -63,9 +77,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
+  metadataBase: new URL("https://oleksandrp.me"),
 }
 
 export default function RootLayout({
@@ -75,13 +87,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
-          <LanguageProvider defaultLanguage="en">{children}</LanguageProvider>
-        </ThemeProvider>
+      <head>
         <link rel="icon" href="/oleksandrp_logo.webp" type="image/webp" />
         <link rel="apple-touch-icon" href="/oleksandrp_logo.webp" />
         <link rel="manifest" href="/manifest.webmanifest" />
+      </head>
+      <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-sans antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
+          <LanguageProvider defaultLanguage="en">
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
