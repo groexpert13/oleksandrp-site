@@ -1,1 +1,9 @@
-{}
+{
+  "version": 2,
+  "buildCommand": "pnpm build || npm run build || yarn build",
+  "devCommand": "pnpm dev || npm run dev || yarn dev",
+  "installCommand": "pnpm install || npm install || yarn install",
+  "framework": "nextjs"
+}
+
+
