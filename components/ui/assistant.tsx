@@ -484,7 +484,7 @@ export function Assistant() {
                   )}
                   {/* Contextual CTA buttons when agent suggests actions */}
                   {agents[persona as keyof typeof agents]?.ui?.showCTAButtons && m.role === "assistant" && (
-                    <div className="mt-3 flex flex-col sm:flex-row gap-2">
+                    <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-sm">
                       <Button 
                         size="sm" 
                         variant="default" 
@@ -497,17 +497,21 @@ export function Assistant() {
                             }, 200)
                           }
                         }}
-                        className="flex-1 sm:flex-initial"
+                        className="w-full text-xs px-2 py-1 h-8 whitespace-nowrap overflow-hidden text-ellipsis"
+                        title={t("assistant.buttons.contactDeveloper")}
                       >
-                        {t("assistant.buttons.contactDeveloper")}
+                        <span className="truncate">{t("assistant.buttons.contactDeveloper")}</span>
                       </Button>
                       <Button 
                         size="sm" 
                         variant="outline" 
                         onClick={() => toggleVoice()}
-                        className="flex-1 sm:flex-initial"
+                        className="w-full text-xs px-2 py-1 h-8 whitespace-nowrap overflow-hidden text-ellipsis"
+                        title={isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
                       >
-                        {isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
+                        <span className="truncate">
+                          {isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
+                        </span>
                       </Button>
                     </div>
                   )}
