@@ -19,6 +19,7 @@ export function Assistant() {
   const [messages, setMessages] = React.useState<Message[]>([
     { id: "m1", role: "assistant", content: "Hi! I can help with AI, automation and projects. How can I assist?" },
   ])
+  const [persona, setPersona] = React.useState<string>("advisor")
   // Persist persona and messages
   React.useEffect(() => {
     try {
@@ -39,7 +40,6 @@ export function Assistant() {
   }, [messages])
 
   const [files, setFiles] = React.useState<File[]>([])
-  const [persona, setPersona] = React.useState<string>("advisor")
   const [isRecording, setIsRecording] = React.useState(false)
   const recognitionRef = React.useRef<any>(null)
   const baseInputRef = React.useRef<string>("")
@@ -51,6 +51,7 @@ export function Assistant() {
   const messagesRef = React.useRef<HTMLDivElement | null>(null)
   const footerRef = React.useRef<HTMLDivElement | null>(null)
   const [footerHeight, setFooterHeight] = React.useState(0)
+  const [showJump, setShowJump] = React.useState(false)
 
   // Ensure message list has enough bottom padding not to be hidden by sticky footer
   React.useEffect(() => {
@@ -70,7 +71,16 @@ export function Assistant() {
     if (nearBottom) {
       el.scrollTop = el.scrollHeight
     }
+    setShowJump(!nearBottom)
   }, [messages, open])
+
+  // Track scroll to toggle Jump button
+  const onMessagesScroll = React.useCallback(() => {
+    const el = messagesRef.current
+    if (!el) return
+    const nearBottom = el.scrollHeight - (el.scrollTop + el.clientHeight) < 120
+    setShowJump(!nearBottom)
+  }, [])
 
   // Allow external open from mobile bottom bar
   React.useEffect(() => {
@@ -116,8 +126,30 @@ export function Assistant() {
           body: JSON.stringify({ message: text, persona, history: messages.map(({ role, content }) => ({ role, content })) }),
         })
       }
-      const data = await res.json()
-      setMessages((m) => [...m, { id: id + "a", role: "assistant", content: data.reply || "" }])
+      // If streaming – parse SSE-like stream
+      const contentType = res.headers.get("content-type") || ""
+      if (contentType.includes("text/event-stream")) {
+        const reader = res.body?.getReader()
+        if (!reader) return
+        let acc = ""
+        setMessages((m) => [...m, { id: id + "a", role: "assistant", content: "" }])
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          acc += new TextDecoder().decode(value)
+          // naive chunk append
+          setMessages((m) => {
+            const last = m[m.length - 1]
+            if (last && last.id === id + "a") {
+              return [...m.slice(0, -1), { ...last, content: acc }]
+            }
+            return m
+          })
+        }
+      } else {
+        const data = await res.json()
+        setMessages((m) => [...m, { id: id + "a", role: "assistant", content: data.reply || "" }])
+      }
     } catch {
       setMessages((m) => [...m, { id: id + "e", role: "assistant", content: "Sorry, something went wrong." }])
     }
@@ -256,9 +288,9 @@ export function Assistant() {
         </button>
       </SheetTrigger>
       <SheetContent side="right" className="w-full sm:max-w-md p-0">
-        <SheetHeader className="p-4 pr-12 border-b border-border/30">
+        <SheetHeader className="p-3 sm:p-4 pr-12 border-b border-border/30">
           <SheetTitle className="sr-only">{t("common.assistant")}</SheetTitle>
-          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-3">
+          <div className="grid grid-cols-[1fr_auto] items-end gap-3">
             <div className="flex flex-col gap-1 w-full">
               <span className="text-xs text-muted-foreground">{t("assistant.personaLabel")}</span>
               <Select value={persona} onValueChange={setPersona}>
@@ -273,23 +305,19 @@ export function Assistant() {
                 </SelectContent>
               </Select>
             </div>
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger className="text-xs text-muted-foreground hidden sm:block px-2 py-1">
-                  {agents[persona as keyof typeof agents]?.hint || ""}
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs text-sm">{agents[persona as keyof typeof agents]?.hint}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <div className="text-muted-foreground text-xs hidden sm:flex items-center gap-2 whitespace-nowrap self-end pb-[2px]">
-              <Command className="h-3.5 w-3.5" /> Cmd/Ctrl + K
+            <div className="flex items-end justify-end gap-2">
+              <Button variant="ghost" size="sm" onClick={() => setMessages([])}>Clear chat</Button>
             </div>
           </div>
         </SheetHeader>
         <div className="flex flex-col h-full">
-          <div ref={messagesRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 12 }}>
+          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto p-4 space-y-3" style={{ paddingBottom: footerHeight + 12 }}>
+            {/* Persona banner */}
+            <div className="w-full">
+              <div className="glass-card px-3 py-2 rounded-md text-xs text-muted-foreground">
+                {agents[persona as keyof typeof agents]?.hint}
+              </div>
+            </div>
             {messages.map((m) => (
               <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : "mr-auto max-w-[85%]"}>
                 <div className="text-sm whitespace-pre-wrap leading-relaxed">
@@ -297,22 +325,24 @@ export function Assistant() {
                 </div>
               </GlassCard>
             ))}
+            {showJump && (
+              <div className="sticky bottom-2 w-full flex justify-center">
+                <Button size="sm" className="glass" onClick={() => { const el = messagesRef.current; if (el) el.scrollTop = el.scrollHeight }}>
+                  Jump to latest
+                </Button>
+              </div>
+            )}
           </div>
           <div ref={footerRef} className="border-t border-border/30 p-3 bg-background/80 backdrop-blur-md safe-bottom sticky bottom-0">
-            <div className="flex items-center justify-between mb-2">
-              {isRecording && (
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="relative inline-flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-destructive/80 opacity-75 animate-ping"></span>
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-destructive"></span>
-                  </span>
-                  {t("assistant.listening")}
-                </div>
-              )}
-              <div className="ml-auto">
-                <Button variant="ghost" size="sm" onClick={() => setMessages([])}>Clear chat</Button>
+            {isRecording && (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                <span className="relative inline-flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-destructive/80 opacity-75 animate-ping"></span>
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-destructive"></span>
+                </span>
+                {t("assistant.listening")}
               </div>
-            </div>
+            )}
             {isRecording && (
               <div />
             )}

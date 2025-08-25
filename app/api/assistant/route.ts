@@ -36,17 +36,17 @@ export async function POST(req: NextRequest) {
           ...history,
           { role: "user", content: message },
         ],
+        stream: true,
       }),
     })
-    if (!res.ok) {
+    if (!res.ok || !res.body) {
       const text = await res.text()
       return new Response(JSON.stringify({ error: text }), { status: 500 })
     }
-    const data = await res.json()
-    const reply = data?.output_text || data?.content?.[0]?.text || ""
-    return new Response(JSON.stringify({ reply }), {
+    // Proxy streaming chunks to client
+    return new Response(res.body, {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/event-stream" },
     })
   } catch (e) {
     return new Response(JSON.stringify({ reply: "Sorry, something went wrong." }), {
