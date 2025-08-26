@@ -122,11 +122,18 @@ export const translations = {
       listening: "Listening…",
       attach: "Attach",
       welcome: "Hi! I can help with AI, automation and projects. How can I assist?",
+      switchedTo: "Switched to",
       personas: {
         advisor: "Automation Consultant",
-        lead: "AI Solutions Architect", 
+        lead: "AI Solutions Architect",
         product: "AI Product Strategist",
         analyst: "Business Intelligence Analyst",
+      },
+      personaHints: {
+        advisor: "Business automation opportunities and ROI-focused solutions",
+        lead: "AI strategy, implementation planning, and technical architecture",
+        product: "AI product strategy, user experience, and market positioning",
+        analyst: "Data strategy, business intelligence, and AI-powered analytics",
       },
       responseLang: "Response language",
       buttons: {
@@ -331,11 +338,18 @@ export const translations = {
       listening: "Прослуховування…",
       attach: "Додати файл",
       welcome: "Привіт! Допоможу з AI, автоматизацією та проектами. З чого почнемо?",
+      switchedTo: "Перемкнено на",
       personas: {
         advisor: "Консультант з автоматизації",
         lead: "AI архітектор рішень",
-        product: "AI продуктовий стратег", 
+        product: "AI продуктовий стратег",
         analyst: "Бізнес-аналітик",
+      },
+      personaHints: {
+        advisor: "Можливості автоматизації бізнесу та рішення з фокусом на ROI",
+        lead: "AI стратегія, планування впровадження та технічна архітектура",
+        product: "AI продуктова стратегія, користувацький досвід та позиціонування",
+        analyst: "Стратегія даних, бізнес-аналітика та AI-аналітика",
       },
       responseLang: "Мова відповіді",
       buttons: {

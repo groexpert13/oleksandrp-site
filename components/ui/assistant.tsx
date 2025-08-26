@@ -1,6 +1,6 @@
 "use client"
 import * as React from "react"
-import { Bot, Send, Command, Mic, Paperclip, Square, ChevronUp, ChevronDown } from "lucide-react"
+import { Bot, Send, Command, Mic, Paperclip, Square } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -12,7 +12,7 @@ import { agents } from "@/lib/agents"
 import { useTranslation } from "@/lib/i18n/language-context"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
-type Message = { id: string; role: "user" | "assistant" | "system"; content: string }
+type Message = { id: string; role: "user" | "assistant" | "system"; content: string; highlight?: boolean }
 
 export function Assistant() {
   const { t } = useTranslation()
@@ -36,23 +36,19 @@ export function Assistant() {
 
   React.useEffect(() => {
     try { localStorage.setItem("assistant-persona", persona) } catch {}
-    // info message on persona switch
-    setMessages((m) => [
-      ...m,
-      { id: `sys-${Date.now()}`, role: "system", content: `Switched to: ${agents[persona as keyof typeof agents].name}. ${agents[persona as keyof typeof agents].hint}` },
-    ])
-    // Highlight agent change with green glow (but not on initial load)
-    if (!isInitialLoadRef.current) {
-      setUiState(prev => ({ ...prev, recentlyChangedAgent: true }))
-      const timer = setTimeout(() => {
-        setUiState(prev => ({ ...prev, recentlyChangedAgent: false }))
-      }, 3000) // 3 seconds highlight
-      return () => clearTimeout(timer)
-    } else {
+    const messageId = `sys-${Date.now()}`
+    const content = `${t("assistant.switchedTo")}: ${t(`assistant.personas.${persona}`)}. ${t(`assistant.personaHints.${persona}`)}`
+    if (isInitialLoadRef.current) {
+      setMessages((m) => [...m, { id: messageId, role: "system", content }])
       isInitialLoadRef.current = false
-      setUiState(prev => ({ ...prev, isInitialLoad: false }))
+    } else {
+      setMessages((m) => [...m, { id: messageId, role: "system", content, highlight: true }])
+      const timer = setTimeout(() => {
+        setMessages((m) => m.map((msg) => (msg.id === messageId ? { ...msg, highlight: false } : msg)))
+      }, 3000)
+      return () => clearTimeout(timer)
     }
-  }, [persona])
+  }, [persona, t])
   React.useEffect(() => {
     try { localStorage.setItem("assistant-history", JSON.stringify(messages.slice(-100))) } catch {}
   }, [messages])
@@ -94,26 +90,8 @@ export function Assistant() {
     showJump: false,
     unreadCount: 0,
     nearBottom: true,
-    bannerCollapsed: false,
-    recentlyChangedAgent: false,
-    isInitialLoad: true,
     isStreaming: false,
   })
-
-  React.useEffect(() => {
-    try {
-      const b = localStorage.getItem("assistant-banner-collapsed")
-      if (b === "1") {
-        setUiState(prev => ({ ...prev, bannerCollapsed: true }))
-      }
-    } catch {}
-  }, [])
-  
-  React.useEffect(() => {
-    try { 
-      localStorage.setItem("assistant-banner-collapsed", uiState.bannerCollapsed ? "1" : "0") 
-    } catch {}
-  }, [uiState.bannerCollapsed])
 
   // Ensure message list has enough bottom padding not to be hidden by sticky footer
   React.useEffect(() => {
@@ -453,24 +431,14 @@ export function Assistant() {
         </SheetHeader>
         <div className="flex flex-col h-full">
           <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto px-4 pb-4 space-y-3" style={{ paddingBottom: uiState.footerHeight + 140 }}>
-            {/* Persona banner - sticky, collapsible, at the very top */}
-            <div className="sticky top-0 z-10 pt-2 pb-2 bg-gradient-to-b from-background via-background/95 to-transparent">
-              <div className={`glass-card px-3 py-2 rounded-md text-xs text-muted-foreground flex items-center justify-between transition-all duration-500 ${
-                uiState.recentlyChangedAgent 
-                  ? 'border-green-500/60 shadow-[0_0_10px_rgba(34,197,94,0.3)] ring-1 ring-green-500/30' 
-                  : 'border-border/20'
-              }`}>
-                <div className={`transition-all ${uiState.bannerCollapsed ? "line-clamp-1" : ""}`}>
-                  <span className="font-medium text-foreground/80">{agents[persona as keyof typeof agents]?.name}:</span>
-                  <span className="ml-1">{agents[persona as keyof typeof agents]?.hint}</span>
-                </div>
-                <button aria-label="Toggle banner" className="ml-3 glass rounded-md px-2 py-1 text-foreground hover:shadow" onClick={() => setUiState(prev => ({ ...prev, bannerCollapsed: !prev.bannerCollapsed }))}>
-                  {uiState.bannerCollapsed ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronUp className="h-3.5 w-3.5" />}
-                </button>
-              </div>
-            </div>
             {messages.map((m, i) => (
-              <GlassCard key={m.id} className={m.role === "user" ? "ml-auto max-w-[85%]" : m.role === "system" ? "mx-auto max-w-[90%] border-dashed" : "mr-auto max-w-[85%]"}>
+              <GlassCard key={m.id} className={`${
+                  m.role === "user"
+                    ? "ml-auto max-w-[85%]"
+                    : m.role === "system"
+                      ? `mx-auto max-w-[90%] border-dashed ${m.highlight ? 'border-green-500/60 shadow-[0_0_10px_rgba(34,197,94,0.3)] ring-1 ring-green-500/30' : ''}`
+                      : "mr-auto max-w-[85%]"
+                }`}>
                 <div className="text-sm leading-relaxed">
                   {m.role === "system" ? (
                     <div className="text-xs text-muted-foreground">
