@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react"
 import { Bot, Send, Command, Mic, Paperclip, Square, ChevronUp, ChevronDown } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { GlassCard } from "@/components/ui/glass-card"
@@ -273,6 +273,7 @@ export function Assistant() {
                     }
                     return m
                   })
+                  
                 }
               }
             } catch {}
@@ -282,6 +283,7 @@ export function Assistant() {
       } else {
         const data = await res.json()
         setMessages((m) => [...m, { id: id + "a", role: "assistant", content: data.reply || "" }])
+        
       }
     } catch {
       setMessages((m) => [...m, { id: id + "e", role: "assistant", content: "Sorry, something went wrong." }])
@@ -426,7 +428,8 @@ export function Assistant() {
       </SheetTrigger>
       <SheetContent side="right" className="w-full sm:max-w-md p-0">
         <SheetHeader className="p-3 sm:p-4 pr-12 border-b border-border/30">
-          <SheetTitle className="sr-only">{t("common.assistant")}</SheetTitle>
+          <SheetTitle>{t("common.assistant")}</SheetTitle>
+          <SheetDescription className="sr-only">AI assistant chat interface</SheetDescription>
           <div className="grid grid-cols-[1fr_auto] items-end gap-3">
             <div className="flex flex-col gap-1 w-full">
               <span className="text-xs text-muted-foreground">{t("assistant.personaLabel")}</span>
@@ -441,6 +444,7 @@ export function Assistant() {
                   <SelectItem value="analyst">{t("assistant.personas.analyst")}</SelectItem>
                 </SelectContent>
               </Select>
+              
             </div>
             <div className="flex items-end justify-end gap-2">
               <Button variant="ghost" size="sm" onClick={() => setMessages([])}>Clear chat</Button>
@@ -448,7 +452,7 @@ export function Assistant() {
           </div>
         </SheetHeader>
         <div className="flex flex-col h-full">
-          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto px-4 pb-4 space-y-3" style={{ paddingBottom: uiState.footerHeight + 80 }}>
+          <div ref={messagesRef} onScroll={onMessagesScroll} className="relative flex-1 overflow-y-auto px-4 pb-4 space-y-3" style={{ paddingBottom: uiState.footerHeight + 140 }}>
             {/* Persona banner - sticky, collapsible, at the very top */}
             <div className="sticky top-0 z-10 pt-2 pb-2 bg-gradient-to-b from-background via-background/95 to-transparent">
               <div className={`glass-card px-3 py-2 rounded-md text-xs text-muted-foreground flex items-center justify-between transition-all duration-500 ${
@@ -504,15 +508,22 @@ export function Assistant() {
                       </Button>
                       <Button 
                         size="sm" 
-                        variant="outline" 
-                        onClick={() => toggleVoice()}
+                        variant="secondary" 
+                        onClick={() => {
+                          const roi = document.getElementById('roi')
+                          if (roi) {
+                            setOpen(false)
+                            setTimeout(() => {
+                              roi.scrollIntoView({ behavior: 'smooth' })
+                            }, 200)
+                          }
+                        }}
                         className="w-full text-xs px-2 py-1 h-8 whitespace-nowrap overflow-hidden text-ellipsis"
-                        title={isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
+                        title={t("assistant.buttons.openRoi")}
                       >
-                        <span className="truncate">
-                          {isRecording ? t("assistant.buttons.stopRecording") : t("assistant.buttons.recordVoice")}
-                        </span>
+                        <span className="truncate">{t("assistant.buttons.openRoi")}</span>
                       </Button>
+                      {/* Removed record button per request */}
                     </div>
                   )}
                 </div>

@@ -11,6 +11,8 @@ import { MobileContactBar } from "@/components/ui/mobile-contact-bar"
 import { Assistant } from "@/components/ui/assistant"
 import { SplashScreen } from "@/components/ui/SplashScreen"
 import { GlobalKeyboardShortcuts } from "@/components/ui/keyboard-shortcuts"
+import { RoiSimulatorSection } from "@/components/ui/roi-simulator"
+import { AutomationQuestSection } from "@/components/ui/automation-quest"
 
 export default function HomePage() {
   return (
@@ -24,6 +26,8 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <ServicesSection />
+  <RoiSimulatorSection />
+  <AutomationQuestSection />
         <ProjectsSection />
         <ExperienceSection />
         <ContactSection />
