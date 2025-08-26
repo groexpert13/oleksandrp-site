@@ -121,9 +121,9 @@ export function AutomationQuestSection() {
   return (
     <Section id="quest" background="muted">
       <SectionHeader title={t("quest.title")} subtitle={t("quest.subtitle")} />
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2 overflow-x-hidden">
         <Card className="h-fit order-2 lg:order-1">
-          <CardContent className="p-4 space-y-4">
+          <CardContent className="p-3 sm:p-4 space-y-4">
             <div className="grid gap-3">
               {QUESTIONS.map(q => (
                 <div key={q.id} className="space-y-1">
@@ -155,9 +155,9 @@ export function AutomationQuestSection() {
             </div>
             {error && <div className="text-xs text-destructive bg-destructive/10 border p-2 rounded">{error}</div>}
             <div className="text-[11px] text-muted-foreground flex flex-wrap gap-4">
-              <span>Baseline≈{derived.baselineHours || 0}h/mo</span>
-              {ops.some(o=>o.selected) && <span>Selected: {ops.filter(o=>o.selected).length}</span>}
-              {ops.some(o=>o.selected) && <span>Total $/mo ≈ {ops.filter(o=>o.selected).reduce((s,o)=> s+(o.monthlySavings||0),0)}</span>}
+              <span>{t('quest.baseline')}≈{derived.baselineHours || 0}{t('quest.hoursPerMonthShort')}</span>
+              {ops.some(o=>o.selected) && <span>{t('quest.selected')}: {ops.filter(o=>o.selected).length}</span>}
+              {ops.some(o=>o.selected) && <span>{t('quest.totalPerMonth')} ≈ {ops.filter(o=>o.selected).reduce((s,o)=> s+(o.monthlySavings||0),0)}</span>}
             </div>
           </CardContent>
         </Card>
@@ -183,11 +183,11 @@ export function AutomationQuestSection() {
                       <Button size="sm" variant={o.selected? 'default':'outline'} onClick={()=>toggleSelect(o.id)} className="text-xs h-7">{o.selected? t('quest.remove'): t('quest.add')}</Button>
                     </div>
                     <div className="flex flex-wrap gap-3 text-[10px] font-medium text-muted-foreground">
-                      <span>H/mo {o.estHoursSaved}</span>
-                      <span>Share {(o.automationShare*100).toFixed(0)}%</span>
-                      <span>Cx {o.complexity}</span>
-                      <span>Conf {(o.confidence*100).toFixed(0)}%</span>
-                      {typeof o.monthlySavings==='number' && <span className="text-primary">${o.monthlySavings}/mo</span>}
+                      <span>{t('quest.hoursPerMonthShort')} {o.estHoursSaved}</span>
+                      <span>{t('quest.shareShort')} {(o.automationShare*100).toFixed(0)}%</span>
+                      <span>{t('quest.complexityShort')} {o.complexity}</span>
+                      <span>{t('quest.confidenceShort')} {(o.confidence*100).toFixed(0)}%</span>
+                      {typeof o.monthlySavings==='number' && <span className="text-primary">${o.monthlySavings}{t('quest.perMonthShort')}</span>}
                     </div>
                     {o.selected && (
                       <Button variant="secondary" size="sm" className="h-6 px-2 text-[10px]" onClick={()=>{ const el=document.getElementById('contact'); if(el) el.scrollIntoView({behavior:'smooth'}) }}>

@@ -122,7 +122,7 @@ export function RoiSimulatorSection() {
   return (
     <Section id="roi" background="default">
       <SectionHeader title={t("roi.title")} subtitle={t("roi.subtitle")} />
-      <div className="grid gap-4 md:gap-6 lg:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-2 xl:grid-cols-5 overflow-x-hidden">
         <div className="lg:col-span-1 xl:col-span-2">
         <Card className="h-fit">
           <CardContent className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-5">
@@ -190,7 +190,11 @@ export function RoiSimulatorSection() {
               <div className="mb-3">
                 <h3 className="text-sm font-medium text-muted-foreground">{t("roi.cumulative")}</h3>
               </div>
-              <ChartContainer id="roi" config={{ savings: { label: t("roi.cumulative"), color: "hsl(var(--chart-1))" }}} className="h-[200px] sm:h-[300px]">
+              <ChartContainer
+                id="roi"
+                config={{ savings: { label: t("roi.cumulative"), color: "hsl(var(--chart-1))" }}}
+                className="w-full h-[200px] sm:h-[300px] aspect-auto"
+              >
                 <AreaChart data={(data?.series || []).map(s => ({ month: s.month, savings: s.cumulative }))}>
                   <defs>
                     <linearGradient id="fillSavings" x1="0" x2="0" y1="0" y2="1">
