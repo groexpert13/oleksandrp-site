@@ -1,239 +1,98 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 9%;
+    --radius: 0.75rem;
+  }
 
-:root {
-  /* Updated color tokens to match Notion/Vision OS design brief */
-  --background: oklch(1 0 0); /* Pure white for light theme */
-  --foreground: oklch(0.35 0 0); /* Dark gray for primary text */
-  --card: oklch(0.98 0 0); /* Very light gray for cards */
-  --card-foreground: oklch(0.15 0 0); /* Dark text on cards */
-  --popover: oklch(0.99 0.005 0); /* Slightly tinted white with transparency effect */
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.15 0 0); /* Charcoal for primary elements */
-  --primary-foreground: oklch(1 0 0); /* White text on primary */
-  --secondary: oklch(0.98 0 0); /* Light gray for secondary elements */
-  --secondary-foreground: oklch(0.35 0 0);
-  --muted: oklch(0.97 0 0); /* Muted backgrounds */
-  --muted-foreground: oklch(0.45 0 0); /* Muted text */
-  --accent: oklch(0.65 0.15 162); /* Emerald accent color */
-  --accent-foreground: oklch(1 0 0); /* White text on accent */
-  --destructive: oklch(0.55 0.2 25); /* Orange for warnings */
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0 0); /* Light border */
-  --input: oklch(1 0 0); /* White input backgrounds */
-  --ring: oklch(0.65 0.15 162 / 0.3); /* Emerald focus ring with transparency */
-  --chart-1: oklch(0.7 0.15 45); /* Golden yellow */
-  --chart-2: oklch(0.65 0.2 35); /* Orange */
-  --chart-3: oklch(0.6 0.25 25); /* Red-orange */
-  --chart-4: oklch(0.55 0.2 15); /* Red */
-  --chart-5: oklch(0.5 0.25 10); /* Dark red */
-  --radius: 0.75rem; /* Increased radius for Vision OS feel */
-  --sidebar: oklch(0.15 0 0); /* Dark sidebar */
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.35 0 0);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.65 0.15 162);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(0.92 0 0);
-  --sidebar-ring: oklch(0.65 0.15 162 / 0.3);
-}
-
-.dark {
-  /* Updated dark theme colors for Vision OS aesthetic */
-  --background: oklch(0.08 0 0); /* Very dark background */
-  --foreground: oklch(0.95 0 0); /* Light text */
-  --card: oklch(0.12 0 0); /* Dark cards with slight elevation */
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.1 0 0 / 0.95); /* Dark popover with transparency */
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.95 0 0); /* Light primary in dark mode */
-  --primary-foreground: oklch(0.08 0 0); /* Dark text on light primary */
-  --secondary: oklch(0.15 0 0); /* Dark secondary */
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0); /* Muted dark backgrounds */
-  --muted-foreground: oklch(0.65 0 0); /* Muted light text */
-  --accent: oklch(0.7 0.15 162); /* Brighter emerald in dark mode */
-  --accent-foreground: oklch(0.08 0 0); /* Dark text on bright accent */
-  --destructive: oklch(0.6 0.2 25); /* Brighter orange in dark mode */
-  --destructive-foreground: oklch(0.08 0 0);
-  --border: oklch(0.2 0 0); /* Dark borders */
-  --input: oklch(0.12 0 0); /* Dark input backgrounds */
-  --ring: oklch(0.7 0.15 162 / 0.4); /* Brighter focus ring */
-  --chart-1: oklch(0.75 0.15 45);
-  --chart-2: oklch(0.7 0.2 35);
-  --chart-3: oklch(0.65 0.25 25);
-  --chart-4: oklch(0.6 0.2 15);
-  --chart-5: oklch(0.55 0.25 10);
-  --sidebar: oklch(0.05 0 0); /* Very dark sidebar */
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.7 0.15 162);
-  --sidebar-primary-foreground: oklch(0.08 0 0);
-  --sidebar-accent: oklch(0.15 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.7 0.15 162 / 0.4);
-}
-
-@theme inline {
-  /* Updated font configuration for Space Grotesk and DM Sans */
-  --font-sans: var(--font-dm-sans);
-  --font-heading: var(--font-space-grotesk);
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 83%;
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
-    /* Added Vision OS-like backdrop blur and smooth transitions */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-
-  /* Added heading font class for Space Grotesk */
-  .font-heading {
-    font-family: var(--font-heading);
-  }
-
-  /* Vision OS-inspired glass morphism utilities */
-  .glass {
-    @apply bg-background/80 backdrop-blur-xl border border-border/50;
-  }
-
-  .glass-card {
-    @apply bg-card/90 backdrop-blur-lg border border-border/30 shadow-lg;
-  }
-
-  /* Smooth scrolling with reduced-motion respect */
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-  }
-
-  /* Prevent iOS keyboard from pushing fixed elements off-screen */
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  /* Added scroll padding to account for fixed header */
+  
+  /* Smooth scroll behavior */
   html {
-    scroll-padding-top: 4rem;
-  }
-
-  /* Added custom animations for better UX */
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
-  }
-
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-    opacity: 0;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-    opacity: 0;
-  }
-
-  .animation-delay-600 {
-    animation-delay: 0.6s;
-    opacity: 0;
-  }
-
-  /* Improved focus styles for accessibility */
-  *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-accent;
-  }
-
-  /* Better text selection */
-  ::selection {
-    @apply bg-accent/20 text-accent-foreground;
-  }
-
-  /* Improved scrollbar styling */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-muted;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+    scroll-behavior: smooth;
   }
 }
 
-/* Added responsive utilities for better mobile experience */
 @layer utilities {
-  .container {
-    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  .glass {
+    @apply bg-white/70 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10;
   }
-
-  /* Improved spacing for mobile */
-  @media (max-width: 640px) {
-    .space-y-6 > * + * {
-      margin-top: 1rem;
-    }
-
-    .space-y-8 > * + * {
-      margin-top: 1.5rem;
-    }
+  
+  .glass-strong {
+    @apply bg-white/90 dark:bg-black/50 backdrop-blur-2xl border border-white/30 dark:border-white/15;
+  }
+  
+  .ios-shadow {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .ios-shadow-lg {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dark .ios-shadow {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .ios-shadow-lg {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400;
   }
 }
