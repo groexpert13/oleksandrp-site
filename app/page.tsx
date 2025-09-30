@@ -252,124 +252,118 @@ export default function Home() {
 
             <div className="space-y-4 mb-8">
               {/* Service 1 */}
-              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="text-emerald-600 dark:text-emerald-400 mt-1">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
+                <div className="mb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
+                    <h3 className="font-bold text-base sm:text-lg">{t.service1.title}</h3>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-1">{t.service1.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service1.description}</p>
-                    
-                    <button
-                      onClick={() => setOpenService(openService === 1 ? null : 1)}
-                      className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
-                    >
-                      <span className="underline decoration-2 underline-offset-4">{t.service1.whatYouGet}</span>
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openService === 1 ? "rotate-180" : ""}`} />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service1.description}</p>
+                  
+                  <button
+                    onClick={() => setOpenService(openService === 1 ? null : 1)}
+                    className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
+                  >
+                    <span className="underline decoration-2 underline-offset-4">{t.service1.whatYouGet}</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${openService === 1 ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  {openService === 1 && (
+                    <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
+                      {t.service1.includes.map((item: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
+                    <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service1.price}</div>
+                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                      {t.service1.cta}
                     </button>
-                    
-                    {openService === 1 && (
-                      <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
-                        {t.service1.includes.map((item: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    
-                    <div className="flex items-center justify-between gap-4 pt-3 border-t border-gray-200 dark:border-gray-800">
-                      <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{t.service1.price}</div>
-                      <button className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
-                        {t.service1.cta}
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Service 2 */}
-              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="text-emerald-600 dark:text-emerald-400 mt-1">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
+                <div className="mb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
+                    <h3 className="font-bold text-base sm:text-lg">{t.service2.title}</h3>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-1">{t.service2.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service2.description}</p>
-                    
-                    <button
-                      onClick={() => setOpenService(openService === 2 ? null : 2)}
-                      className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
-                    >
-                      <span className="underline decoration-2 underline-offset-4">{t.service2.whatYouGet}</span>
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openService === 2 ? "rotate-180" : ""}`} />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service2.description}</p>
+                  
+                  <button
+                    onClick={() => setOpenService(openService === 2 ? null : 2)}
+                    className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
+                  >
+                    <span className="underline decoration-2 underline-offset-4">{t.service2.whatYouGet}</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${openService === 2 ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  {openService === 2 && (
+                    <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
+                      {t.service2.includes.map((item: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
+                    <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service2.price}</div>
+                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                      {t.service2.cta}
                     </button>
-                    
-                    {openService === 2 && (
-                      <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
-                        {t.service2.includes.map((item: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    
-                    <div className="flex items-center justify-between gap-4 pt-3 border-t border-gray-200 dark:border-gray-800">
-                      <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{t.service2.price}</div>
-                      <button className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
-                        {t.service2.cta}
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Service 3 */}
-              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="text-emerald-600 dark:text-emerald-400 mt-1">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-sm hover:shadow-md">
+                <div className="mb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
+                    <h3 className="font-bold text-base sm:text-lg">{t.service3.title}</h3>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-1">{t.service3.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service3.description}</p>
-                    
-                    <button
-                      onClick={() => setOpenService(openService === 3 ? null : 3)}
-                      className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
-                    >
-                      <span className="underline decoration-2 underline-offset-4">{t.service3.whatYouGet}</span>
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openService === 3 ? "rotate-180" : ""}`} />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t.service3.description}</p>
+                  
+                  <button
+                    onClick={() => setOpenService(openService === 3 ? null : 3)}
+                    className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mb-3"
+                  >
+                    <span className="underline decoration-2 underline-offset-4">{t.service3.whatYouGet}</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${openService === 3 ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  {openService === 3 && (
+                    <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
+                      {t.service3.includes.map((item: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
+                    <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service3.price}</div>
+                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                      {t.service3.cta}
                     </button>
-                    
-                    {openService === 3 && (
-                      <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1.5 mb-4 ml-2">
-                        {t.service3.includes.map((item: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    
-                    <div className="flex items-center justify-between gap-4 pt-3 border-t border-gray-200 dark:border-gray-800">
-                      <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{t.service3.price}</div>
-                      <button className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
-                        {t.service3.cta}
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
