@@ -252,16 +252,31 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-bold mb-6">{t.contacts}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {/* Telegram - Quick */}
                 <a
-                  href="https://t.me/your-telegram"
+                  href="https://t.me/your-telegram-quick"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-center"
                 >
                   <Send className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
-                  <div className="text-sm font-medium">Telegram</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.telegramDesc}</div>
+                  <div className="text-sm font-medium">{t.contactTelegramQuick}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.telegramQuickDesc}</div>
                 </a>
+                
+                {/* Telegram - Projects */}
+                <a
+                  href="https://t.me/your-telegram-projects"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-center"
+                >
+                  <Send className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
+                  <div className="text-sm font-medium">{t.contactTelegramProject}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.telegramProjectDesc}</div>
+                </a>
+                
+                {/* YouTube */}
                 <a
                   href="https://youtube.com/@your-channel"
                   target="_blank"
@@ -269,9 +284,11 @@ export default function Home() {
                   className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-center"
                 >
                   <Youtube className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
-                  <div className="text-sm font-medium">YouTube</div>
+                  <div className="text-sm font-medium">{t.contactYoutube}</div>
                   <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.youtubeDesc}</div>
                 </a>
+                
+                {/* Instagram */}
                 <a
                   href="https://instagram.com/your-instagram"
                   target="_blank"
@@ -283,16 +300,6 @@ export default function Home() {
                   </svg>
                   <div className="text-sm font-medium">{t.contactInstagram}</div>
                   <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.instagramDesc}</div>
-                </a>
-                <a
-                  href="https://t.me/your-bot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-center"
-                >
-                  <MessageCircle className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
-                  <div className="text-sm font-medium">{t.contactBot}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.botDesc}</div>
                 </a>
               </div>
             </div>
