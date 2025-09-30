@@ -10,10 +10,13 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [lang, setLang] = useState<Language>('ru')
   const [showThemeMenu, setShowThemeMenu] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setMounted(true)
     setLang(detectLanguage())
+    // Hide loader after mount
+    setTimeout(() => setLoading(false), 800)
   }, [])
 
   const t = translations[lang]
@@ -25,6 +28,21 @@ export default function Home() {
     { title: t.videos[2], url: "https://youtube.com/@your-channel" },
     { title: t.videos[3], url: "https://youtube.com/@your-channel" },
   ]
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-white dark:bg-black flex items-center justify-center z-50">
+        <div className="relative">
+          <img 
+            src="/oleksandrp_logo.webp" 
+            alt="Loading..." 
+            className="w-20 h-20 animate-spin"
+            style={{ animationDuration: '2s' }}
+          />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors">
@@ -369,6 +387,8 @@ export default function Home() {
           <div className="max-w-3xl w-full">
             {/* Videos */}
             <div className="mb-12">
+              <h2 className="text-2xl font-bold mb-2">{lang === 'ru' ? 'Полезный контент' : 'Корисний контент'}</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{lang === 'ru' ? 'Обучающие материалы и кейсы по автоматизации' : 'Навчальні матеріали та кейси з автоматизації'}</p>
               <div className="space-y-2">
                 {youtubeVideos.map((video, index) => (
                   <a
