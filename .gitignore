@@ -9,3 +9,4 @@ build
 !.env.example
 pnpm-debug.log*
 coverage
+.vercel

@@ -145,86 +145,74 @@ export default function Home() {
             </div>
 
             {/* Products */}
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold mb-6 text-center">{t.products}</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <Send className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="mt-10">
+              <h2 className="text-xl font-bold mb-4 text-center">{t.products}</h2>
+              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <Send className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product1}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product1Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product1}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product1Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <MessageCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <MessageCircle className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product2}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product2Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product2}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product2Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <svg className="h-5 w-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                      </svg>
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product3}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product3Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product3}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product3Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <svg className="h-5 w-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product4}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product4Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product4}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product4Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <svg className="h-5 w-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product5}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product5Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product5}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product5Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <svg className="h-5 w-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product6}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product6Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product6}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product6Desc}</div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors sm:col-span-2">
-                  <div className="text-center">
-                    <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <svg className="h-5 w-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                      </svg>
+                  
+                  <div className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold whitespace-nowrap">{t.product7}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.product7Desc}</span>
                     </div>
-                    <div className="font-semibold text-sm">{t.product7}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{t.product7Desc}</div>
                   </div>
                 </div>
               </div>
