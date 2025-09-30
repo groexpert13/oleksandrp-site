@@ -126,12 +126,12 @@ export default function Home() {
               <p className="text-base text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                 {t.description}
               </p>
-              <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-500">
-                <span>{t.age}</span>
-                <span>•</span>
-                <span>{t.experience}</span>
-                <span>•</span>
-                <span>{t.marketing}</span>
+              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs sm:text-sm text-gray-500 dark:text-gray-500">
+                <span className="whitespace-nowrap">{t.age}</span>
+                <span className="hidden sm:inline">•</span>
+                <span className="whitespace-nowrap">{t.experience}</span>
+                <span className="hidden sm:inline">•</span>
+                <span className="whitespace-nowrap">{t.marketing}</span>
               </div>
             </div>
 
