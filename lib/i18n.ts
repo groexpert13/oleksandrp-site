@@ -7,29 +7,66 @@ export const translations = {
     experience: "4 года разработки",
     marketing: "10 лет в рекламе и PR",
     services: "Услуги",
+    products: "Продукты",
     contacts: "Контакты",
     service1: {
       title: "Первичная консультация",
       price: "Бесплатно",
       description: "Оценка возможности внедрения автоматизации и ИИ в ваш бизнес.",
-      cta: "Записаться"
+      cta: "Записаться",
+      whatYouGet: "Что я получу?",
+      includes: [
+        "Анализ текущих процессов",
+        "Выявление точек автоматизации",
+        "Оценка потенциала ИИ",
+        "Рекомендации по первым шагам"
+      ]
     },
     service2: {
       title: "Консультация по внедрению",
       price: "€69 / час",
       description: "Детальный разбор и план внедрения автоматизации и ИИ-решений.",
-      cta: "Заказать"
+      cta: "Заказать",
+      whatYouGet: "Что я получу?",
+      includes: [
+        "Детальный план внедрения",
+        "Подбор технологий под задачи",
+        "Оценка сроков и бюджета",
+        "Пошаговая стратегия реализации"
+      ]
     },
     service3: {
       title: "Проект под ключ",
       price: "По согласованию",
       description: "Полное внедрение от анализа до запуска и поддержки.",
-      cta: "Обсудить проект"
+      cta: "Обсудить проект",
+      whatYouGet: "Что я получу?",
+      includes: [
+        "Полный цикл разработки",
+        "Интеграция с существующими системами",
+        "Тестирование и запуск",
+        "Обучение команды",
+        "Техподдержка после запуска"
+      ]
     },
-    webStack: "Web & App Stack",
-    webStackDesc: "Next.js, React, Python, FastAPI, PostgreSQL, MongoDB, Redis, Telegram Web Apps, Telegram Bots",
+    webStack: "Web Stack",
+    webStackDesc: "Next.js, React, Python, FastAPI, PostgreSQL, MongoDB, Redis",
     aiStack: "AI Stack",
-    aiStackDesc: "GPT-4, Claude, Gemini, Grok, LLaMA, LangChain, Vector DB, RAG, Fine-tuning, AI Agents",
+    aiStackDesc: "OpenAI, Anthropic, LangChain, Vector DB, RAG, Fine-tuning, AI Agents",
+    product1: "Telegram Apps",
+    product1Desc: "Web-приложения внутри Telegram",
+    product2: "Telegram Bots",
+    product2Desc: "Автоматизация и интеграции",
+    product3: "Web приложения",
+    product3Desc: "Полноценные веб-сервисы",
+    product4: "AI Agents",
+    product4Desc: "Умные ИИ-помощники",
+    product5: "Аналитика и ИИ",
+    product5Desc: "Анализ данных и прогнозы",
+    product6: "CRM системы",
+    product6Desc: "Управление клиентами и продажами",
+    product7: "Платежные системы",
+    product7Desc: "Интеграция любых способов оплаты",
     contactTelegramQuick: "Telegram",
     contactTelegramProject: "Telegram",
     contactYoutube: "YouTube",
@@ -53,29 +90,66 @@ export const translations = {
     experience: "4 роки розробки",
     marketing: "10 років у рекламі та PR",
     services: "Послуги",
+    products: "Продукти",
     contacts: "Контакти",
     service1: {
       title: "Первинна консультація",
       price: "Безкоштовно",
       description: "Оцінка можливості впровадження автоматизації та ШІ у ваш бізнес.",
-      cta: "Записатися"
+      cta: "Записатися",
+      whatYouGet: "Що я отримаю?",
+      includes: [
+        "Аналіз поточних процесів",
+        "Виявлення точок автоматизації",
+        "Оцінка потенціалу ШІ",
+        "Рекомендації щодо перших кроків"
+      ]
     },
     service2: {
       title: "Консультація з впровадження",
       price: "€69 / година",
       description: "Детальний розбір та план впровадження автоматизації та ШІ-рішень.",
-      cta: "Замовити"
+      cta: "Замовити",
+      whatYouGet: "Що я отримаю?",
+      includes: [
+        "Детальний план впровадження",
+        "Підбір технологій під завдання",
+        "Оцінка термінів та бюджету",
+        "Покрокова стратегія реалізації"
+      ]
     },
     service3: {
       title: "Проект під ключ",
       price: "За домовленістю",
       description: "Повне впровадження від аналізу до запуску та підтримки.",
-      cta: "Обговорити проект"
+      cta: "Обговорити проект",
+      whatYouGet: "Що я отримаю?",
+      includes: [
+        "Повний цикл розробки",
+        "Інтеграція з існуючими системами",
+        "Тестування та запуск",
+        "Навчання команди",
+        "Техпідтримка після запуску"
+      ]
     },
-    webStack: "Web & App Stack",
-    webStackDesc: "Next.js, React, Python, FastAPI, PostgreSQL, MongoDB, Redis, Telegram Web Apps, Telegram Bots",
+    webStack: "Web Stack",
+    webStackDesc: "Next.js, React, Python, FastAPI, PostgreSQL, MongoDB, Redis",
     aiStack: "AI Stack",
-    aiStackDesc: "GPT-4, Claude, Gemini, Grok, LLaMA, LangChain, Vector DB, RAG, Fine-tuning, AI Agents",
+    aiStackDesc: "OpenAI, Anthropic, LangChain, Vector DB, RAG, Fine-tuning, AI Agents",
+    product1: "Telegram Apps",
+    product1Desc: "Web-додатки всередині Telegram",
+    product2: "Telegram Bots",
+    product2Desc: "Автоматизація та інтеграції",
+    product3: "Web додатки",
+    product3Desc: "Повноцінні веб-сервіси",
+    product4: "AI Agents",
+    product4Desc: "Розумні ШІ-помічники",
+    product5: "Аналітика та ШІ",
+    product5Desc: "Аналіз даних та прогнози",
+    product6: "CRM системи",
+    product6Desc: "Управління клієнтами та продажами",
+    product7: "Платіжні системи",
+    product7Desc: "Інтеграція будь-яких способів оплати",
     contactTelegramQuick: "Telegram",
     contactTelegramProject: "Telegram",
     contactYoutube: "YouTube",
