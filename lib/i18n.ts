@@ -9,6 +9,7 @@ export const translations = {
     services: "Услуги",
     products: "Продукты",
     contacts: "Контакты",
+    contactsContent: "Полезные материалы",
     service1: {
       title: "Первичная консультация",
       price: "Бесплатно",
@@ -72,6 +73,7 @@ export const translations = {
     contactTelegramProject: "Telegram",
     contactYoutube: "YouTube",
     contactInstagram: "Instagram",
+    contactTelegramChannel: "Telegram канал",
     telegramQuickDesc: "Быстрая консультация",
     telegramQuickFree: "Бесплатно",
     telegramPaidDesc: "Консультация",
@@ -80,6 +82,7 @@ export const translations = {
     telegramProjectNote: "Личный чат",
     youtubeDesc: "Полезные материалы",
     instagramDesc: "Lifestyle",
+    telegramChannelDesc: "Новости и кейсы",
     videos: [
       "Автоматизация бизнес-процессов с помощью ИИ",
       "Как внедрить ChatGPT в вашу компанию",
@@ -97,6 +100,7 @@ export const translations = {
     services: "Послуги",
     products: "Продукти",
     contacts: "Контакти",
+    contactsContent: "Корисні матеріали",
     service1: {
       title: "Первинна консультація",
       price: "Безкоштовно",
@@ -160,6 +164,7 @@ export const translations = {
     contactTelegramProject: "Telegram",
     contactYoutube: "YouTube",
     contactInstagram: "Instagram",
+    contactTelegramChannel: "Telegram-канал",
     telegramQuickDesc: "Швидка консультація",
     telegramQuickFree: "Безкоштовно",
     telegramPaidDesc: "Консультація",
@@ -168,6 +173,7 @@ export const translations = {
     telegramProjectNote: "Особистий чат",
     youtubeDesc: "Корисні матеріали",
     instagramDesc: "Lifestyle",
+    telegramChannelDesc: "Новини та кейси",
     videos: [
       "Автоматизація бізнес-процесів за допомогою ШІ",
       "Як впровадити ChatGPT у вашу компанію",

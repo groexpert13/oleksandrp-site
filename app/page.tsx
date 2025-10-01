@@ -23,10 +23,10 @@ export default function Home() {
   const [openService, setOpenService] = useState<number | null>(null)
 
   const youtubeVideos = [
-    { title: t.videos[0], url: "https://youtube.com/@your-channel" },
-    { title: t.videos[1], url: "https://youtube.com/@your-channel" },
-    { title: t.videos[2], url: "https://youtube.com/@your-channel" },
-    { title: t.videos[3], url: "https://youtube.com/@your-channel" },
+    { title: t.videos[0], url: "https://www.youtube.com/@oleksandrpme" },
+    { title: t.videos[1], url: "https://www.youtube.com/@oleksandrpme" },
+    { title: t.videos[2], url: "https://www.youtube.com/@oleksandrpme" },
+    { title: t.videos[3], url: "https://www.youtube.com/@oleksandrpme" },
   ]
 
   if (loading) {
@@ -287,9 +287,14 @@ export default function Home() {
                   
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service1.price}</div>
-                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                    <a
+                      href="https://t.me/alexassiatantbot"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
+                    >
                       {t.service1.cta}
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -326,9 +331,14 @@ export default function Home() {
                   
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service2.price}</div>
-                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                    <a
+                      href="https://t.me/alexassiatantbot"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
+                    >
                       {t.service2.cta}
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -365,9 +375,14 @@ export default function Home() {
                   
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service3.price}</div>
-                    <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                    <a
+                      href="https://t.me/sapl13"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
+                    >
                       {t.service3.cta}
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -410,76 +425,103 @@ export default function Home() {
             {/* Contact */}
             <div>
               <h2 className="text-xl sm:text-2xl font-bold mb-4">{t.contacts}</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
+              
+              {/* Telegram Contact Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 {/* Telegram - Quick Free */}
                 <a
-                  href="https://t.me/your-telegram-quick"
+                  href="https://t.me/alexassiatantbot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col"
                 >
-                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramQuick}</div>
-                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramQuickDesc}</div>
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-sm font-bold mb-1.5 leading-tight">{t.contactTelegramQuick}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3">{t.telegramQuickDesc}</div>
                   <div className="mt-auto">
-                    <div className="inline-block px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-[10px] font-semibold">{t.telegramQuickFree}</div>
+                    <div className="inline-block px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">{t.telegramQuickFree}</div>
                   </div>
                 </a>
                 
                 {/* Telegram - Paid */}
                 <a
-                  href="https://t.me/your-telegram-paid"
+                  href="https://t.me/alexassiatantbot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-lg p-3 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10 flex flex-col h-full"
+                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-lg p-4 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10 flex flex-col"
                 >
-                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramPaid}</div>
-                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramPaidDesc}</div>
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-sm font-bold mb-1.5 leading-tight">{t.contactTelegramPaid}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3">{t.telegramPaidDesc}</div>
                   <div className="mt-auto">
-                    <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
+                    <div className="text-base font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
                   </div>
                 </a>
                 
                 {/* Telegram - Projects */}
                 <a
-                  href="https://t.me/your-telegram-projects"
+                  href="https://t.me/sapl13"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col"
                 >
-                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramProject}</div>
-                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramProjectDesc}</div>
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-sm font-bold mb-1.5 leading-tight">{t.contactTelegramProject}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3">{t.telegramProjectDesc}</div>
                   <div className="mt-auto">
-                    <div className="text-[10px] text-gray-500 dark:text-gray-500">{t.telegramProjectNote}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-500">{t.telegramProjectNote}</div>
                   </div>
+                </a>
+              </div>
+              
+              {/* Divider */}
+              <div className="relative my-8">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="px-4 text-sm font-medium text-gray-500 dark:text-gray-500 bg-white dark:bg-black">{t.contactsContent}</span>
+                </div>
+              </div>
+              
+              {/* Content Channels */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Telegram Channel */}
+                <a
+                  href="https://t.me/+DvuRP7KBT-dmYmM6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-sm text-center flex flex-col"
+                >
+                  <Send className="h-5 w-5 mx-auto mb-2.5 text-gray-600 dark:text-gray-400" />
+                  <div className="text-sm font-semibold mb-1 leading-tight">{t.contactTelegramChannel}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">{t.telegramChannelDesc}</div>
                 </a>
                 
                 {/* YouTube */}
                 <a
-                  href="https://youtube.com/@your-channel"
+                  href="https://www.youtube.com/@oleksandrpme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
+                  className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-sm text-center flex flex-col"
                 >
-                  <Youtube className="h-4 w-4 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
-                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactYoutube}</div>
-                  <div className="text-[10px] leading-snug text-gray-500 dark:text-gray-500">{t.youtubeDesc}</div>
+                  <Youtube className="h-5 w-5 mx-auto mb-2.5 text-gray-600 dark:text-gray-400" />
+                  <div className="text-sm font-semibold mb-1 leading-tight">{t.contactYoutube}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">{t.youtubeDesc}</div>
                 </a>
-                
+
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com/your-instagram"
+                  href="https://www.instagram.com/oleksandrp.me/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
+                  className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-sm text-center flex flex-col"
                 >
-                  <svg className="h-4 w-4 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 mx-auto mb-2.5 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
-                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactInstagram}</div>
-                  <div className="text-[10px] leading-snug text-gray-500 dark:text-gray-500">{t.instagramDesc}</div>
+                  <div className="text-sm font-semibold mb-1 leading-tight">{t.contactInstagram}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">{t.instagramDesc}</div>
                 </a>
               </div>
             </div>
