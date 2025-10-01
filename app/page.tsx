@@ -163,73 +163,73 @@ export default function Home() {
             </div>
 
             {/* Products */}
-            <div className="mt-10">
-              <h2 className="text-xl font-bold mb-4 text-center">{t.products}</h2>
-              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <Send className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                    <div>
-                      <div className="text-sm font-semibold">{t.product1}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product1Desc}</div>
+            <div className="mt-8">
+              <h2 className="text-lg font-bold mb-3 text-center">{t.products}</h2>
+              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-3">
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <Send className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product1}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product1Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <MessageCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                    <div>
-                      <div className="text-sm font-semibold">{t.product2}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product2Desc}</div>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <MessageCircle className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product2}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product2Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
-                    <div>
-                      <div className="text-sm font-semibold">{t.product3}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product3Desc}</div>
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product3}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product3Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
-                    <div>
-                      <div className="text-sm font-semibold">{t.product4}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product4Desc}</div>
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product4}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product4Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
-                    <div>
-                      <div className="text-sm font-semibold">{t.product5}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product5Desc}</div>
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product5}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product5Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer">
-                    <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <div>
-                      <div className="text-sm font-semibold">{t.product6}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product6Desc}</div>
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product6}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product6Desc}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 p-2.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors cursor-pointer sm:col-span-2">
-                    <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
+                    <svg className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                     </svg>
-                    <div>
-                      <div className="text-sm font-semibold">{t.product7}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-500">{t.product7Desc}</div>
+                    <div className="text-xs">
+                      <span className="font-semibold">{t.product7}</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-1">{t.product7Desc}</span>
                     </div>
                   </div>
                 </div>
@@ -406,18 +406,18 @@ export default function Home() {
             {/* Contact */}
             <div>
               <h2 className="text-2xl font-bold mb-6">{t.contacts}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 {/* Telegram - Quick Free */}
                 <a
                   href="https://t.me/your-telegram-quick"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group"
                 >
-                  <Send className="h-6 w-6 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
                   <div className="text-sm font-bold mb-1">{t.contactTelegramQuick}</div>
                   <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t.telegramQuickDesc}</div>
-                  <div className="inline-block px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">{t.telegramQuickFree}</div>
+                  <div className="inline-block px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">{t.telegramQuickFree}</div>
                 </a>
                 
                 {/* Telegram - Paid */}
@@ -425,12 +425,12 @@ export default function Home() {
                   href="https://t.me/your-telegram-paid"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-xl p-5 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10"
+                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-xl p-4 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10"
                 >
-                  <Send className="h-6 w-6 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
                   <div className="text-sm font-bold mb-1">{t.contactTelegramPaid}</div>
                   <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t.telegramPaidDesc}</div>
-                  <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
+                  <div className="text-base font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
                 </a>
                 
                 {/* Telegram - Projects */}
@@ -438,12 +438,38 @@ export default function Home() {
                   href="https://t.me/your-telegram-projects"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group"
                 >
-                  <Send className="h-6 w-6 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
+                  <Send className="h-5 w-5 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
                   <div className="text-sm font-bold mb-1">{t.contactTelegramProject}</div>
                   <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t.telegramProjectDesc}</div>
                   <div className="text-xs text-gray-500 dark:text-gray-500">{t.telegramProjectNote}</div>
+                </a>
+                
+                {/* YouTube */}
+                <a
+                  href="https://youtube.com/@your-channel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center"
+                >
+                  <Youtube className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
+                  <div className="text-sm font-bold mb-1">{t.contactYoutube}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">{t.youtubeDesc}</div>
+                </a>
+                
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com/your-instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center"
+                >
+                  <svg className="h-5 w-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <div className="text-sm font-bold mb-1">{t.contactInstagram}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">{t.instagramDesc}</div>
                 </a>
               </div>
             </div>
