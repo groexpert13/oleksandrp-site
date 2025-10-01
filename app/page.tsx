@@ -110,7 +110,7 @@ export default function Home() {
               {/* Avatar */}
               <div className="mb-6 flex justify-center">
                 <div className="relative">
-                  <div className="h-40 w-40 rounded-full overflow-hidden border-4 border-gray-200 dark:border-gray-800 shadow-lg">
+                  <div className="h-32 w-32 sm:h-40 sm:w-40 rounded-full overflow-hidden border-4 border-gray-200 dark:border-gray-800 shadow-lg">
                     <img 
                       src="/ava.png" 
                       alt={t.name}
@@ -120,42 +120,46 @@ export default function Home() {
                 </div>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl font-bold mb-2 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 tracking-tight">
                 {t.name}
               </h1>
-              <p className="text-base text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                {t.description}
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto">
+                {t.description.split('. ').map((part: string, idx: number, arr: string[]) => (
+                  <span key={idx} className={idx > 0 ? 'block' : undefined}>
+                    {idx < arr.length - 1 ? part + '.' : part}
+                  </span>
+                ))}
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs sm:text-sm text-gray-500 dark:text-gray-500">
+              <div className="flex items-center justify-center gap-x-2 text-xs sm:text-sm text-gray-500 dark:text-gray-500 whitespace-nowrap overflow-x-auto">
                 <span className="whitespace-nowrap">{t.age}</span>
-                <span className="hidden sm:inline">•</span>
+                <span className="mx-0.5">•</span>
                 <span className="whitespace-nowrap">{t.experience}</span>
-                <span className="hidden sm:inline">•</span>
+                <span className="mx-0.5">•</span>
                 <span className="whitespace-nowrap">{t.marketing}</span>
               </div>
             </div>
 
             {/* Tech Stack */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
+              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-5">
                 <div className="text-emerald-600 dark:text-emerald-400 mb-3">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                   </svg>
                 </div>
-                <div className="font-semibold mb-2">{t.webStack}</div>
+                <div className="text-sm font-semibold mb-2">{t.webStack}</div>
                 <div className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
                   {t.webStackDesc}
                 </div>
               </div>
 
-              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
+              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-5">
                 <div className="text-emerald-600 dark:text-emerald-400 mb-3">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                <div className="font-semibold mb-2">{t.aiStack}</div>
+                <div className="text-sm font-semibold mb-2">{t.aiStack}</div>
                 <div className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
                   {t.aiStackDesc}
                 </div>
@@ -164,8 +168,8 @@ export default function Home() {
 
             {/* Products */}
             <div className="mt-8">
-              <h2 className="text-lg font-bold mb-3 text-center">{t.products}</h2>
-              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-3">
+              <h2 className="text-base sm:text-lg font-bold mb-3 text-center">{t.products}</h2>
+              <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-4">
                 <div className="flex flex-wrap gap-2 justify-center">
                   <div className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md transition-colors">
                     <Send className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
@@ -247,7 +251,7 @@ export default function Home() {
         <section className="min-h-screen flex items-center justify-center px-4 py-16">
           <div className="max-w-3xl w-full">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-3 tracking-tight">{t.services}</h2>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 tracking-tight">{t.services}</h2>
             </div>
 
             <div className="space-y-4 mb-8">
@@ -381,7 +385,7 @@ export default function Home() {
           <div className="max-w-3xl w-full">
             {/* Videos */}
             <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-2">{lang === 'ru' ? 'Полезный контент' : 'Корисний контент'}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">{lang === 'ru' ? 'Полезный контент' : 'Корисний контент'}</h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{lang === 'ru' ? 'Обучающие материалы и кейсы по автоматизации' : 'Навчальні матеріали та кейси з автоматизації'}</p>
               <div className="space-y-2">
                 {youtubeVideos.map((video, index) => (
@@ -405,20 +409,20 @@ export default function Home() {
 
             {/* Contact */}
             <div>
-              <h2 className="text-2xl font-bold mb-6">{t.contacts}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4">{t.contacts}</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
                 {/* Telegram - Quick Free */}
                 <a
                   href="https://t.me/your-telegram-quick"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
                 >
-                  <Send className="h-5 w-5 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-sm font-bold mb-2">{t.contactTelegramQuick}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 min-h-[2.5rem] flex items-center justify-center">{t.telegramQuickDesc}</div>
+                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramQuick}</div>
+                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramQuickDesc}</div>
                   <div className="mt-auto">
-                    <div className="inline-block px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">{t.telegramQuickFree}</div>
+                    <div className="inline-block px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-[10px] font-semibold">{t.telegramQuickFree}</div>
                   </div>
                 </a>
                 
@@ -427,13 +431,13 @@ export default function Home() {
                   href="https://t.me/your-telegram-paid"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-xl p-4 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10 flex flex-col h-full"
+                  className="border-2 border-emerald-500 dark:border-emerald-500 rounded-lg p-3 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10 flex flex-col h-full"
                 >
-                  <Send className="h-5 w-5 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-sm font-bold mb-2">{t.contactTelegramPaid}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 min-h-[2.5rem] flex items-center justify-center">{t.telegramPaidDesc}</div>
+                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramPaid}</div>
+                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramPaidDesc}</div>
                   <div className="mt-auto">
-                    <div className="text-base font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
+                    <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{t.telegramPaidPrice}</div>
                   </div>
                 </a>
                 
@@ -442,13 +446,13 @@ export default function Home() {
                   href="https://t.me/your-telegram-projects"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col h-full"
                 >
-                  <Send className="h-5 w-5 mx-auto mb-3 text-emerald-600 dark:text-emerald-400" />
-                  <div className="text-sm font-bold mb-2">{t.contactTelegramProject}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 min-h-[2.5rem] flex items-center justify-center">{t.telegramProjectDesc}</div>
+                  <Send className="h-4 w-4 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactTelegramProject}</div>
+                  <div className="text-[10px] leading-snug text-gray-600 dark:text-gray-400 mb-2">{t.telegramProjectDesc}</div>
                   <div className="mt-auto">
-                    <div className="text-xs text-gray-500 dark:text-gray-500">{t.telegramProjectNote}</div>
+                    <div className="text-[10px] text-gray-500 dark:text-gray-500">{t.telegramProjectNote}</div>
                   </div>
                 </a>
                 
@@ -457,11 +461,11 @@ export default function Home() {
                   href="https://youtube.com/@your-channel"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
                 >
-                  <Youtube className="h-5 w-5 mx-auto mb-3 text-gray-600 dark:text-gray-400" />
-                  <div className="text-sm font-bold mb-2">{t.contactYoutube}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-500 min-h-[2.5rem] flex items-center justify-center">{t.youtubeDesc}</div>
+                  <Youtube className="h-4 w-4 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
+                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactYoutube}</div>
+                  <div className="text-[10px] leading-snug text-gray-500 dark:text-gray-500">{t.youtubeDesc}</div>
                 </a>
                 
                 {/* Instagram */}
@@ -469,13 +473,13 @@ export default function Home() {
                   href="https://instagram.com/your-instagram"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
+                  className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-md text-center flex flex-col h-full"
                 >
-                  <svg className="h-5 w-5 mx-auto mb-3 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 mx-auto mb-2 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
-                  <div className="text-sm font-bold mb-2">{t.contactInstagram}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-500 min-h-[2.5rem] flex items-center justify-center">{t.instagramDesc}</div>
+                  <div className="text-xs font-bold mb-1.5 leading-tight">{t.contactInstagram}</div>
+                  <div className="text-[10px] leading-snug text-gray-500 dark:text-gray-500">{t.instagramDesc}</div>
                 </a>
               </div>
             </div>
