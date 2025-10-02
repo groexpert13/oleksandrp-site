@@ -2,7 +2,7 @@
 
 import { Youtube, Send, MessageCircle, Sun, Moon, Monitor, ChevronDown, Globe } from "lucide-react"
 import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { translations, detectLanguage, type Language } from "@/lib/i18n"
 
 export default function Home() {
@@ -12,12 +12,31 @@ export default function Home() {
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [loading, setLoading] = useState(true)
 
+  const langMenuRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     setMounted(true)
     setLang(detectLanguage())
     // Hide loader after mount
     setTimeout(() => setLoading(false), 800)
   }, [])
+
+  // Close language menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
+        setShowLangMenu(false)
+      }
+    }
+
+    if (showLangMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showLangMenu])
 
   const t = translations[lang]
   const [openService, setOpenService] = useState<number | null>(null)
@@ -56,7 +75,7 @@ export default function Home() {
               alt="Logo" 
               className="w-4 h-4 sm:w-5 sm:h-5"
             />
-            <div className="text-xs sm:text-sm font-medium truncate max-w-[120px] sm:max-w-none">{t.name}</div>
+            <div className="text-xs sm:text-sm font-medium">{t.name}</div>
           </div>
           
           {/* Right: Theme + Language */}
@@ -99,7 +118,7 @@ export default function Home() {
             </div>
             
             {/* Language Selector */}
-            <div className="relative">
+            <div className="relative" ref={langMenuRef}>
               <button
                 onClick={() => setShowLangMenu(!showLangMenu)}
                 className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-100 dark:bg-gray-900 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
