@@ -1,6 +1,6 @@
 "use client"
 
-import { Youtube, Send, MessageCircle, Sun, Moon, Monitor, ChevronDown } from "lucide-react"
+import { Youtube, Send, MessageCircle, Sun, Moon, Monitor, ChevronDown, Globe } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { translations, detectLanguage, type Language } from "@/lib/i18n"
@@ -9,7 +9,7 @@ export default function Home() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [lang, setLang] = useState<Language>('ru')
-  const [showThemeMenu, setShowThemeMenu] = useState(false)
+  const [showLangMenu, setShowLangMenu] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -48,50 +48,85 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors">
       {/* Fixed Header */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-black/95 backdrop-blur-md">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-          <div className="text-sm font-medium">{t.name}</div>
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 h-12 sm:h-14 flex items-center justify-between">
+          {/* Left: Logo + Name */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <img 
+              src="/oleksandrp_logo.webp" 
+              alt="Logo" 
+              className="w-4 h-4 sm:w-5 sm:h-5"
+            />
+            <div className="text-xs sm:text-sm font-medium truncate max-w-[120px] sm:max-w-none">{t.name}</div>
+          </div>
           
-          <div className="flex items-center gap-2">
-            {/* Language Toggle */}
-            <button
-              onClick={() => setLang(lang === 'ru' ? 'uk' : 'ru')}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
-            >
-              {lang === 'ru' ? 'УК' : 'РУ'}
-            </button>
+          {/* Right: Theme + Language */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Theme Toggle Group */}
+            <div className="flex items-center bg-gray-100 dark:bg-gray-900 rounded-lg p-0.5 sm:p-1">
+              <button
+                onClick={() => setTheme('system')}
+                className={`p-1 sm:p-1.5 rounded-md transition-colors ${
+                  theme === 'system' 
+                    ? 'bg-white dark:bg-gray-800 shadow-sm' 
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-800'
+                }`}
+                title="System"
+              >
+                {mounted && <Monitor className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
+              </button>
+              <button
+                onClick={() => setTheme('light')}
+                className={`p-1 sm:p-1.5 rounded-md transition-colors ${
+                  theme === 'light' 
+                    ? 'bg-white dark:bg-gray-800 shadow-sm' 
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-800'
+                }`}
+                title="Light"
+              >
+                {mounted && <Sun className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
+              </button>
+              <button
+                onClick={() => setTheme('dark')}
+                className={`p-1 sm:p-1.5 rounded-md transition-colors ${
+                  theme === 'dark' 
+                    ? 'bg-white dark:bg-gray-800 shadow-sm' 
+                    : 'hover:bg-gray-200 dark:hover:bg-gray-800'
+                }`}
+                title="Dark"
+              >
+                {mounted && <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
+              </button>
+            </div>
             
-            {/* Theme Toggle */}
+            {/* Language Selector */}
             <div className="relative">
               <button
-                onClick={() => setShowThemeMenu(!showThemeMenu)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
+                onClick={() => setShowLangMenu(!showLangMenu)}
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-100 dark:bg-gray-900 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
               >
-                {mounted && (
-                  theme === "dark" ? <Moon className="h-4 w-4" /> : 
-                  theme === "light" ? <Sun className="h-4 w-4" /> : 
-                  <Monitor className="h-4 w-4" />
-                )}
+                <Globe className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline text-sm font-medium">{lang === 'ru' ? 'Русский' : 'Українська'}</span>
+                <span className="sm:hidden text-xs font-medium">{lang === 'ru' ? 'РУ' : 'УК'}</span>
+                <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               </button>
               
-              {showThemeMenu && (
-                <div className="absolute right-0 mt-2 w-32 py-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg">
+              {showLangMenu && (
+                <div className="absolute right-0 mt-2 w-32 sm:w-36 py-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg">
                   <button
-                    onClick={() => { setTheme('light'); setShowThemeMenu(false) }}
-                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"
+                    onClick={() => { setLang('ru'); setShowLangMenu(false) }}
+                    className={`w-full px-3 py-2 text-left text-xs sm:text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
+                      lang === 'ru' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : ''
+                    }`}
                   >
-                    <Sun className="h-3.5 w-3.5" /> Light
+                    Русский
                   </button>
                   <button
-                    onClick={() => { setTheme('dark'); setShowThemeMenu(false) }}
-                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"
+                    onClick={() => { setLang('uk'); setShowLangMenu(false) }}
+                    className={`w-full px-3 py-2 text-left text-xs sm:text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
+                      lang === 'uk' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : ''
+                    }`}
                   >
-                    <Moon className="h-3.5 w-3.5" /> Dark
-                  </button>
-                  <button
-                    onClick={() => { setTheme('system'); setShowThemeMenu(false) }}
-                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"
-                  >
-                    <Monitor className="h-3.5 w-3.5" /> System
+                    Українська
                   </button>
                 </div>
               )}
@@ -101,7 +136,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="pt-14">
+      <main className="pt-12 sm:pt-14">
         {/* Page 1: About */}
         <section className="min-h-screen flex items-center justify-center px-4 py-16">
           <div className="max-w-3xl w-full">
