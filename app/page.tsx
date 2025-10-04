@@ -342,7 +342,7 @@ export default function Home() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service1.price}</div>
                     <a
-                      href="https://t.me/alexassiatantbot"
+                      href="https://t.me/alexassiatantbot?start=free_brief"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
@@ -386,7 +386,7 @@ export default function Home() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service2.price}</div>
                     <a
-                      href="https://t.me/alexassiatantbot"
+                      href="https://t.me/alexassiatantbot?start=paid_consult"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
@@ -430,7 +430,7 @@ export default function Home() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-gray-200 dark:border-gray-800">
                     <div className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{t.service3.price}</div>
                     <a
-                      href="https://t.me/sapl13"
+                      href={`https://t.me/sapl13?text=${encodeURIComponent(t.telegramProjectMessage)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center"
@@ -484,7 +484,7 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 {/* Telegram - Quick Free */}
                 <a
-                  href="https://t.me/alexassiatantbot"
+                  href="https://t.me/alexassiatantbot?start=free_brief"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col"
@@ -499,7 +499,7 @@ export default function Home() {
                 
                 {/* Telegram - Paid */}
                 <a
-                  href="https://t.me/alexassiatantbot"
+                  href="https://t.me/alexassiatantbot?start=paid_consult"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border-2 border-emerald-500 dark:border-emerald-500 rounded-lg p-4 hover:shadow-lg transition-all text-center group bg-emerald-50/50 dark:bg-emerald-900/10 flex flex-col"
@@ -514,7 +514,7 @@ export default function Home() {
                 
                 {/* Telegram - Projects */}
                 <a
-                  href="https://t.me/sapl13"
+                  href={`https://t.me/sapl13?text=${encodeURIComponent(t.telegramProjectMessage)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border-2 border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all hover:shadow-md text-center group flex flex-col"
